@@ -4,12 +4,11 @@
 regioncode
 =========
 
-Inspired by Professor Vincent Arel-Bundock's well-known [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848), `regioncode` is indigenous version for China studies. 
-Chinese government gives unique geocodes for each county, city, and provincial level administrative unit. 
-The geocodes were consistently adjusted to matched the national and regional plans of development, taking the new centrally-administered municipality Chongqing (1997) and new state-level new area Xiong'an (2016) as examples. 
+Inspired by Vincent Arel-Bundock's well-known [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848), `regioncode` is an indigenous version for China studies. 
 
-The package is developed to conquer the difficulties to match regional data across years due such geocodes adjustments. 
-In the current version, `regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986. 
+The Chinese government gives unique geocodes for each county, city, and provincial-level administrative unit. The geocodes were consistently adjusted to matched the national and regional plans of development, taking the new centrally-administered municipality Chongqing (1997) and new state-level new area Xiong'an (2016) as examples.
+
+The package is developed to conquer the difficulties to match regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
 
 To install:
 
