@@ -29,44 +29,179 @@ To install:
 
 ## Loading Package and Vignetee dataset
 
-In `regioncode`, we named regions' geocodes as `code`, regions' formal names as `name`, and regions' common-used names as `sname`.
-This example is based on  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) made by [Prof. Yuhua Wang](https://scholar.harvard.edu/yuhuawang/data).
+This example is based on  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) made by [Yuhua Wang](https://scholar.harvard.edu/yuhuawang/data).
+```{r include=FALSE}
+#load package 这边我直接把函数粘贴过来了
+library(dplyr)
+load('../data/region_data_all.rda')
+CHNregioncode <- function(import, year_col, from_year, 
+                               to_year = 2015, type){
+  if(class(import) != "data.frame") {stop('Import error. Please input class == "data.frame" import')}
+  
+  if(type != 'code2name' & type != 'code2code' & type != 'code2sname' & type != 'name2name' &  type != 'name2code' & type != 'name2sname' & type != 'sname2name' & type != 'sname2code' & type != 'sname2sname') {stop('Type error.')}
+  
+  switch (type,
+          'code2code' = {
+            #如果要转换的类型为城市编码(年份转换)
+            from_year <- paste('X', as.character(from_year) , '_code', sep = '')
+            to_year <- paste('X', as.character(to_year), '_code', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          'name2code' = {
+            #如果要转换的类型为城市名name
+            from_year <- paste('X', as.character(from_year) , '_name', sep = '')
+            to_year <- paste('X', as.character(to_year), '_code', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          'sname2code' = {
+            #如果要转换的类型为城市名sname
+            from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
+            to_year <- paste('X', as.character(to_year), '_code', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          
+          'code2name' = {
+            #如果要转换的类型为城市编码
+            from_year <- paste('X', as.character(from_year) , '_code', sep = '')
+            to_year <- paste('X', as.character(to_year), '_name', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          'name2name' = {
+            #如果要转换的类型为城市名name(年份转换)
+            from_year <- paste('X', as.character(from_year) , '_name', sep = '')
+            to_year <- paste('X', as.character(to_year), '_name', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          'sname2name' = {
+            #如果要转换的类型为城市名sname
+            from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
+            to_year <- paste('X', as.character(to_year), '_name', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          
+          'code2sname' = {
+            #如果要转换的类型为城市编码
+            from_year <- paste('X', as.character(from_year) , '_code', sep = '')
+            to_year <- paste('X', as.character(to_year), '_sname', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          'name2sname' = {
+            #如果要转换的类型为城市名name
+            from_year <- paste('X', as.character(from_year) , '_name', sep = '')
+            to_year <- paste('X', as.character(to_year), '_sname', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          'sname2sname' = {
+            #如果要转换的类型为城市名sname(年份转换)
+            from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
+            to_year <- paste('X', as.character(to_year), '_sname', sep = '')
+            
+            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
+            name[year_col] = name[to_year]
+            name <- name[,-grep(to_year,colnames(name))] %>% unique()
+            rownames(name) <- NULL
+            return(name)
+          },
+          
+  )
+}
+```
 
 ```{r}
-library(regioncode)  #load package
-load('vegnitee_data.rda')  #load the data
+#load package 
+# library(regioncode)  这边我直接把函数粘贴过来了
+#load the data
+load('vignette_data.rda')  
+vignette_data <- as.data.frame(vignette_data[c(1:20),])
 ```
 
-## Type Converting: code2name, code2sname, name2code, ......
+## Year Convert
 
+In `regioncode`, we named regions' geocodes as `code`, regions' formal names as `name`, and regions' common-used names as `sname`. 
+`regioncode` can covert same region geocoding type into different years. 
 
+### For geocodes: `code2code`
+```{r}
+# <year_col> is column name that needs to be coverted
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005, type = "code2code")
+# original geocodes. It's 2019 version.
+vignette_data$prefecture_id
+# covert geocodes into 2005 version.
+vignette_covert$prefecture_id 
+```
+### For formal names: `name2name`
+```{r}
+# <year_col> is column name that needs to be coverted
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005, type = "name2name")
 
-
-
-
-
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# original formal names. It's 2019 version.
+vignette_data$prefecture
+# covert formal names into 2005 version.
+vignette_covert$prefecture
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+### For common-used names: `sname2sname`
+```{r eval=FALSE, include=FALSE}
+# <year_col> is column name that needs to be coverted
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005, type = "sname2sname")
+# original common-used names. It's 2020 version.
+vignette_data$prefecture_id
+# covert common-used names into 2005 version.
+vignette_covert$prefecture_id 
 ```
 
-## Including Plots
+## Type Convert
+Regioncode enables seamlessly converting regions' formal names, common-used names, and geocodes between each other.
 
-You can also embed plots, for example:
+### from geocodes to others: `code2name` and `code2sname`
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+### from formal names to others: `name2code` and `name2sname`
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### from common-used names to others: `sname2code` and `sname2name`
+
