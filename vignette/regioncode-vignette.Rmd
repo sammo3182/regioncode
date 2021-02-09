@@ -1,8 +1,9 @@
 ---
-title: "regioncode-vignette"
+title: "regioncode: Covert Chinese Regions' Geocode"
 author: "Dr.Hu's SRT Team"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: vignette.bib
 vignette: >
   %\VignetteIndexEntry{regioncode: Covert Chinese Regions' Geocode}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,7 +18,7 @@ Inspired by Vincent Arel-Bundock's well-known `countrycode`,
 The Chinese government gives unique geocodes for each county, city, and provincial-level administrative unit. The geocodes were consistently adjusted to matched the national and regional plans of development, taking the new centrally-administered municipality Chongqing (1997) and new state-level new area Xiong'an (2016) as examples. Geocode adjustment disturb researchers when they try to 
 
 
-The package is developed to conquer the difficulties to match regional data across years due to such geocodes adjustments. In the current version, regioncode enables seamlessly converting regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
+The package is developed to conquer the difficulties to match regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
 
 ## Installation
 
@@ -149,7 +150,7 @@ CHNregioncode <- function(import, year_col, from_year,
 
 ```{r}
 #load package 
-# library(regioncode)  这边我直接把函数粘贴过来了
+#library(regioncode)
 #load the data
 load('vignette_data.rda')  
 vignette_data <- as.data.frame(vignette_data[c(1:20),])
@@ -162,15 +163,19 @@ In `regioncode`, we named regions' geocodes as `code`, regions' formal names as 
 
 ### For geocodes: `code2code`
 ```{r}
-# <year_col> is column name that needs to be coverted
-vignette_covert <- CHNregioncode(import = vignette_data, 
-                                 year_col = 'prefecture_id',
-                                 from_year = 2019,to_year = 2005, type = "code2code")
-# original geocodes. It's 2019 version.
+# original geocodes. It's 2019 version
 vignette_data$prefecture_id
-# covert geocodes into 2005 version.
-vignette_covert$prefecture_id 
+# <year_col> is column name that needs to be coverted
+vignette_covert <- CHNregioncode(import = vignette_data, year_col = 'prefecture_id',
+                from_year = 2019,to_year = 2005, type = "code2code")
+
 ```
+
+```{r}
+# covert geocodes into 2005 version
+vignette_covert$prefecture_id
+```
+
 ### For formal names: `name2name`
 ```{r}
 # <year_col> is column name that needs to be coverted
@@ -178,9 +183,9 @@ vignette_covert <- CHNregioncode(import = vignette_data,
                                  year_col = 'prefecture',
                                  from_year = 2019,to_year = 2005, type = "name2name")
 
-# original formal names. It's 2019 version.
+# original formal names. It's 2019 version
 vignette_data$prefecture
-# covert formal names into 2005 version.
+# covert formal names into 2005 version
 vignette_covert$prefecture
 ```
 
@@ -190,18 +195,62 @@ vignette_covert$prefecture
 vignette_covert <- CHNregioncode(import = vignette_data, 
                                  year_col = 'prefecture_id',
                                  from_year = 2019,to_year = 2005, type = "sname2sname")
-# original common-used names. It's 2020 version.
+# original common-used names. It's 2020 version
 vignette_data$prefecture_id
-# covert common-used names into 2005 version.
+# covert common-used names into 2005 version
 vignette_covert$prefecture_id 
 ```
 
 ## Type Convert
 Regioncode enables seamlessly converting regions' formal names, common-used names, and geocodes between each other.
 
-### from geocodes to others: `code2name` and `code2sname`
+### From geocodes to others: `code2name` and `code2sname`
+```{r}
+# <year_col> is column name that needs to be coverted
+vignette_covert1 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005, type = "code2name")
 
-### from formal names to others: `name2code` and `name2sname`
+vignette_covert2 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005, type = "code2sname")
 
-### from common-used names to others: `sname2code` and `sname2name`
+# original geocodes
+vignette_data$prefecture_id
+# covert geocodes into formal names
+vignette_covert1$prefecture_id
+# covert geocodes  into common-used names
+vignette_covert2$prefecture_id
+```
+### From formal names to others: `name2code` and `name2sname`
+```{r}
+# <year_col> is column name that needs to be coverted
+vignette_covert1 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005, type = "name2code")
 
+vignette_covert2 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005, type = "name2sname")
+
+# original formal names.
+vignette_data$prefecture
+# covert formal names into geocodes
+vignette_covert1$prefecture
+# covert formal names into common-used names
+vignette_covert2$prefecture
+```
+### From common-used names to others: `sname2code` and `sname2name`
+```{r eval=FALSE, include=FALSE}
+# <year_col> is column name that needs to be coverted
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005, type = "name2name")
+
+# ocovert common-used names into geocodes
+vignette_data$prefecture
+# covert common-used names into formal names
+vignette_covert$prefecture
+```
+
+## Reference
