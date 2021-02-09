@@ -6,8 +6,8 @@ p_load(
 )
 
 #load region data
-region_table <- as_tibble(read.csv('./data/region_data_all.csv', fileEncoding = "GBK"))
-
+# region_table <- as_tibble(read.csv('./data/region_data_all.csv', fileEncoding = "GBK"))
+load('./data/region_data_all.rda')
 #load sample data
 sample_code <- read.csv('./data/sample_code.csv') %>% subset(select = -X)
 
@@ -36,17 +36,17 @@ sample_name <- read.csv('./data/sample_name.csv') %>% subset(select = -X)
 # sample_city_name <- sample_city_name[, c('year', 'GDP')]
 # write.csv(sample_city_name, './data/sample_name.csv')
 
-#############Function: table_year_convert############
+#############Function: CHNregioncode############
 
-table_year_convert <- function(import, year_col, from_year, 
+CHNregioncode <- function(import, year_col, from_year, 
                                to_year = 2015, type){
   if(class(import) != "data.frame") {stop('Import error. Please input class == "data.frame" import')}
   
-  if(type != 'code2name'|type != 'code2code'|type != 'code2sname'|type != 'name2name'| type != 'name2code'| type != 'name2sname'| type != 'sname2name'| type != 'sname2code'| type != 'sname2sname') {stop('Type error.')}
+  if(type != 'code2name' & type != 'code2code' & type != 'code2sname' & type != 'name2name' &  type != 'name2code' & type != 'name2sname' & type != 'sname2name' & type != 'sname2code' & type != 'sname2sname') {stop('Type error.')}
   
   switch (type,
           'code2code' = {
-            #如果要转换的类型为城市编码
+            #如果要转换的类型为城市编码(年份转换)
             from_year <- paste('X', as.character(from_year) , '_code', sep = '')
             to_year <- paste('X', as.character(to_year), '_code', sep = '')
             
@@ -91,7 +91,7 @@ table_year_convert <- function(import, year_col, from_year,
             return(name)
           },
           'name2name' = {
-            #如果要转换的类型为城市名name
+            #如果要转换的类型为城市名name(年份转换)
             from_year <- paste('X', as.character(from_year) , '_name', sep = '')
             to_year <- paste('X', as.character(to_year), '_name', sep = '')
             
@@ -136,7 +136,7 @@ table_year_convert <- function(import, year_col, from_year,
             return(name)
           },
           'sname2sname' = {
-            #如果要转换的类型为城市名sname
+            #如果要转换的类型为城市名sname(年份转换)
             from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
             to_year <- paste('X', as.character(to_year), '_sname', sep = '')
             
@@ -151,17 +151,17 @@ table_year_convert <- function(import, year_col, from_year,
 }
 
 
-############TEST: Function table_year_convert################
-conver_data <- table_year_convert(import = sample_city_name, year_col = 'year', from_year = 1988,
-                               to_year = 1989, type = 'name2code')
-sample_city_name
-conver_data
-
-conver_data <- table_year_convert(name = sample_name, year_col = 'year', 
-                         from_year = 1988, to_year = 2014, type = 'name' )
+############TEST: Function CHNregioncode################
+conver_data <- CHNregioncode(import = sample_name, year_col = 'year', from_year = 1988,
+                               to_year = 1989, type = "name2name")
 sample_name
 conver_data
 
-conver_data <- table_year_convert(name = sample_name, year_col = 'year', 
+conver_data <- CHNregioncode(import = sample_name, year_col = 'year', 
+                         from_year = 1988, to_year = 2014, type = 'name2name' )
+sample_name
+conver_data
+
+conver_data <- CHNregioncode(import = sample_name, year_col = 'year', 
                                from_year = 1988, to_year = 2015, type = 'love_qiubao' )
 

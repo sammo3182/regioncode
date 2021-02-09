@@ -1,0 +1,72 @@
+---
+title: "regioncode-vignette"
+author: "Dr.Hu's SRT Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{regioncode: Covert Chinese Regions' Geocode}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Inspired by Vincent Arel-Bundock's well-known `countrycode`,
+`regioncode` is an indigenous version for China studies. `regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other.
+
+## Why `regioncode`?
+
+The Chinese government gives unique geocodes for each county, city, and provincial-level administrative unit. The geocodes were consistently adjusted to matched the national and regional plans of development, taking the new centrally-administered municipality Chongqing (1997) and new state-level new area Xiong'an (2016) as examples. Geocode adjustment disturb researchers when they try to 
+
+
+The package is developed to conquer the difficulties to match regional data across years due to such geocodes adjustments. In the current version, regioncode enables seamlessly converting regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
+
+## Installation
+
+To install:
+
+* the latest released version: `install.packages("regioncode")`.
+* the latest developing version: `remotes::install_github("sammo3182/regioncode")`.
+
+
+## Loading Package and Vignetee dataset
+
+In `regioncode`, we named regions' geocodes as `code`, regions' formal names as `name`, and regions' common-used names as `sname`.
+This example is based on  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) made by [Prof. Yuhua Wang](https://scholar.harvard.edu/yuhuawang/data).
+
+```{r}
+library(regioncode)  #load package
+load('vegnitee_data.rda')  #load the data
+```
+
+## Type Converting: code2name, code2sname, name2code, ......
+
+
+
+
+
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
