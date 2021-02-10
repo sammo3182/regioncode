@@ -1,0 +1,181 @@
+---
+title: "regioncode: Covert Chinese Regions' Geocode"
+author: "Dr.Hu's SRT Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: vignette.bib
+vignette: >
+  %\VignetteIndexEntry{regioncode: Covert Chinese Regions' Geocode}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+nocite: |
+  @interplot, @Arel-Bundock2018, @DVN/9QZRAD_2020
+---
+
+Inspired by Vincent Arel-Bundock's well-known `countrycode`,
+`regioncode` is an indigenous version for China studies. `regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other.
+
+## Why `regioncode`?
+
+The Chinese government gives unique geocodes for each county, city, and provincial-level administrative unit. The geocodes were consistently adjusted to matched the national and regional plans of development, taking the new centrally-administered municipality Chongqing (1997) and new state-level new area Xiong'an (2016) as examples. Geocodes adjustment disturb researchers when they try to merge tables which have ddifferent geocodes versions or region id  types. Especially, when researchers render  statistical data on Chinese map, different geocodes between map data and statistical data may cause blank outcomes on plots.
+
+
+The package is developed to conquer the difficulties to match regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting Chinese prefecture regions'(named '地级市' in Chinese) formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
+
+## Installation
+
+To install:
+
+* the latest released version: `install.packages("regioncode")`.
+* the latest developing version: `remotes::install_github("sammo3182/regioncode")`.
+
+
+## Loading Package and Vignetee Data
+
+This example is based on  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) made by [Yuhua Wang](https://scholar.harvard.edu/yuhuawang/data).
+
+```{r}
+# load package
+library(regioncode)
+# load data
+load('vignette_data.rda')
+vignette_data <- as.data.frame(vignette_data)
+```
+```{r eval=FALSE, message=FALSE}
+# view data
+# <prefecture_id> means prefecture region administrative geocode
+# <prefecture> means prefecture region formal name
+# <prefecture_sname> means prefecture region common-used name
+View(vignette_data)
+```
+
+In `regioncode` package, we named regions' geocodes as `code`, regions' formal names as `name`, and regions' common-used names as `sname`.
+
+## Year Conversion
+
+`regioncode` can covert same region geocodes type into different years from 1986 to 2019.
+
+### Geocodes: `code2code`
+```{r}
+# <year_col> is column that needs to be coverted
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005,type = "code2code")
+
+```
+
+```{r}
+# original geocodes. It's 2019 version
+vignette_data$prefecture_id
+
+# after conversion. It's 2005 version
+vignette_covert$prefecture_id
+```
+
+### Formal Names: `name2name`
+```{r}
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005,type = "name2name")
+```
+
+```{r}
+# original formal names. It's 2019 version
+vignette_data$prefecture
+# after conversion. It's 2005 version
+vignette_covert$prefecture
+```
+
+### Common-used Names: `sname2sname`
+```{r echo=TRUE}
+vignette_covert <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_sname',
+                                 from_year = 2019,to_year = 2005,type = "sname2sname")
+```
+
+```{r}
+# original common-used names. It's 2020 version
+vignette_data$prefecture_sname
+# after conversion. It's 2005 version
+vignette_covert$prefecture_sname 
+```
+
+## Type Conversion
+`regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other.
+
+### From Geocodes to Others: `code2name` and `code2sname`
+```{r}
+# <year_col> is column name that needs to be coverted
+vignette_covert1 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005, type = "code2name")
+
+vignette_covert2 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_id',
+                                 from_year = 2019,to_year = 2005, type = "code2sname")
+
+# original geocodes
+vignette_data$prefecture_id
+# covert geocodes into formal names
+vignette_covert1$prefecture_id
+# covert geocodes  into common-used names
+vignette_covert2$prefecture_id
+```
+### From Formal Names to Others: `name2code` and `name2sname`
+```{r}
+vignette_covert1 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005, type = "name2code")
+
+vignette_covert2 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture',
+                                 from_year = 2019,to_year = 2005, type = "name2sname")
+
+# original formal names.
+vignette_data$prefecture
+# covert formal names into geocodes
+vignette_covert1$prefecture
+# covert formal names into common-used names
+vignette_covert2$prefecture
+```
+### From Common-used Names to Others: `sname2code` and `sname2name`
+```{r echo=TRUE}
+vignette_covert1 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_sname',
+                                 from_year = 2019,to_year = 2005, type = "sname2code")
+
+vignette_covert2 <- CHNregioncode(import = vignette_data, 
+                                 year_col = 'prefecture_sname',
+                                 from_year = 2019,to_year = 2005, type = "sname2name")
+
+# original common-used names
+vignette_data$prefecture_sname
+# covert formal names into geocodes
+vignette_covert1$prefecture_sname
+# covert formal names into formal names
+vignette_covert2$prefecture_sname
+```
+
+## Conclusion
+The `regioncode` package provide a convenient way to convert Chinese region geocodes, formal names and common-used names between each other. This vignette offers an quick tutorial for users.
+
+The development of the package is ongoing.The current version only provide Chinese prefecture regions conversion.Out future research promise supporting more administrative level choice , from province level to county level. Please contact us with any questions, bug reports, and comments.
+
+## Affiliation
+Yue Hu
+
+Department of Political Science,
+
+Tsinghua University,
+
+Mingzhai 114,
+
+Qinghua Yuan, Haidian District, Beijing 100084, China
+
+Email: yuehu@tsinghua.edu.cn
+
+Website: https://sammo3182.github.io
+
+Dr.Hu's SRT Team
+
+## Reference
