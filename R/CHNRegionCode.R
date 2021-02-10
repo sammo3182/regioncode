@@ -1,13 +1,3 @@
-############LOAD############
-if (!require(pacman)) install.packages("pacman")
-library(pacman)
-p_load(
-  tidyverse,
-  magrittr
-)
-
-region_table <- read_rds("./R/data/region_data_all.rds")
-
 #############Function: CHNRegionCode############
 #' CHNRegionCode
 #'
@@ -19,7 +9,7 @@ region_table <- read_rds("./R/data/region_data_all.rds")
 #' @param to_year Code, name or sname version you want get. The default is 2015.
 #' @param type The function converting type. The Valid strings are: `name2name`, `name2sname`, `name2code`, `code2code`, `code2name`, `code2sname`, `sname2sname`, `sname2name`, and `sname2code`.
 #'
-#' @import tidyverse
+#' @import dplyr
 #' @import magrittr
 #' @export
 #'
@@ -30,6 +20,9 @@ region_table <- read_rds("./R/data/region_data_all.rds")
 #' # vignette_covert <- CHNregioncode(import = vignette_data,
 #' #                    year_col = 'prefecture_id',from_year = 2019,to_year = 2005,type = "code2code")
 #'
+
+load("./R/data/region_data_all.rda")
+
 CHNRegionCode <- function(import, year_col, from_year,
                                to_year = 2015, type){
   if(class(import) != "data.frame") {stop('Import error. Please input class == "data.frame" import')}
