@@ -1,0 +1,24 @@
+Package: regioncode
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Yue",
+           family = "Hu",
+           role = c("aut", "cre"),
+           email = "yuehu@mail.tsinghua.edu.cn")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+BugReports: https://github.com/sammo3182/regioncode/issues
+Depends:
+  R(>= 3.6.0)
+Imports:
+  tidyverse,
+  pacman,
+  magrittr
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
