@@ -34,10 +34,6 @@ To install:
 
 This example is based on  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) made by [Yuhua Wang](https://scholar.harvard.edu/yuhuawang/data).
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
-```
-
 ```{r}
 # load package
 library(regioncode)
@@ -47,21 +43,42 @@ vignette_data <- as.data.frame(vignette_data)
 ```
 ```{r eval=FALSE, message=FALSE}
 # view data
-# <prefecture_id> means prefecture region administrative geocode
-# <prefecture> means prefecture region formal name
-# <prefecture_sname> means prefecture region common-used name
 View(vignette_data)
 ```
+In vignette_data:
+
+- `prefecture_id` means prefecture region administrative geocode
+- `prefecture` means prefecture region formal name
+- `prefecture_sname` means prefecture region common-used name
+
+## Usage and Arguments
 
 In `regioncode` package, we named regions' geocodes as `code`, regions' formal names as `name`, and regions' common-used names as `sname`.
+
+### Usage
+```{r eval=FALSE, message=FALSE}
+CHNregioncode(
+  import,
+  year_col,
+  from_year,
+  to_year = 2015,
+  type)
+```
+
+### Arguments
+- **import**: Table virable that needs geocode coverting.The class of import virable must be dataframe.
+- **year_col**: Column that needs to be coverted.
+- **from_year**: Code, name or sname version of `year_col`.
+- **to_year**: Code, name or sname version you want get. The default is 2015.
+- **type**: The function converting type. The Valid strings are: `name2name`, `name2sname`, `name2code`, `code2code`, `code2name`, `code2sname`, `sname2sname`, `sname2name`, and `sname2code`.
 
 ## Year Conversion
 
 `regioncode` can covert same region geocodes type into different years from 1986 to 2019.
 
+
 ### Geocodes: `code2code`
 ```{r}
-# <year_col> is column that needs to be coverted
 vignette_covert <- CHNregioncode(import = vignette_data, 
                                  year_col = 'prefecture_id',
                                  from_year = 2019,to_year = 2005,type = "code2code")
@@ -109,7 +126,6 @@ vignette_covert$prefecture_sname
 
 ### From Geocodes to Others: `code2name` and `code2sname`
 ```{r}
-# <year_col> is column name that needs to be coverted
 vignette_covert1 <- CHNregioncode(import = vignette_data, 
                                  year_col = 'prefecture_id',
                                  from_year = 2019,to_year = 2005, type = "code2name")
@@ -143,7 +159,7 @@ vignette_covert1$prefecture
 vignette_covert2$prefecture
 ```
 ### From Common-used Names to Others: `sname2code` and `sname2name`
-```{r, echo=TRUE}
+```{r echo=TRUE}
 vignette_covert1 <- CHNregioncode(import = vignette_data, 
                                  year_col = 'prefecture_sname',
                                  from_year = 2019,to_year = 2005, type = "sname2code")
@@ -161,9 +177,9 @@ vignette_covert2$prefecture_sname
 ```
 
 ## Conclusion
-The `regioncode` package provide a convenient way to convert Chinese region geocodes, formal names and common-used names between each other. This vignette offers an quick tutorial for users.
+The `regioncode` package provide a convenient way to convert Chinese region geocodes, formal names and common-used names between each other. This vignette offers a quick view of package features and a short tutorial for users.
 
-The development of the package is ongoing.The current version only provide Chinese prefecture regions conversion.Out future research promise supporting more administrative level choice , from province level to county level. Please contact us with any questions, bug reports, and comments.
+The development of the package is ongoing.The current version only provide Chinese prefecture regions conversion.Out future research promise supporting more administrative level choice, from province level to county level. Please contact us with any questions, bug reports, and comments.
 
 ## Affiliation
 Yue Hu
