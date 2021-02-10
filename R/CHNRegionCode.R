@@ -13,11 +13,11 @@ region_table <- read_rds("./R/data/region_data_all.rds")
 #'
 #' `regioncode` is an software developes to conquer the difficulties to match Chinese regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
 #'
-#' @param import A character vector
-#' @param year_col A character vector
-#' @param from_year A character vector
-#' @param to_year A character vector
-#' @param type A character vector
+#' @param import Table virable that needs geocode coverting.The class of import virable must be dataframe.
+#' @param year_col Column that needs to be coverted.
+#' @param from_year Code, name or sname version of `year_col`.
+#' @param to_year Code, name or sname version you want get. The default is 2015.
+#' @param type The function converting type. The Valid strings are: `name2name`, `name2sname`, `name2code`, `code2code`, `code2name`, `code2sname`, `sname2sname`, `sname2name`, and `sname2code`.
 #'
 #' @import tidyverse
 #' @import magrittr

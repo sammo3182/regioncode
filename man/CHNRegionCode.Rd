@@ -7,15 +7,15 @@
 CHNRegionCode(import, year_col, from_year, to_year = 2015, type)
 }
 \arguments{
-\item{import}{A character vector}
+\item{import}{Table virable that needs geocode coverting.The class of import virable must be dataframe.}
 
-\item{year_col}{A character vector}
+\item{year_col}{Column that needs to be coverted.}
 
-\item{from_year}{A character vector}
+\item{from_year}{Code, name or sname version of \code{year_col}.}
 
-\item{to_year}{A character vector}
+\item{to_year}{Code, name or sname version you want get. The default is 2015.}
 
-\item{type}{A character vector}
+\item{type}{The function converting type. The Valid strings are: \code{name2name}, \code{name2sname}, \code{name2code}, \code{code2code}, \code{code2name}, \code{code2sname}, \code{sname2sname}, \code{sname2name}, and \code{sname2code}.}
 }
 \description{
 \code{regioncode} is an software developes to conquer the difficulties to match Chinese regional data across years due to such geocodes adjustments. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
