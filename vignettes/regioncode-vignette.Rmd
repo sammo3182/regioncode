@@ -12,6 +12,10 @@ nocite: |
   @interplot, @Arel-Bundock2018, @DVN/9QZRAD_2020
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 Inspired by Vincent Arel-Bundock's well-known `countrycode`,
 `regioncode` is an indigenous version for China studies. `regioncode` enables seamlessly converting regions' formal names, common-used names, and geocodes between each other.
 
@@ -56,7 +60,7 @@ In vignette_data:
 In `regioncode` package, we named regions' geocodes as `code`, regions' formal names as `name`, and regions' common-used names as `sname`.
 
 ### Usage
-```{r eval=FALSE, message=FALSE}
+```{r, include=FALSE}
 CHNregioncode(
   import,
   year_col,
