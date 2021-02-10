@@ -20,7 +20,6 @@ Author: Yue hu [aut, cre],
   Haiting STian [ctb],
   Weihang Shao [ctb],
   Yuanqian Chen [ctb]
-
 Maintainer: Yufei Sun <sunyf20@mails.tsinghua.edu.cn>
 Description: `regioncode` is an software developes to conquer the difficulties to match Chinese regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
 License: MIT + file LICENSE
