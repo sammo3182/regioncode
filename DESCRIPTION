@@ -1,0 +1,42 @@
+Package: regioncode
+Title: Convert Region Names and Division Codes of China Over Years
+Version: 0.0.9999
+Authors@R: 
+    person(given = "Yue",family = "Hu",role = c("cre","aut"), email = "yuehu@tsinghua.edu.cn")
+    person(given = "Yufei",family = "Sun",role = c("aut"), email = "sunyf20@mails.tsinghua.edu.cn")
+    person(given = "Wenquan",family = "Wu",role = c("aut"), email = "gohuntsuan@gmail.com")
+    person(given = "Yuyang",family = "She",role = c("ctb"), email = "yangtzesyy@gmail.com")
+    person(given = "Yujia",family = "Xu",role = c("ctb"), email = "593878126@qq.com")
+    person(given = "Yuxin",family = "Pan",role = c("ctb"), email = "panyx17@mails.tsinghua.edu.cn")
+    person(given = "Haiting",family = "Tian",role = c("ctb"), email = "tianht.18@sem.tsingha.edu.cn")
+    person(given = "Weihang",family = "Shao",role = c("ctb"), email = "shaowh19@mails.tsinghua.edu.cn")
+    person(given = "Yuanqian",family = "Chen",role = c("ctb"), email = "yuanqian18@mails.tsinghua.edu.cn")
+Author: Yue Hu [cre, aut],
+  Yufei Sun [aut],
+  Wenquan Wu [aut],
+  Yuyang Shi [ctb],
+  Yujia Xu [ctb],
+  Yuxin Pan [ctb],
+  Haiting Tian [ctb],
+  Weihang Shao [ctb],
+  Yuanqian Chen [ctb]
+Maintainer: Yue Hu <yuehu@tsinghua.edu.cn>
+Description: `regioncode` is an software developes to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.
+License: MIT + file LICENSE
+Encoding: UTF-8
+BugReports: https://github.com/sammo3182/regioncode/issues
+Depends:
+  R(>= 3.6.0)
+Imports:
+  tidyverse,
+  pacman,
+  magrittr
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+VignetteBuilder: knitr
