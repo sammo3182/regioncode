@@ -155,45 +155,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loading-package-and-vignetee-data" class="section level2">
 <h2>Loading Package and Vignetee Data</h2>
 <p>This example is based on <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD"><code>China’s Corruption Investigations Dataset</code></a> made by <a href="https://scholar.harvard.edu/yuhuawang/data">Yuhua Wang</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load package</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(regioncode)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#load data</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&#39;vignette_data.rda&#39;</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>vignette_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(vignette_data)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#view data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;prefecture_id&gt; means prefecture region administrative geocode</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;prefecture&gt; means prefecture region formal name</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&lt;prefecture_sname&gt; means prefecture region common-used name</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(vignette_data)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(vignette_data)</span></code></pre></div>
+<p>In vignette_data:</p>
+<ul>
+<li><code>prefecture_id</code> means prefecture region administrative geocode</li>
+<li><code>prefecture</code> means prefecture region formal name</li>
+<li><code>prefecture_sname</code> means prefecture region common-used name</li>
+</ul>
+</div>
+<div id="usage-and-arguments" class="section level2">
+<h2>Usage and Arguments</h2>
 <p>In <code>regioncode</code> package, we named regions’ geocodes as <code>code</code>, regions’ formal names as <code>name</code>, and regions’ common-used names as <code>sname</code>.</p>
+<div id="usage" class="section level3">
+<h3>Usage</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CHNregioncode</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  import,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  year_col,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  from_year,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">to_year =</span> <span class="dv">2015</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  type)</span></code></pre></div>
+</div>
+<div id="arguments" class="section level3">
+<h3>Arguments</h3>
+<ul>
+<li><strong>import</strong>: Table virable that needs geocode coverting.The class of import virable must be dataframe.</li>
+<li><strong>year_col</strong>: Column that needs to be coverted.</li>
+<li><strong>from_year</strong>: Code, name or sname version of <code>year_col</code>.</li>
+<li><strong>to_year</strong>: Code, name or sname version you want get. The default is 2015.</li>
+<li><strong>type</strong>: The function converting type. The Valid strings are: <code>name2name</code>, <code>name2sname</code>, <code>name2code</code>, <code>code2code</code>, <code>code2name</code>, <code>code2sname</code>, <code>sname2sname</code>, <code>sname2name</code>, and <code>sname2code</code>.</li>
+</ul>
+</div>
 </div>
 <div id="year-conversion" class="section level2">
 <h2>Year Conversion</h2>
 <p><code>regioncode</code> can covert same region geocodes type into different years from 1986 to 2019.</p>
 <div id="geocodes-code2code" class="section level3">
 <h3>Geocodes: <code>code2code</code></h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;year_col&gt; is column that needs to be coverted</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>vignette_covert <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_id&#39;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>,<span class="at">type =</span> <span class="st">&quot;code2code&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes. It&#39;s 2019 version</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_id</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>vignette_covert <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_id&#39;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>,<span class="at">type =</span> <span class="st">&quot;code2code&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes. It&#39;s 2019 version</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_id</span></code></pre></div>
 <pre><code>##  [1] 371400 522600 450700 530800 532500 420200 429004 530900 513400 410400
 ## [11] 520600 411500 450300 141100 429004 410500     NA 152200 440200 140900
 ## [21] 421300 441900 410900 522300 411300     NA 150100 230200     NA 220600</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>vignette_covert<span class="sc">$</span>prefecture_id</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>vignette_covert<span class="sc">$</span>prefecture_id</span></code></pre></div>
 <pre><code>##  [1]     NA     NA 150100 152200 220600 230200     NA 410400 410500 410900
 ## [11] 411300 411500 420200 421300 429004 429004 440200 441900 450300 450700
 ## [21] 513400     NA     NA     NA     NA     NA     NA     NA     NA     NA</code></pre>
 </div>
 <div id="formal-names-name2name" class="section level3">
 <h3>Formal Names: <code>name2name</code></h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vignette_covert <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture&#39;</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>,<span class="at">type =</span> <span class="st">&quot;name2name&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original formal names. It&#39;s 2019 version</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vignette_covert <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture&#39;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>,<span class="at">type =</span> <span class="st">&quot;name2name&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original formal names. It&#39;s 2019 version</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture</span></code></pre></div>
 <pre><code>##  [1] &quot;德州市&quot;                 &quot;黔东南苗族侗族自治州&quot;   &quot;钦州市&quot;                
 ##  [4] &quot;普洱市&quot;                 &quot;红河哈尼族彝族自治州&quot;   &quot;黄石市&quot;                
 ##  [7] &quot;仙桃市&quot;                 &quot;临沧市&quot;                 &quot;凉山彝族自治州&quot;        
@@ -204,8 +228,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [22] &quot;东莞市&quot;                 &quot;濮阳市&quot;                 &quot;黔西南布依族苗族自治州&quot;
 ## [25] &quot;南阳市&quot;                 NA                       &quot;呼和浩特市&quot;            
 ## [28] &quot;齐齐哈尔市&quot;             NA                       &quot;白山市&quot;</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>vignette_covert<span class="sc">$</span>prefecture</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>vignette_covert<span class="sc">$</span>prefecture</span></code></pre></div>
 <pre><code>##  [1] &quot;安阳市&quot;         &quot;白山市&quot;         NA               &quot;东莞市&quot;        
 ##  [5] &quot;桂林市&quot;         NA               &quot;呼和浩特市&quot;     &quot;黄石市&quot;        
 ##  [9] &quot;凉山彝族自治州&quot; NA               NA               &quot;南阳市&quot;        
@@ -217,18 +241,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="common-used-names-sname2sname" class="section level3">
 <h3>Common-used Names: <code>sname2sname</code></h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>vignette_covert <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_sname&#39;</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>,<span class="at">type =</span> <span class="st">&quot;sname2sname&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original common-used names. It&#39;s 2020 version</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_sname</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>vignette_covert <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_sname&#39;</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>,<span class="at">type =</span> <span class="st">&quot;sname2sname&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original common-used names. It&#39;s 2020 version</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_sname</span></code></pre></div>
 <pre><code>##  [1] &quot;德州&quot;     &quot;黔东南&quot;   &quot;钦州&quot;     &quot;普洱&quot;     &quot;红河&quot;     &quot;黄石&quot;    
 ##  [7] &quot;仙桃&quot;     &quot;临沧&quot;     &quot;凉山&quot;     &quot;平顶山&quot;   &quot;铜仁&quot;     &quot;信阳&quot;    
 ## [13] &quot;桂林&quot;     &quot;吕梁&quot;     &quot;仙桃&quot;     &quot;安阳&quot;     NA         &quot;兴安&quot;    
 ## [19] &quot;韶关&quot;     &quot;忻州&quot;     &quot;随州&quot;     &quot;东莞&quot;     &quot;濮阳&quot;     &quot;黔西南&quot;  
 ## [25] &quot;南阳&quot;     NA         &quot;呼和浩特&quot; &quot;齐齐哈尔&quot; NA         &quot;白山&quot;</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>vignette_covert<span class="sc">$</span>prefecture_sname </span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>vignette_covert<span class="sc">$</span>prefecture_sname </span></code></pre></div>
 <pre><code>##  [1] &quot;安阳&quot;     &quot;白山&quot;     NA         &quot;东莞&quot;     &quot;桂林&quot;     NA        
 ##  [7] &quot;呼和浩特&quot; &quot;黄石&quot;     &quot;凉山&quot;     NA         NA         &quot;南阳&quot;    
 ## [13] &quot;平顶山&quot;   &quot;濮阳&quot;     NA         &quot;齐齐哈尔&quot; NA         NA        
@@ -241,22 +265,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>regioncode</code> enables seamlessly converting regions’ formal names, common-used names, and geocodes between each other.</p>
 <div id="from-geocodes-to-others-code2name-and-code2sname" class="section level3">
 <h3>From Geocodes to Others: <code>code2name</code> and <code>code2sname</code></h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &lt;year_col&gt; is column name that needs to be coverted</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_id&#39;</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;code2name&quot;</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>vignette_covert2 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_id&#39;</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;code2sname&quot;</span>)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_id</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>vignette_covert1 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_id&#39;</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;code2name&quot;</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>vignette_covert2 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_id&#39;</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;code2sname&quot;</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_id</span></code></pre></div>
 <pre><code>##  [1] 371400 522600 450700 530800 532500 420200 429004 530900 513400 410400
 ## [11] 520600 411500 450300 141100 429004 410500     NA 152200 440200 140900
 ## [21] 421300 441900 410900 522300 411300     NA 150100 230200     NA 220600</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert geocodes into formal names</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1<span class="sc">$</span>prefecture_id</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert geocodes into formal names</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1<span class="sc">$</span>prefecture_id</span></code></pre></div>
 <pre><code>##  [1] NA               NA               &quot;呼和浩特市&quot;     &quot;兴安盟&quot;        
 ##  [5] &quot;白山市&quot;         &quot;齐齐哈尔市&quot;     NA               &quot;平顶山市&quot;      
 ##  [9] &quot;安阳市&quot;         &quot;濮阳市&quot;         &quot;南阳市&quot;         &quot;信阳市&quot;        
@@ -265,8 +288,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [21] &quot;凉山彝族自治州&quot; NA               NA               NA              
 ## [25] NA               NA               NA               NA              
 ## [29] NA               NA</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert geocodes  into common-used names</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>vignette_covert2<span class="sc">$</span>prefecture_id</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert geocodes  into common-used names</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>vignette_covert2<span class="sc">$</span>prefecture_id</span></code></pre></div>
 <pre><code>##  [1] NA         NA         &quot;呼和浩特&quot; &quot;兴安&quot;     &quot;白山&quot;     &quot;浑江&quot;    
 ##  [7] &quot;临江&quot;     &quot;齐齐哈尔&quot; &quot;讷河&quot;     NA         &quot;平顶山&quot;   &quot;安阳&quot;    
 ## [13] &quot;濮阳&quot;     &quot;南阳&quot;     &quot;信阳&quot;     &quot;黄石&quot;     &quot;随州&quot;     &quot;仙桃&quot;    
@@ -276,16 +299,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="from-formal-names-to-others-name2code-and-name2sname" class="section level3">
 <h3>From Formal Names to Others: <code>name2code</code> and <code>name2sname</code></h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vignette_covert1 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture&#39;</span>,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;name2code&quot;</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>vignette_covert2 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture&#39;</span>,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;name2sname&quot;</span>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># original formal names.</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>vignette_covert1 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture&#39;</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;name2code&quot;</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>vignette_covert2 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture&#39;</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;name2sname&quot;</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># original formal names.</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture</span></code></pre></div>
 <pre><code>##  [1] &quot;德州市&quot;                 &quot;黔东南苗族侗族自治州&quot;   &quot;钦州市&quot;                
 ##  [4] &quot;普洱市&quot;                 &quot;红河哈尼族彝族自治州&quot;   &quot;黄石市&quot;                
 ##  [7] &quot;仙桃市&quot;                 &quot;临沧市&quot;                 &quot;凉山彝族自治州&quot;        
@@ -296,13 +319,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [22] &quot;东莞市&quot;                 &quot;濮阳市&quot;                 &quot;黔西南布依族苗族自治州&quot;
 ## [25] &quot;南阳市&quot;                 NA                       &quot;呼和浩特市&quot;            
 ## [28] &quot;齐齐哈尔市&quot;             NA                       &quot;白山市&quot;</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into geocodes</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1<span class="sc">$</span>prefecture</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into geocodes</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1<span class="sc">$</span>prefecture</span></code></pre></div>
 <pre><code>##  [1] 410500 220600     NA 441900 450300     NA 150100 420200 513400     NA
 ## [11]     NA 411300 410400 410900     NA 230200     NA     NA 450700 440200
 ## [21] 421300     NA 429004 429004     NA 411500 152200     NA     NA     NA</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into common-used names</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>vignette_covert2<span class="sc">$</span>prefecture</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into common-used names</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>vignette_covert2<span class="sc">$</span>prefecture</span></code></pre></div>
 <pre><code>##  [1] &quot;安阳&quot;     &quot;白山&quot;     &quot;浑江&quot;     &quot;临江&quot;     NA         &quot;东莞&quot;    
 ##  [7] &quot;桂林&quot;     NA         &quot;呼和浩特&quot; &quot;黄石&quot;     &quot;凉山&quot;     NA        
 ## [13] NA         &quot;南阳&quot;     &quot;平顶山&quot;   &quot;濮阳&quot;     NA         &quot;齐齐哈尔&quot;
@@ -312,28 +335,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="from-common-used-names-to-others-sname2code-and-sname2name" class="section level3">
 <h3>From Common-used Names to Others: <code>sname2code</code> and <code>sname2name</code></h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>vignette_covert1 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_sname&#39;</span>,</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;sname2code&quot;</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>vignette_covert2 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_sname&#39;</span>,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;sname2name&quot;</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># original common-used names</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_sname</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>vignette_covert1 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_sname&#39;</span>,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;sname2code&quot;</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>vignette_covert2 <span class="ot">&lt;-</span> <span class="fu">CHNregioncode</span>(<span class="at">import =</span> vignette_data, </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">year_col =</span> <span class="st">&#39;prefecture_sname&#39;</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">from_year =</span> <span class="dv">2019</span>,<span class="at">to_year =</span> <span class="dv">2005</span>, <span class="at">type =</span> <span class="st">&quot;sname2name&quot;</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># original common-used names</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>vignette_data<span class="sc">$</span>prefecture_sname</span></code></pre></div>
 <pre><code>##  [1] &quot;德州&quot;     &quot;黔东南&quot;   &quot;钦州&quot;     &quot;普洱&quot;     &quot;红河&quot;     &quot;黄石&quot;    
 ##  [7] &quot;仙桃&quot;     &quot;临沧&quot;     &quot;凉山&quot;     &quot;平顶山&quot;   &quot;铜仁&quot;     &quot;信阳&quot;    
 ## [13] &quot;桂林&quot;     &quot;吕梁&quot;     &quot;仙桃&quot;     &quot;安阳&quot;     NA         &quot;兴安&quot;    
 ## [19] &quot;韶关&quot;     &quot;忻州&quot;     &quot;随州&quot;     &quot;东莞&quot;     &quot;濮阳&quot;     &quot;黔西南&quot;  
 ## [25] &quot;南阳&quot;     NA         &quot;呼和浩特&quot; &quot;齐齐哈尔&quot; NA         &quot;白山&quot;</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into geocodes</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1<span class="sc">$</span>prefecture_sname</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into geocodes</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>vignette_covert1<span class="sc">$</span>prefecture_sname</span></code></pre></div>
 <pre><code>##  [1] 410500 220600     NA 441900 450300     NA 150100 420200 513400     NA
 ## [11]     NA 411300 410400 410900     NA 230200     NA     NA 450700 440200
 ## [21] 421300     NA 429004 429004     NA 411500 152200     NA     NA     NA</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into formal names</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>vignette_covert2<span class="sc">$</span>prefecture_sname</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covert formal names into formal names</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>vignette_covert2<span class="sc">$</span>prefecture_sname</span></code></pre></div>
 <pre><code>##  [1] &quot;安阳市&quot;         &quot;白山市&quot;         NA               &quot;东莞市&quot;        
 ##  [5] &quot;桂林市&quot;         NA               &quot;呼和浩特市&quot;     &quot;黄石市&quot;        
 ##  [9] &quot;凉山彝族自治州&quot; NA               NA               &quot;南阳市&quot;        
@@ -346,8 +369,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>The <code>regioncode</code> package provide a convenient way to convert Chinese region geocodes, formal names and common-used names between each other. This vignette offers an quick tutorial for users.</p>
-<p>The development of the package is ongoing.The current version only provide Chinese prefecture regions conversion.Out future research promise supporting more administrative level choice , from province level to county level. Please contact us with any questions, bug reports, and comments.</p>
+<p>The <code>regioncode</code> package provide a convenient way to convert Chinese region geocodes, formal names and common-used names between each other. This vignette offers a quick view of package features and a short tutorial for users.</p>
+<p>The development of the package is ongoing.The current version only provide Chinese prefecture regions conversion.Out future research promise supporting more administrative level choice, from province level to county level. Please contact us with any questions, bug reports, and comments.</p>
 </div>
 <div id="affiliation" class="section level2">
 <h2>Affiliation</h2>
