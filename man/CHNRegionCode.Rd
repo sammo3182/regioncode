@@ -2,7 +2,7 @@
 % Please edit documentation in R/CHNRegionCode.R
 \name{CHNRegionCode}
 \alias{CHNRegionCode}
-\title{Title}
+\title{CHNRegionCode}
 \usage{
 CHNRegionCode(import, year_col, from_year, to_year = 2015, type)
 }
@@ -18,5 +18,13 @@ CHNRegionCode(import, year_col, from_year, to_year = 2015, type)
 \item{type}{A character vector}
 }
 \description{
-Title
+\code{regioncode} is an software developes to conquer the difficulties to match Chinese regional data across years due to such geocodes adjustments. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
+}
+\examples{
+# library(regioncode)
+# load("./vignettes/vignette_data.rda")
+# vignette_data <- as.data.frame(vignette_data)
+# vignette_covert <- CHNregioncode(import = vignette_data,
+#                    year_col = 'prefecture_id',from_year = 2019,to_year = 2005,type = "code2code")
+
 }

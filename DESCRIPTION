@@ -2,42 +2,15 @@ Package: regioncode
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Yue",
-           family = "Hu",
-           role = c("aut", "cre"),
-           email = "yuehu@mail.tsinghua.edu.cn")
-    person(given = "Yufei",
-           family = "Sun",
-           role = c("aut"),
-           email = "sunyf20@mails.tsinghua.edu.cn")
-    person(given = "Wenquan",
-           family = "Wu",
-           role = c("aut"),
-           email = "gohuntsuan@gmail.com")
-    person(given = "Yuyang",
-           family = "She",
-           role = c("ctb"),
-           email = "yangtzesyy@gmail.com")
-    person(given = "Yujia",
-           family = "Xu",
-           role = c("ctb"),
-           email = "593878126@qq.com")
-    person(given = "Yuxin",
-           family = "Pan",
-           role = c("ctb"),
-           email = "panyx17@mails.tsinghua.edu.cn")
-    person(given = "Haiting",
-           family = "Tian",
-           role = c("ctb"),
-           email = "tianht.18@sem.tsingha.edu.cn")
-    person(given = "Weihang",
-           family = "Shao",
-           role = c("ctb"),
-           email = "shaowh19@mails.tsinghua.edu.cn")
-    person(given = "Yuanqian",
-           family = "Chen",
-           role = c("ctb"),
-           email = "yuanqian18@mails.tsinghua.edu.cn")
+    person(given = "Yue",family = "Hu",role = c("cre","aut"), email = "yuehu@tsinghua.edu.cn")
+    person(given = "Yufei",family = "Sun",role = c("aut"), email = "sunyf20@mails.tsinghua.edu.cn")
+    person(given = "Wenquan",family = "Wu",role = c("aut"), email = "gohuntsuan@gmail.com")
+    person(given = "Yuyang",family = "She",role = c("ctb"), email = "yangtzesyy@gmail.com")
+    person(given = "Yujia",family = "Xu",role = c("ctb"), email = "593878126@qq.com")
+    person(given = "Yuxin",family = "Pan",role = c("ctb"), email = "panyx17@mails.tsinghua.edu.cn")
+    person(given = "Haiting",family = "Tian",role = c("ctb"), email = "tianht.18@sem.tsingha.edu.cn")
+    person(given = "Weihang",family = "Shao",role = c("ctb"), email = "shaowh19@mails.tsinghua.edu.cn")
+    person(given = "Yuanqian",family = "Chen",role = c("ctb"), email = "yuanqian18@mails.tsinghua.edu.cn")
 Description: `regioncode` is an software developes to conquer the difficulties to match Chinese regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
 License: MIT + file LICENSE
 Encoding: UTF-8

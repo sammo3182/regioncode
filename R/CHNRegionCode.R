@@ -9,7 +9,9 @@ p_load(
 region_table <- read_rds("./R/data/region_data_all.rds")
 
 #############Function: CHNRegionCode############
-#' Title
+#' CHNRegionCode
+#'
+#' `regioncode` is an software developes to conquer the difficulties to match Chinese regional data across years due to such geocodes adjustments. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other and across thirty-four years from 1986.
 #'
 #' @param import A character vector
 #' @param year_col A character vector
@@ -22,6 +24,12 @@ region_table <- read_rds("./R/data/region_data_all.rds")
 #' @export
 #'
 #' @examples
+#' # library(regioncode)
+#' # load("./vignettes/vignette_data.rda")
+#' # vignette_data <- as.data.frame(vignette_data)
+#' # vignette_covert <- CHNregioncode(import = vignette_data,
+#' #                    year_col = 'prefecture_id',from_year = 2019,to_year = 2005,type = "code2code")
+#'
 CHNRegionCode <- function(import, year_col, from_year,
                                to_year = 2015, type){
   if(class(import) != "data.frame") {stop('Import error. Please input class == "data.frame" import')}

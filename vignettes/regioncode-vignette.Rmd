@@ -34,6 +34,10 @@ To install:
 
 This example is based on  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) made by [Yuhua Wang](https://scholar.harvard.edu/yuhuawang/data).
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 ```{r}
 # load package
 library(regioncode)
@@ -139,7 +143,7 @@ vignette_covert1$prefecture
 vignette_covert2$prefecture
 ```
 ### From Common-used Names to Others: `sname2code` and `sname2name`
-```{r echo=TRUE}
+```{r, echo=TRUE}
 vignette_covert1 <- CHNregioncode(import = vignette_data, 
                                  year_col = 'prefecture_sname',
                                  from_year = 2019,to_year = 2005, type = "sname2code")
