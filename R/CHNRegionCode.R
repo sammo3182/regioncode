@@ -39,8 +39,8 @@ CHNRegionCode <- function(import, year_col, from_year,
   switch (type,
           'code2code' = {
             #如果要转换的类型为城市编码
-            from_year <- paste('X', as.character(from_year) , '_code', sep = '')
-            to_year <- paste('X', as.character(to_year), '_code', sep = '')
+            from_year <- paste(as.character(from_year) , '_code', sep = '')
+            to_year <- paste(as.character(to_year), '_code', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -50,8 +50,8 @@ CHNRegionCode <- function(import, year_col, from_year,
           },
           'name2code' = {
             #如果要转换的类型为城市名name
-            from_year <- paste('X', as.character(from_year) , '_name', sep = '')
-            to_year <- paste('X', as.character(to_year), '_code', sep = '')
+            from_year <- paste(as.character(from_year) , '_name', sep = '')
+            to_year <- paste(as.character(to_year), '_code', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -61,8 +61,8 @@ CHNRegionCode <- function(import, year_col, from_year,
           },
           'sname2code' = {
             #如果要转换的类型为城市名sname
-            from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
-            to_year <- paste('X', as.character(to_year), '_code', sep = '')
+            from_year <- paste(as.character(from_year) , '_sname', sep = '')
+            to_year <- paste(as.character(to_year), '_code', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -73,8 +73,8 @@ CHNRegionCode <- function(import, year_col, from_year,
 
           'code2name' = {
             #如果要转换的类型为城市编码
-            from_year <- paste('X', as.character(from_year) , '_code', sep = '')
-            to_year <- paste('X', as.character(to_year), '_name', sep = '')
+            from_year <- paste(as.character(from_year) , '_code', sep = '')
+            to_year <- paste(as.character(to_year), '_name', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -84,8 +84,8 @@ CHNRegionCode <- function(import, year_col, from_year,
           },
           'name2name' = {
             #如果要转换的类型为城市名name
-            from_year <- paste('X', as.character(from_year) , '_name', sep = '')
-            to_year <- paste('X', as.character(to_year), '_name', sep = '')
+            from_year <- paste(as.character(from_year) , '_name', sep = '')
+            to_year <- paste(as.character(to_year), '_name', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -95,8 +95,8 @@ CHNRegionCode <- function(import, year_col, from_year,
           },
           'sname2name' = {
             #如果要转换的类型为城市名sname
-            from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
-            to_year <- paste('X', as.character(to_year), '_name', sep = '')
+            from_year <- paste(as.character(from_year) , '_sname', sep = '')
+            to_year <- paste(as.character(to_year), '_name', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -107,8 +107,8 @@ CHNRegionCode <- function(import, year_col, from_year,
 
           'code2sname' = {
             #如果要转换的类型为城市编码
-            from_year <- paste('X', as.character(from_year) , '_code', sep = '')
-            to_year <- paste('X', as.character(to_year), '_sname', sep = '')
+            from_year <- paste(as.character(from_year) , '_code', sep = '')
+            to_year <- paste(as.character(to_year), '_sname', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -118,8 +118,8 @@ CHNRegionCode <- function(import, year_col, from_year,
           },
           'name2sname' = {
             #如果要转换的类型为城市名name
-            from_year <- paste('X', as.character(from_year) , '_name', sep = '')
-            to_year <- paste('X', as.character(to_year), '_sname', sep = '')
+            from_year <- paste(as.character(from_year) , '_name', sep = '')
+            to_year <- paste(as.character(to_year), '_sname', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
@@ -129,8 +129,8 @@ CHNRegionCode <- function(import, year_col, from_year,
           },
           'sname2sname' = {
             #如果要转换的类型为城市名sname
-            from_year <- paste('X', as.character(from_year) , '_sname', sep = '')
-            to_year <- paste('X', as.character(to_year), '_sname', sep = '')
+            from_year <- paste(as.character(from_year) , '_sname', sep = '')
+            to_year <- paste(as.character(to_year), '_sname', sep = '')
 
             name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
             name[year_col] = name[to_year]
