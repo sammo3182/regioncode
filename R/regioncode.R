@@ -1,144 +1,156 @@
-############LOAD############
-if (!require(pacman)) install.packages("pacman")
-library(pacman)
-p_load(
-  tidyverse,
-  magrittr
-)
-
-region_table <- read_rds("./R/data/region_data_all.rds")
-
-#############Function: regioncode############
 #' regioncode
 #'
 #' `regioncode` is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.
 #'
-#' @param import A character vector that needs geocode coverting.The class of import virable must be dataframe.
-#' @param year_col Column that needs to be coverted.
-#' @param from_year Code, name or sname version of `year_col`.
-#' @param to_year Code, name or sname version you want get. The default is 2015.
-#' @param type The function converting type. The Valid strings are: `name2name`, `name2sname`, `name2code`, `code2code`, `code2name`, `code2sname`, `sname2sname`, `sname2name`, and `sname2code`.
+#' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
+#' @param year_from A integer to define the year of the input. The default value is 1999.
+#' @param year_to A integer to define the year to convert. The default value is 2015.
+#' @param method A character indicating the converting methods. Valid methods include converting between codes in different years (`code2code`), from codes to region names (`code2name`), from region names to division codes(`name2code`), and between names in different years (`name2name`). The default option is `code2code`.
+#' @param zhixiashi A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin system). The default is FALSE.
+#' @param incompleteName A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
 #'
-#' @import tidyverse
-#' @import magrittr
-#' @export
+#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incompleteName`. The argument has four options: "none", "from", "to", and "both".
+#' \itemize{
+#'   \item "none": no short name will be used for either input or output;
+#'   \item "from": input data is short names instead of the full, official ones;
+#'   \item "to": output results will be short names;
+#'   \item "both": both input and output are using short names.
+#' }
+#'
+#' The argument makes a difference only when `name2code` or `name2name` are chose in `method`.
+#'
+#' @returns The function returns a character or numeric vector depending on what method is specified.
+#'
+#' @import dplyr
+#'
 #'
 #' @examples
-#' # library(regioncode)
-#' # load("./vignettes/vignette_data.rda")
-#' # vignette_data <- as.data.frame(vignette_data)
-#' # vignette_covert <- CHNregioncode(import = vignette_data,
-#' #                    year_col = 'prefecture_id',from_year = 2019,to_year = 2005,type = "code2code")
 #'
-CHNRegionCode <- function(import, year_col, from_year,
-                               to_year = 2015, type){
-  if(class(import) != "data.frame") {stop('Import error. Please input class == "data.frame" import')}
+#' library(regioncode)
 
-  if(type != 'code2name' & type != 'code2code' & type != 'code2sname' & type != 'name2name' &  type != 'name2code' & type != 'name2sname' & type != 'sname2name' & type != 'sname2code' & type != 'sname2sname') {stop('Type error.')}
+#' # Example data
+#' load("./vignettes/vignette_data.rda")
 
-  switch (type,
-          'code2code' = {
-            #如果要转换的类型为城市编码
-            from_year <- paste(as.character(from_year) , '_code', sep = '')
-            to_year <- paste(as.character(to_year), '_code', sep = '')
+#' df_2015 <- filter(vignette_data, Year == 2015)
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-          'name2code' = {
-            #如果要转换的类型为城市名name
-            from_year <- paste(as.character(from_year) , '_name', sep = '')
-            to_year <- paste(as.character(to_year), '_code', sep = '')
+#' regioncode(data_input = df_2015,
+#'            year_from = 2015,
+#'            year_to = 1999,
+#'            method = "code2code",
+#'            zhixiashi = FALSE,
+#'            incompleteName = "none")
+#'
+#'
+#' @export
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-          'sname2code' = {
-            #如果要转换的类型为城市名sname
-            from_year <- paste(as.character(from_year) , '_sname', sep = '')
-            to_year <- paste(as.character(to_year), '_code', sep = '')
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
+regioncode <- function(data_input,
+                       year_from = 1999,
+                       year_to = 2015,
+                       method = "code2code",
+                       zhixiashi = TRUE,
+                       incompleteName = "none") {
+  if (!is.character(data_input) & !is.numeric(data_input))
+    stop(
+      'Invalid input: only region names as a character vector or division codes as an integer vector are valid.'
+    )
 
-          'code2name' = {
-            #如果要转换的类型为城市编码
-            from_year <- paste(as.character(from_year) , '_code', sep = '')
-            to_year <- paste(as.character(to_year), '_name', sep = '')
+  if (!is.numeric(year_from))
+    stop("Invalid input: Converting years must be integers.")
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-          'name2name' = {
-            #如果要转换的类型为城市名name
-            from_year <- paste(as.character(from_year) , '_name', sep = '')
-            to_year <- paste(as.character(to_year), '_name', sep = '')
+  if (!(method %in% c('code2name', 'code2code', 'name2name', 'name2code')))
+    stop("Invalid input: please choose a valid converting method.")
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-          'sname2name' = {
-            #如果要转换的类型为城市名sname
-            from_year <- paste(as.character(from_year) , '_sname', sep = '')
-            to_year <- paste(as.character(to_year), '_name', sep = '')
+  if (!(incompleteName %in% c("none", "from", "to", "both")))
+    stop("Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'.")
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
+  region_table <- readRDS("../data/region_data_all.rds")
+  name_zhixiashi <- c("北京", "天津", "上海", "重庆")
 
-          'code2sname' = {
-            #如果要转换的类型为城市编码
-            from_year <- paste(as.character(from_year) , '_code', sep = '')
-            to_year <- paste(as.character(to_year), '_sname', sep = '')
+  region_table <- region_table %>%
+    mutate(zhixiashi = prov_name %in% name_zhixiashi)
 
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-          'name2sname' = {
-            #如果要转换的类型为城市名name
-            from_year <- paste(as.character(from_year) , '_name', sep = '')
-            to_year <- paste(as.character(to_year), '_sname', sep = '')
-
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-          'sname2sname' = {
-            #如果要转换的类型为城市名sname
-            from_year <- paste(as.character(from_year) , '_sname', sep = '')
-            to_year <- paste(as.character(to_year), '_sname', sep = '')
-
-            name <- merge(import, region_table[,c(from_year, to_year)], by.x = year_col , by.y = from_year, all.x = TRUE)
-            name[year_col] = name[to_year]
-            name <- name[,-grep(to_year,colnames(name))] %>% unique()
-            rownames(name) <- NULL
-            return(name)
-          },
-
+  ls_index <- switch(
+    method,
+    "code2code" = {
+      year_from <- paste(year_from, '_code', sep = '')
+      year_to <- paste(year_to, '_code', sep = '')
+      c(year_from, year_to)
+    },
+    "code2name" = {
+      year_from <- paste(year_from, '_code', sep = '')
+      year_to <- paste(year_to, '_name', sep = '')
+      c(year_from, year_to)
+    },
+    "name2code" = {
+      year_from <- paste(year_from, '_name', sep = '')
+      year_to <- paste(year_to, '_code', sep = '')
+      c(year_from, year_to)
+    },
+    "name2name" = {
+      year_from <- paste(year_from, '_name', sep = '')
+      year_to <- paste(year_to, '_name', sep = '')
+      c(year_from, year_to)
+    }
   )
+
+  ls_index <- case_when(
+    incompleteName == "both" ~ gsub("_name", "_sname", ls_index),
+    incompleteName == "from" ~ c(gsub("_name", "_sname", ls_index[1]), ls_index[2]),
+    incompleteName == "to" ~ c(ls_index[1], gsub("_name", "_sname", ls_index[2])),
+    incompleteName == "none" ~ ls_index
+  )
+
+  # Using the Municipal codes for within region codes
+
+  if (zhixiashi) {
+    region_zhixiashi <- region_table %>%
+      filter(zhixiashi)
+
+    region_sname <- region_zhixiashi %>%
+      select(ends_with("_sname"))
+
+    region_name <- region_zhixiashi %>%
+      select(ends_with("_name"))
+
+    region_code <- region_zhixiashi %>%
+      select(ends_with("_code"))
+
+    # replacing the prefectural names and codes with provincial names and codes
+    region_sname2 <-
+      replicate(ncol(region_sname), region_zhixiashi$prov_name) %>%
+      as.data.frame()
+    names(region_sname2) <- names(region_sname)
+
+    region_name2 <-
+      replicate(ncol(region_name), region_zhixiashi$prov_name) %>%
+      as.data.frame()
+    names(region_name2) <- names(region_name)
+
+    region_code2 <-
+      replicate(ncol(region_code), region_zhixiashi$prov_code) %>%
+      as.data.frame()
+    names(region_code2) <- names(region_code)
+
+    region_zhixiashi <-
+      bind_cols(region_sname2, region_name2, region_code2) %>%
+      .[, order(colnames(.))]
+
+    region_province <- region_table %>%
+      filter(!zhixiashi) %>%
+      .[, order(colnames(.))]
+
+    region_table <- bind_rows(region_zhixiashi, region_province)
+  }
+
+  # Convert the input to a data.frame for later merging
+
+  df_input <- data_input %>% as.data.frame
+  names(df_input) <- ls_index[1]
+
+  data_output <- select(region_table,!!ls_index) %>%
+    distinct() %>%
+    right_join(df_input) %>%
+    pull(!!year_to)
 }
 

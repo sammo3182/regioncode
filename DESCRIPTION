@@ -28,15 +28,9 @@ BugReports: https://github.com/sammo3182/regioncode/issues
 Depends:
   R(>= 3.6.0)
 Imports:
-  tidyverse,
-  pacman,
-  magrittr
+  dplyr
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Suggests: 
-    testthat (>= 3.0.0),
-    knitr,
-    rmarkdown
 Config/testthat/edition: 3
 VignetteBuilder: knitr
