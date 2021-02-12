@@ -6,8 +6,8 @@
 #' @param year_from A integer to define the year of the input. The default value is 1999.
 #' @param year_to A integer to define the year to convert. The default value is 2015.
 #' @param method A character indicating the converting methods. Valid methods include converting between codes in different years (`code2code`), from codes to region names (`code2name`), from region names to division codes(`name2code`), and between names in different years (`name2name`). The default option is `code2code`.
-#' @param zhixiashi A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin system). The default is FALSE.
-#' @param incompleteName A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
+#' @param zhixiashi A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default is FALSE.
+#' @param incompleteName A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both". The default value is "none".
 #'
 #' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incompleteName`. The argument has four options: "none", "from", "to", and "both".
 #' \itemize{
@@ -29,16 +29,12 @@
 #' library(regioncode)
 
 #' # Example data
-#' load("./vignettes/vignette_data.rda")
-
-#' df_2015 <- filter(vignette_data, Year == 2015)
-
-#' regioncode(data_input = df_2015,
-#'            year_from = 2015,
-#'            year_to = 1999,
-#'            method = "code2code",
-#'            zhixiashi = FALSE,
-#'            incompleteName = "none")
+#' library(regioncode)
+#' # load toy data
+#' df_toy <- readRDS("vignettes/df_toy.rds")
+#' regioncode(data_input = df_toy$prefecture_id,
+#'            year_from = 2019,
+#'            year_to = 1999)
 #'
 #'
 #' @export
@@ -64,11 +60,7 @@ regioncode <- function(data_input,
   if (!(incompleteName %in% c("none", "from", "to", "both")))
     stop("Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'.")
 
-  region_table <- readRDS("../data/region_data_all.rds")
-  name_zhixiashi <- c("北京", "天津", "上海", "重庆")
-
-  region_table <- region_table %>%
-    mutate(zhixiashi = prov_name %in% name_zhixiashi)
+  load("../data/region_data_all.RData")
 
   ls_index <- switch(
     method,
@@ -134,11 +126,11 @@ regioncode <- function(data_input,
 
     region_zhixiashi <-
       bind_cols(region_sname2, region_name2, region_code2) %>%
-      .[, order(colnames(.))]
+    region_zhixiashi <- region_zhixiashi[, order(colnames(region_zhixiashi))]
 
     region_province <- region_table %>%
-      filter(!zhixiashi) %>%
-      .[, order(colnames(.))]
+      filter(!zhixiashi)
+    region_province <- region_province[, order(colnames(region_province))]
 
     region_table <- bind_rows(region_zhixiashi, region_province)
   }
@@ -152,5 +144,7 @@ regioncode <- function(data_input,
     distinct() %>%
     right_join(df_input) %>%
     pull(!!year_to)
+
+  return(data_output)
 }
 
