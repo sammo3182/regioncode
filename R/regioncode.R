@@ -30,9 +30,10 @@
 
 #' # Example data
 #' library(regioncode)
-#' # load toy data
-#' df_toy <- readRDS("vignettes/df_toy.rds")
-#' regioncode(data_input = df_toy$prefecture_id,
+#'
+#' data(toy)
+#'
+#' regioncode(data_input = toy$prefecture_id,
 #'            year_from = 2019,
 #'            year_to = 1999)
 #'
