@@ -27,3 +27,8 @@ region_table <- region_table %>%
   mutate(zhixiashi = prov_code %in% code_zhixiashi)
 
 usethis::use_data(region_table, overwrite = TRUE)
+
+
+# Building the vignette
+
+devtools::install(build_vignettes = TRUE)

@@ -10,8 +10,10 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-# Sys.setlocale(category = "LC_COLLATE", locale = "Chinese")
-# Sys.setlocale(category = "LC_CTYPE", locale = "Chinese")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+
+Sys.setlocale(category = "LC_COLLATE", locale = "Chinese")
+Sys.setlocale(category = "LC_CTYPE", locale = "Chinese")
 ```
 
 
@@ -45,8 +47,7 @@ We added a column of to short names of the prefectures to further illustrate how
 library(dplyr)
 library(regioncode)
 
-data(corruption)
-head(corruption)
+corruption
 ```
 
 ## Usage and Arguments
