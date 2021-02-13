@@ -9,6 +9,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include=FALSE}
+# Sys.setlocale(category = "LC_COLLATE", locale = "Chinese")
+# Sys.setlocale(category = "LC_CTYPE", locale = "Chinese")
+```
+
+
 Inspired by Vincent Arel-Bundock's well-known [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848), we created `regioncode` to achieve similar functions specifically for China studies. `regioncode` enables seamlessly converting regions' formal names, common-used names, and administrative division codes between each other.
 
 ## Why `regioncode`?
@@ -36,12 +42,11 @@ We kept the variables of prefectural names and division codes.
 We added a column of to short names of the prefectures to further illustrate how the software works.
 
 ```{r toy}
+library(dplyr)
 library(regioncode)
 
-# load toy data
-df_toy <- readRDS("df_toy.rds")
-
-head(df_toy)
+data(corruption)
+head(corruption)
 ```
 
 ## Usage and Arguments
@@ -59,10 +64,10 @@ See the following example to convert the 2019-version codes to the 1999 version:
 
 ```{r code2code}
 # original geocodes. It's 2019 version
-df_toy$prefecture_id
+corruption$prefecture_id
 
 # after conversion. It's 2005 version
-regioncode(data_input = df_toy$prefecture_id, 
+regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999)
 ```
@@ -74,7 +79,7 @@ In such cases, `regioncode` offers a function to convert division codes from any
 Users only need to alter the converting method, for example, to "code2name" in order to convert division codes to region names.
 
 ```{r code2name}
-regioncode(data_input = df_toy$prefecture_id, 
+regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999, 
            method = "code2name")
@@ -84,14 +89,14 @@ Similarly, one can get the code from names, or in a less-often case get the name
 Users need to change the `method` argument to "name2code" or "name2name" to achieve these conversions.
 
 ```{r name2code}
-df_toy$prefecture
+corruption$prefecture
 
-regioncode(data_input = df_toy$prefecture, 
+regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            method = "name2code")
 
-regioncode(data_input = df_toy$prefecture, 
+regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            method = "name2name")
@@ -106,13 +111,13 @@ One of the occasions occurs when the data source includes only common-used short
 
 ```{r incompleteName}
 # Full, official names
-df_toy$prefecture
+corruption$prefecture
 
 # Incomplete names
-df_toy$prefecture_sname
+corruption$prefecture_sname
 
 # Converting
-regioncode(data_input = df_toy$prefecture_sname, 
+regioncode(data_input = corruption$prefecture_sname, 
            year_from = 2019,
            year_to = 1999, 
            method = "name2code",
@@ -125,12 +130,14 @@ This is common for national survey data.
 
 ```{r zhixiashi}
 # In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces' codes.
-df_toy <- df_toy %>% 
-  mutate(prefecture_id = ifelse(is.na(prefecture_id), province_id, prefecture_id))
+code_zhixiashi <- c("110000", "120000", "310000", "400000")
+
+corruption <- corruption %>% 
+  mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, province_id, prefecture_id))
 
 # Converting
 
-regioncode(data_input = df_toy$prefecture_id, 
+regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999,
            zhixiashi = TRUE)

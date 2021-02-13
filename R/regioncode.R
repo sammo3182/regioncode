@@ -27,13 +27,10 @@
 #' @examples
 #'
 #' library(regioncode)
-
-#' # Example data
-#' library(regioncode)
 #'
-#' data(toy)
+#' data(corruption)
 #'
-#' regioncode(data_input = toy$prefecture_id,
+#' regioncode(data_input = corruption$prefecture_id,
 #'            year_from = 2019,
 #'            year_to = 1999)
 #'
@@ -60,8 +57,6 @@ regioncode <- function(data_input,
 
   if (!(incompleteName %in% c("none", "from", "to", "both")))
     stop("Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'.")
-
-  load("../data/region_data_all.RData")
 
   ls_index <- switch(
     method,
@@ -126,7 +121,7 @@ regioncode <- function(data_input,
     names(region_code2) <- names(region_code)
 
     region_zhixiashi <-
-      bind_cols(region_sname2, region_name2, region_code2) %>%
+      bind_cols(region_sname2, region_name2, region_code2)
     region_zhixiashi <- region_zhixiashi[, order(colnames(region_zhixiashi))]
 
     region_province <- region_table %>%

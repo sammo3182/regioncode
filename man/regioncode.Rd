@@ -46,11 +46,10 @@ The argument makes a difference only when \code{name2code} or \code{name2name} a
 \examples{
 
 library(regioncode)
-# Example data
-library(regioncode)
-# load toy data
-df_toy <- readRDS("vignettes/df_toy.rds")
-regioncode(data_input = df_toy$prefecture_id,
+
+data(corruption)
+
+regioncode(data_input = corruption$prefecture_id,
            year_from = 2019,
            year_to = 1999)
 

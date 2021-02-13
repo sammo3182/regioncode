@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yue Hu, Yufei Sun, and Wenquan Wu" />
 
-<meta name="date" content="2021-02-12" />
+<meta name="date" content="2021-02-13" />
 
 <title>regioncode: Convert Region Names and Division Codes of China Over Years</title>
 
@@ -28,11 +28,19 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -133,15 +141,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">regioncode: Convert Region Names and Division Codes of China Over Years</h1>
 <h4 class="author">Yue Hu, Yufei Sun, and Wenquan Wu</h4>
-<h4 class="date">2021-02-12</h4>
+<h4 class="date">2021-02-13</h4>
 
 
 
-<p>Inspired by Vincent Arel-Bundock’s well-known <code>countrycode</code>, we created <code>regioncode</code> to achieve similar functions specifically for China studies. <code>regioncode</code> enables seamlessly converting regions’ formal names, common-used names, and administrative division codes between each other.</p>
+<p>Inspired by Vincent Arel-Bundock’s well-known <a href="https://joss.theoj.org/papers/10.21105/joss.00848"><code>countrycode</code></a>, we created <code>regioncode</code> to achieve similar functions specifically for China studies. <code>regioncode</code> enables seamlessly converting regions’ formal names, common-used names, and administrative division codes between each other.</p>
 <div id="why-regioncode" class="section level2">
 <h2>Why <code>regioncode</code>?</h2>
 <p>The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. The so-called “administrative division codes” were consistently adjusted to matched national and regional plans of development. Geocode adjustments disturb researchers when they merge data with different versions of geocodes or region names. Especially, when researchers render statistical data on Chinese map, different geocodes between map data and statistical data may cause mess-up data output or visualization.</p>
-<p>The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. In the current version, <code>regioncode</code> enables seamlessly converting Chinese prefecture regions’(named ‘地级市’ in Chinese) formal names, common-used names, and division codes between each other and across thirty-four years from 1986 to 2019.</p>
+<p>The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. In the current version, <code>regioncode</code> enables seamlessly converting formal names, common-used names, and division codes of Chinese prefecture regions(named ‘地级市’ in Chinese) between each other and across thirty-four years from 1986 to 2019.</p>
 </div>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
@@ -153,13 +161,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="loading-toy-data-and-the-package" class="section level2">
 <h2>Loading Toy Data and the Package</h2>
-<p>The toy data was created based on a chunk from Yuhua Wang’s <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD"><code>China’s Corruption Investigations Dataset</code></a>. The data includes information on almost 20,000 officials who were investigated during Xi Jinping’s anti-corruption campaign. We randomly drew a eighteen-line sample. The division codes in the original data were based on the 2019 version. We kept the variables of prefectural names and division codes. We added a column of to short names of the prefectures to further illustrate how the software works.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(regioncode)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load toy data</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df_toy <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;df_toy.rds&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_toy)</span></code></pre></div>
+<p>The toy data was created based on a chunk from Yuhua Wang’s <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD"><code>China’s Corruption Investigations Dataset</code></a>. The data includes information on almost 20,000 officials who were investigated during Xi Jinping’s anti-corruption campaign. We randomly drew an eighteen-line sample. The division codes in the original data were based on the 2019 version. We kept the variables of prefectural names and division codes. We added a column of to short names of the prefectures to further illustrate how the software works.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(regioncode)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(corruption)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corruption)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 14
+##   caseid province prefecture county province_id prefecture_id county_id name 
+##    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
+## 1     52       11 &lt;NA&gt;       &lt;NA&gt;        110000            NA        NA &lt;U+7F57&gt;&lt;U+957F&gt;&lt;U+53CB&gt;~
+## 2    137       11 &lt;U+660C&gt;&lt;U+5E73&gt;&lt;U+533A&gt;     &lt;U+660C&gt;&lt;U+5E73&gt;&lt;U+533A&gt;      110000        110114    110114 &lt;U+90ED&gt;&lt;U+8FDE&gt;&lt;U+8363&gt;~
+## 3    163       12 &lt;U+6CB3&gt;&lt;U+4E1C&gt;&lt;U+533A&gt;     &lt;U+6CB3&gt;&lt;U+4E1C&gt;&lt;U+533A&gt;      120000        120102    120102 &lt;U+5B59&gt;&lt;U+57FA&gt;&lt;U+521A&gt;~
+## 4    238       12 &lt;NA&gt;       &lt;NA&gt;        120000            NA        NA &lt;U+8881&gt;&lt;U+4E1C&gt;&lt;U+5347&gt;~
+## 5    521       13 &lt;U+4FDD&gt;&lt;U+5B9A&gt;&lt;U+5E02&gt;     &lt;NA&gt;        130000        130600        NA &lt;U+9AD8&gt;&lt;U+589E&gt;&lt;U+5F55&gt;~
+## 6    374       13 &lt;U+77F3&gt;&lt;U+5BB6&gt;&lt;U+5E84&gt;&lt;U+5E02&gt;   &lt;U+6B63&gt;&lt;U+5B9A&gt;&lt;U+53BF&gt;      130000        130100    130123 &lt;U+5415&gt;&lt;U+519B&gt; 
+## # ... with 6 more variables: position &lt;chr&gt;, reason &lt;chr&gt;, rank &lt;dbl&gt;,
+## #   Year &lt;chr&gt;, Month &lt;chr&gt;, prefecture_sname &lt;chr&gt;</code></pre>
 </div>
 <div id="usage-and-arguments" class="section level2">
 <h2>Usage and Arguments</h2>
@@ -167,66 +193,184 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="division-codes-across-years" class="section level3">
 <h3>Division codes across years</h3>
 <p><code>regioncoce</code> function accept numeric and character vectors as the input division codes and region names respectively. To achieve an accurate conversion, users have to specify the year of the source data correctly in the argument <code>year_from</code>. Then they can set the year they want the output is. That’s it. See the following example to convert the 2019-version codes to the 1999 version:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes. It&#39;s 2019 version</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df_toy<span class="sc">$</span>prefecture_id</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> df_toy<span class="sc">$</span>prefecture_id, </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes. It&#39;s 2019 version</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture_id</span></code></pre></div>
+<pre><code>##  [1]     NA 110114 120102     NA 130600 130100 140200 140800 150400 152200
+## [11] 210300 210900 220100 220500 230100 230100 310118 310112 320200 320300
+## [21] 331000 330900 340100 341200 350500 350900     NA 360400 370800 370300
+## [31] 411300 411200 421300 420600 431200 430500 440200 441600 451300 451100
+## [41]     NA 469024 500226 500240 511600 510100 520300 520400 530100     NA
+## [51]     NA 540100 610900 611000 621000 620700 632300 632600 640500 640200
+## [61] 650200     NA</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;2019_code&quot;</code></pre>
+<pre><code>##  [1] 130100 130600 150400 152200 210300 210900 220100 220500 230100 230100
+## [11] 340100 350500 350900 360400 420600 429001 440200 441600 452200 452400
+## [21] 500240 510100 513900 511600 540100     NA     NA     NA     NA     NA
+## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [61]     NA     NA     NA</code></pre>
 </div>
 <div id="division-codes-region-name" class="section level3">
 <h3>Division codes ↓ region name</h3>
 <p>In some cases, the original data may only have division codes or region names, but users needs the other form or both formats of data. In such cases, <code>regioncode</code> offers a function to convert division codes from any year to region names in any year. Users only need to alter the converting method, for example, to “code2name” in order to convert division codes to region names.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> df_toy<span class="sc">$</span>prefecture_id, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;code2name&quot;</span>)</span></code></pre></div>
-<p>Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. Users needs to change the <code>method</code> argument to “name2code” or “name2name” to achieve the these conversions.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_toy<span class="sc">$</span>prefecture</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> df_toy<span class="sc">$</span>prefecture, </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2code&quot;</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> df_toy<span class="sc">$</span>prefecture, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2name&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;code2name&quot;</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;2019_code&quot;</code></pre>
+<pre><code>##  [1] &quot;&lt;U+77F3&gt;&lt;U+5BB6&gt;&lt;U+5E84&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+4FDD&gt;&lt;U+5B9A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8D64&gt;&lt;U+5CF0&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5174&gt;&lt;U+5B89&gt;&lt;U+76DF&gt;&quot;
+##  [5] &quot;&lt;U+978D&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+65B0&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+957F&gt;&lt;U+6625&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+901A&gt;&lt;U+5316&gt;&lt;U+5E02&gt;&quot;
+##  [9] &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5408&gt;&lt;U+80A5&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6CC9&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot;
+## [13] &quot;&lt;U+5B81&gt;&lt;U+5FB7&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+4E5D&gt;&lt;U+6C5F&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8944&gt;&lt;U+6A0A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+968F&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot;
+## [17] &quot;&lt;U+97F6&gt;&lt;U+5173&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+6E90&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+67F3&gt;&lt;U+5DDE&gt;&lt;U+5730&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+8D3A&gt;&lt;U+5DDE&gt;&lt;U+5730&gt;&lt;U+533A&gt;&quot;
+## [21] &quot;&lt;U+77F3&gt;&lt;U+67F1&gt;&lt;U+571F&gt;&lt;U+5BB6&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+6210&gt;&lt;U+90FD&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8D44&gt;&lt;U+9633&gt;&lt;U+5730&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+5E7F&gt;&lt;U+5B89&gt;&lt;U+5E02&gt;&quot;
+## [25] &quot;&lt;U+62C9&gt;&lt;U+8428&gt;&lt;U+5E02&gt;&quot; NA                 NA                 NA                
+## [29] NA                 NA                 NA                 NA                
+## [33] NA                 NA                 NA                 NA                
+## [37] NA                 NA                 NA                 NA                
+## [41] NA                 NA                 NA                 NA                
+## [45] NA                 NA                 NA                 NA                
+## [49] NA                 NA                 NA                 NA                
+## [53] NA                 NA                 NA                 NA                
+## [57] NA                 NA                 NA                 NA                
+## [61] NA                 NA                 NA</code></pre>
+<p>Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. Users need to change the <code>method</code> argument to “name2code” or “name2name” to achieve these conversions.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture</span></code></pre></div>
+<pre><code>##  [1] NA                 &quot;&lt;U+660C&gt;&lt;U+5E73&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+4E1C&gt;&lt;U+533A&gt;&quot; NA                
+##  [5] &quot;&lt;U+4FDD&gt;&lt;U+5B9A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+5BB6&gt;&lt;U+5E84&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5927&gt;&lt;U+540C&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8FD0&gt;&lt;U+57CE&gt;&lt;U+5E02&gt;&quot;
+##  [9] &quot;&lt;U+8D64&gt;&lt;U+5CF0&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5174&gt;&lt;U+5B89&gt;&lt;U+76DF&gt;&quot; &quot;&lt;U+978D&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+65B0&gt;&lt;U+5E02&gt;&quot;
+## [13] &quot;&lt;U+957F&gt;&lt;U+6625&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+901A&gt;&lt;U+5316&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot;
+## [17] &quot;&lt;U+9752&gt;&lt;U+6D66&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+95F5&gt;&lt;U+884C&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+65E0&gt;&lt;U+9521&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5F90&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot;
+## [21] &quot;&lt;U+53F0&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+821F&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5408&gt;&lt;U+80A5&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot;
+## [25] &quot;&lt;U+6CC9&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5B81&gt;&lt;U+5FB7&gt;&lt;U+5E02&gt;&quot; NA                 &quot;&lt;U+4E5D&gt;&lt;U+6C5F&gt;&lt;U+5E02&gt;&quot;
+## [29] &quot;&lt;U+6D4E&gt;&lt;U+5B81&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6DC4&gt;&lt;U+535A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5357&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+4E09&gt;&lt;U+95E8&gt;&lt;U+5CE1&gt;&lt;U+5E02&gt;&quot;
+## [33] &quot;&lt;U+968F&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8944&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6000&gt;&lt;U+5316&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+90B5&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot;
+## [37] &quot;&lt;U+97F6&gt;&lt;U+5173&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+6E90&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6765&gt;&lt;U+5BBE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8D3A&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot;
+## [41] NA                 &quot;&lt;U+4E34&gt;&lt;U+9AD8&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+8363&gt;&lt;U+660C&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+67F1&gt;&lt;U+571F&gt;&lt;U+5BB6&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+53BF&gt;&quot;
+## [45] &quot;&lt;U+5E7F&gt;&lt;U+5B89&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6210&gt;&lt;U+90FD&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+9075&gt;&lt;U+4E49&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5B89&gt;&lt;U+987A&gt;&lt;U+5E02&gt;&quot;
+## [49] &quot;&lt;U+6606&gt;&lt;U+660E&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6012&gt;&lt;U+6C5F&gt;&lt;U+50F3&gt;&lt;U+50F3&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+5DDE&gt;&quot; NA                 &quot;&lt;U+62C9&gt;&lt;U+8428&gt;&lt;U+5E02&gt;&quot;
+## [53] &quot;&lt;U+5B89&gt;&lt;U+5EB7&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5546&gt;&lt;U+6D1B&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5E86&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5F20&gt;&lt;U+6396&gt;&lt;U+5E02&gt;&quot;
+## [57] &quot;&lt;U+9EC4&gt;&lt;U+5357&gt;&lt;U+85CF&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+5DDE&gt;&quot; &quot;&lt;U+679C&gt;&lt;U+6D1B&gt;&lt;U+85CF&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+5DDE&gt;&quot; &quot;&lt;U+4E2D&gt;&lt;U+536B&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+5634&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot;
+## [61] &quot;&lt;U+514B&gt;&lt;U+62C9&gt;&lt;U+739B&gt;&lt;U+4F9D&gt;&lt;U+5E02&gt;&quot; NA</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2code&quot;</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;2019_name&quot;</code></pre>
+<pre><code>##  [1] 130100 130600 150400 152200 210300 210900 220100 220500 230100 230100
+## [11] 340100 342100 350500 350900 360400 420600 429001 440200 441600 452200
+## [21] 452400 460028 500226 500240 510100 513900 511600 540100     NA     NA
+## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [61]     NA     NA     NA</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2name&quot;</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;2019_name&quot;</code></pre>
+<pre><code>##  [1] &quot;&lt;U+77F3&gt;&lt;U+5BB6&gt;&lt;U+5E84&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+4FDD&gt;&lt;U+5B9A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8D64&gt;&lt;U+5CF0&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5174&gt;&lt;U+5B89&gt;&lt;U+76DF&gt;&quot;
+##  [5] &quot;&lt;U+978D&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+65B0&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+957F&gt;&lt;U+6625&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+901A&gt;&lt;U+5316&gt;&lt;U+5E02&gt;&quot;
+##  [9] &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5408&gt;&lt;U+80A5&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot;
+## [13] &quot;&lt;U+6CC9&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5B81&gt;&lt;U+5FB7&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+4E5D&gt;&lt;U+6C5F&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8944&gt;&lt;U+6A0A&gt;&lt;U+5E02&gt;&quot;
+## [17] &quot;&lt;U+968F&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+97F6&gt;&lt;U+5173&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+6E90&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+67F3&gt;&lt;U+5DDE&gt;&lt;U+5730&gt;&lt;U+533A&gt;&quot;
+## [21] &quot;&lt;U+8D3A&gt;&lt;U+5DDE&gt;&lt;U+5730&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+4E34&gt;&lt;U+9AD8&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+8363&gt;&lt;U+660C&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+67F1&gt;&lt;U+571F&gt;&lt;U+5BB6&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+53BF&gt;&quot;
+## [25] &quot;&lt;U+6210&gt;&lt;U+90FD&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8D44&gt;&lt;U+9633&gt;&lt;U+5730&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+5E7F&gt;&lt;U+5B89&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+62C9&gt;&lt;U+8428&gt;&lt;U+5E02&gt;&quot;
+## [29] NA                 NA                 NA                 NA                
+## [33] NA                 NA                 NA                 NA                
+## [37] NA                 NA                 NA                 NA                
+## [41] NA                 NA                 NA                 NA                
+## [45] NA                 NA                 NA                 NA                
+## [49] NA                 NA                 NA                 NA                
+## [53] NA                 NA                 NA                 NA                
+## [57] NA                 NA                 NA                 NA                
+## [61] NA                 NA                 NA</code></pre>
 </div>
 <div id="advanced-usages" class="section level3">
 <h3>Advanced Usages</h3>
 <p><code>regioncode</code> provides two advanced functions to achieve more complicated conversions. One of the occasions occurs when the data source includes only common-used short names of the cities instead of the full, official ones. <code>regioncode</code> can still accomplish the conversion in this case when the users specify the <code>incompleteName</code> to “from”. (<code>regioncode</code> can also produce short names from inputs of full or short names and division code. See the Details of the help file for more information.)</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full, official names</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_toy<span class="sc">$</span>prefecture</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Incomplete names</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df_toy<span class="sc">$</span>prefecture_sname</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> df_toy<span class="sc">$</span>prefecture_sname, </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2code&quot;</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">incompleteName =</span> <span class="st">&quot;from&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full, official names</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture</span></code></pre></div>
+<pre><code>##  [1] NA                 &quot;&lt;U+660C&gt;&lt;U+5E73&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+4E1C&gt;&lt;U+533A&gt;&quot; NA                
+##  [5] &quot;&lt;U+4FDD&gt;&lt;U+5B9A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+5BB6&gt;&lt;U+5E84&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5927&gt;&lt;U+540C&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8FD0&gt;&lt;U+57CE&gt;&lt;U+5E02&gt;&quot;
+##  [9] &quot;&lt;U+8D64&gt;&lt;U+5CF0&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5174&gt;&lt;U+5B89&gt;&lt;U+76DF&gt;&quot; &quot;&lt;U+978D&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+65B0&gt;&lt;U+5E02&gt;&quot;
+## [13] &quot;&lt;U+957F&gt;&lt;U+6625&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+901A&gt;&lt;U+5316&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&lt;U+5E02&gt;&quot;
+## [17] &quot;&lt;U+9752&gt;&lt;U+6D66&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+95F5&gt;&lt;U+884C&gt;&lt;U+533A&gt;&quot; &quot;&lt;U+65E0&gt;&lt;U+9521&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5F90&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot;
+## [21] &quot;&lt;U+53F0&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+821F&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5408&gt;&lt;U+80A5&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot;
+## [25] &quot;&lt;U+6CC9&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5B81&gt;&lt;U+5FB7&gt;&lt;U+5E02&gt;&quot; NA                 &quot;&lt;U+4E5D&gt;&lt;U+6C5F&gt;&lt;U+5E02&gt;&quot;
+## [29] &quot;&lt;U+6D4E&gt;&lt;U+5B81&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6DC4&gt;&lt;U+535A&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5357&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+4E09&gt;&lt;U+95E8&gt;&lt;U+5CE1&gt;&lt;U+5E02&gt;&quot;
+## [33] &quot;&lt;U+968F&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8944&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6000&gt;&lt;U+5316&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+90B5&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot;
+## [37] &quot;&lt;U+97F6&gt;&lt;U+5173&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+6E90&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6765&gt;&lt;U+5BBE&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+8D3A&gt;&lt;U+5DDE&gt;&lt;U+5E02&gt;&quot;
+## [41] NA                 &quot;&lt;U+4E34&gt;&lt;U+9AD8&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+8363&gt;&lt;U+660C&gt;&lt;U+53BF&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+67F1&gt;&lt;U+571F&gt;&lt;U+5BB6&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+53BF&gt;&quot;
+## [45] &quot;&lt;U+5E7F&gt;&lt;U+5B89&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6210&gt;&lt;U+90FD&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+9075&gt;&lt;U+4E49&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5B89&gt;&lt;U+987A&gt;&lt;U+5E02&gt;&quot;
+## [49] &quot;&lt;U+6606&gt;&lt;U+660E&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+6012&gt;&lt;U+6C5F&gt;&lt;U+50F3&gt;&lt;U+50F3&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+5DDE&gt;&quot; NA                 &quot;&lt;U+62C9&gt;&lt;U+8428&gt;&lt;U+5E02&gt;&quot;
+## [53] &quot;&lt;U+5B89&gt;&lt;U+5EB7&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5546&gt;&lt;U+6D1B&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5E86&gt;&lt;U+9633&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+5F20&gt;&lt;U+6396&gt;&lt;U+5E02&gt;&quot;
+## [57] &quot;&lt;U+9EC4&gt;&lt;U+5357&gt;&lt;U+85CF&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+5DDE&gt;&quot; &quot;&lt;U+679C&gt;&lt;U+6D1B&gt;&lt;U+85CF&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&lt;U+5DDE&gt;&quot; &quot;&lt;U+4E2D&gt;&lt;U+536B&gt;&lt;U+5E02&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+5634&gt;&lt;U+5C71&gt;&lt;U+5E02&gt;&quot;
+## [61] &quot;&lt;U+514B&gt;&lt;U+62C9&gt;&lt;U+739B&gt;&lt;U+4F9D&gt;&lt;U+5E02&gt;&quot; NA</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incomplete names</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture_sname</span></code></pre></div>
+<pre><code>##  [1] NA               &quot;&lt;U+660C&gt;&lt;U+5E73&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+4E1C&gt;&quot; NA              
+##  [5] &quot;&lt;U+4FDD&gt;&lt;U+5B9A&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+5BB6&gt;&lt;U+5E84&gt;&quot; &quot;&lt;U+5927&gt;&lt;U+540C&gt;&quot; &quot;&lt;U+8FD0&gt;&lt;U+57CE&gt;&quot;
+##  [9] &quot;&lt;U+8D64&gt;&lt;U+5CF0&gt;&quot; &quot;&lt;U+5174&gt;&lt;U+5B89&gt;&lt;U+76DF&gt;&quot; &quot;&lt;U+978D&gt;&lt;U+5C71&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+65B0&gt;&quot;
+## [13] &quot;&lt;U+957F&gt;&lt;U+6625&gt;&quot; &quot;&lt;U+901A&gt;&lt;U+5316&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&quot; &quot;&lt;U+54C8&gt;&lt;U+5C14&gt;&lt;U+6EE8&gt;&quot;
+## [17] &quot;&lt;U+9752&gt;&lt;U+6D66&gt;&quot; &quot;&lt;U+95F5&gt;&lt;U+884C&gt;&quot; &quot;&lt;U+65E0&gt;&lt;U+9521&gt;&quot; &quot;&lt;U+5F90&gt;&quot;      
+## [21] &quot;&lt;U+53F0&gt;&quot;       &quot;&lt;U+821F&gt;&lt;U+5C71&gt;&quot; &quot;&lt;U+5408&gt;&lt;U+80A5&gt;&quot; &quot;&lt;U+961C&gt;&lt;U+9633&gt;&quot;
+## [25] &quot;&lt;U+6CC9&gt;&quot;       &quot;&lt;U+5B81&gt;&lt;U+5FB7&gt;&quot; NA               &quot;&lt;U+4E5D&gt;&lt;U+6C5F&gt;&quot;
+## [29] &quot;&lt;U+6D4E&gt;&lt;U+5B81&gt;&quot; &quot;&lt;U+6DC4&gt;&lt;U+535A&gt;&quot; &quot;&lt;U+5357&gt;&lt;U+9633&gt;&quot; &quot;&lt;U+4E09&gt;&lt;U+95E8&gt;&lt;U+5CE1&gt;&quot;
+## [33] &quot;&lt;U+968F&gt;&quot;       &quot;&lt;U+8944&gt;&lt;U+9633&gt;&quot; &quot;&lt;U+6000&gt;&lt;U+5316&gt;&quot; &quot;&lt;U+90B5&gt;&lt;U+9633&gt;&quot;
+## [37] &quot;&lt;U+97F6&gt;&lt;U+5173&gt;&quot; &quot;&lt;U+6CB3&gt;&lt;U+6E90&gt;&quot; &quot;&lt;U+6765&gt;&lt;U+5BBE&gt;&quot; &quot;&lt;U+8D3A&gt;&quot;      
+## [41] NA               &quot;&lt;U+4E34&gt;&lt;U+9AD8&gt;&quot; &quot;&lt;U+8363&gt;&lt;U+660C&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+67F1&gt;&quot;
+## [45] &quot;&lt;U+5E7F&gt;&lt;U+5B89&gt;&quot; &quot;&lt;U+6210&gt;&lt;U+90FD&gt;&quot; &quot;&lt;U+9075&gt;&lt;U+4E49&gt;&quot; &quot;&lt;U+5B89&gt;&lt;U+987A&gt;&quot;
+## [49] &quot;&lt;U+6606&gt;&lt;U+660E&gt;&quot; &quot;&lt;U+6012&gt;&lt;U+6C5F&gt;&lt;U+50F3&gt;&lt;U+50F3&gt;&lt;U+65CF&gt;&lt;U+81EA&gt;&lt;U+6CBB&gt;&quot; NA               &quot;&lt;U+62C9&gt;&lt;U+8428&gt;&quot;
+## [53] &quot;&lt;U+5B89&gt;&lt;U+5EB7&gt;&quot; &quot;&lt;U+5546&gt;&lt;U+6D1B&gt;&quot; &quot;&lt;U+5E86&gt;&lt;U+9633&gt;&quot; &quot;&lt;U+5F20&gt;&lt;U+6396&gt;&quot;
+## [57] &quot;&lt;U+9EC4&gt;&lt;U+5357&gt;&quot; &quot;&lt;U+679C&gt;&lt;U+6D1B&gt;&quot; &quot;&lt;U+4E2D&gt;&lt;U+536B&gt;&quot; &quot;&lt;U+77F3&gt;&lt;U+5634&gt;&lt;U+5C71&gt;&quot;
+## [61] &quot;&lt;U+514B&gt;&lt;U+62C9&gt;&lt;U+739B&gt;&lt;U+4F9D&gt;&quot; NA</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_sname, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2code&quot;</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">incompleteName =</span> <span class="st">&quot;from&quot;</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;2019_sname&quot;</code></pre>
+<pre><code>##  [1] 130100 130600 150400 210300 210900 220100 220500 230100 230100 340100
+## [11] 342100 350900 360400 420600 440200 441600 452200 460028 500226 500240
+## [21] 510100 511600 540100     NA     NA     NA     NA     NA     NA     NA
+## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [61]     NA     NA</code></pre>
 <p>Another advanced application involves in the case when the municipalities directly under the central government (“zhixiashi” in Chinese Pinyin). This is common for national survey data. <code>regioncode</code> can fit this case with no problem as long as the user sets the argument <code>zhixiashi</code> as TRUE.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces&#39; codes.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_toy <span class="ot">&lt;-</span> df_toy <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prefecture_id =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(prefecture_id), province_id, prefecture_id))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> df_toy<span class="sc">$</span>prefecture_id, </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">zhixiashi =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces&#39; codes.</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>code_zhixiashi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;110000&quot;</span>, <span class="st">&quot;120000&quot;</span>, <span class="st">&quot;310000&quot;</span>, <span class="st">&quot;400000&quot;</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>corruption <span class="ot">&lt;-</span> corruption <span class="sc">%&gt;%</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prefecture_id =</span> <span class="fu">ifelse</span>(province_id <span class="sc">%in%</span> code_zhixiashi, province_id, prefecture_id))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">zhixiashi =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;2019_code&quot;</code></pre>
+<pre><code>##  [1] 110000 110000 120000 120000 130100 130600 150400 152200 210300 210900
+## [11] 220100 220500 230100 230100 340100 350500 350900 360400 420600 429001
+## [21] 440200 441600 452200 452400 500240 510100 513900 511600 540100     NA
+## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## [61]     NA     NA     NA</code></pre>
 </div>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
 <p><code>regioncode</code> rovides a convenient way to convert Chinese administrative division codes, official names, and common-used short names between each other. This vignette offers a quick view of package features and a short tutorial for users.</p>
-<p>The development of the package is ongoing. Future versions aims to adding more administrative level choice, from province level to county level. Data are also enriching. Please contact us with any questions, bug reports, and comments.</p>
+<p>The development of the package is ongoing. Future versions aim to add more administrative level choice, from province level to county level. Data are also enriching. Please contact us with any questions, bug reports, and comments.</p>
 </div>
 <div id="affiliation" class="section level2">
 <h2>Affiliation</h2>
