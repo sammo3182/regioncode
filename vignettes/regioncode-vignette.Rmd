@@ -43,13 +43,12 @@ The division codes in the original data were based on the 2019 version.
 We kept the variables of prefectural names and division codes.
 We added a column of to short names of the prefectures to further illustrate how the software works.
 
-```{r toy}
+```{r toy, eval=FALSE}
 library(dplyr)
 library(regioncode)
 
 corruption
 ```
-
 ## Usage and Arguments
 
 In `regioncode` package, we named administrative division codes as `code`, regions' formal names as `name`, and their commonly used short names as `sname`.
@@ -63,11 +62,11 @@ Then they can set the year they want the output is.
 That's it. 
 See the following example to convert the 2019-version codes to the 1999 version:
 
-```{r code2code}
+```{r code2code, eval=FALSE}
 # original geocodes. It's 2019 version
 corruption$prefecture_id
 
-# after conversion. It's 2005 version
+# after conversion. It's 1999 version
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999)
@@ -79,7 +78,7 @@ In some cases, the original data may only have division codes or region names, b
 In such cases, `regioncode` offers a function to convert division codes from any year to region names in any year.
 Users only need to alter the converting method, for example, to "code2name" in order to convert division codes to region names.
 
-```{r code2name}
+```{r code2name, eval=FALSE}
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999, 
@@ -89,7 +88,7 @@ regioncode(data_input = corruption$prefecture_id,
 Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. 
 Users need to change the `method` argument to "name2code" or "name2name" to achieve these conversions.
 
-```{r name2code}
+```{r name2code, eval=FALSE}
 corruption$prefecture
 
 regioncode(data_input = corruption$prefecture, 
@@ -110,7 +109,7 @@ One of the occasions occurs when the data source includes only common-used short
 `regioncode` can still accomplish the conversion in this case when the users specify the `incompleteName` to "from". 
 (`regioncode` can also produce short names from inputs of full or short names and division code. See the Details of the help file for more information.)
 
-```{r incompleteName}
+```{r incompleteName, eval=FALSE}
 # Full, official names
 corruption$prefecture
 
@@ -129,7 +128,7 @@ Another advanced application involves in the case when the municipalities direct
 This is common for national survey data.
 `regioncode` can fit this case with no problem as long as the user sets the argument `zhixiashi` as TRUE.
 
-```{r zhixiashi}
+```{r zhixiashi, eval=FALSE}
 # In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces' codes.
 code_zhixiashi <- c("110000", "120000", "310000", "400000")
 
@@ -165,4 +164,13 @@ Website: https://sammo3182.github.io
 
 Yufei Sun
 
+Department of Political Science,    
+Tsinghua University,    
+Email: sunyf20@mails.tsinghua.edu.cn
+
 Wenquan Wu
+
+Department of Political Science,    
+Tsinghua University,    
+Email: wuwq20@mails.tsinghua.edu.cn
+
