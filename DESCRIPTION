@@ -11,7 +11,7 @@ Authors@R:
     person(given = "Haiting",family = "Tian",role = c("ctb"), email = "tianht.18@sem.tsingha.edu.cn"),
     person(given = "Weihang",family = "Shao",role = c("ctb"), email = "shaowh19@mails.tsinghua.edu.cn"),
     person(given = "Yuanqian",family = "Chen",role = c("ctb"), email = "yuanqian18@mails.tsinghua.edu.cn"))
-Author: Yue Hu [cre, aut],
+Author: Yue Hu [aut, cre],
   Yufei Sun [aut],
   Wenquan Wu [aut],
   Yuyang Shi [ctb],
@@ -21,7 +21,7 @@ Author: Yue Hu [cre, aut],
   Weihang Shao [ctb],
   Yuanqian Chen [ctb]
 Maintainer: Yue Hu <yuehu@tsinghua.edu.cn>
-Description: `regioncode` is an software developes to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.
+Description: “regioncode” is a software develops to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, “regioncode” enables seamlessly converting Chinese regions' formal names, common-used names, and codes between each other at the city level from 1986 to 2019.
 License: MIT + file LICENSE
 Encoding: UTF-8
 BugReports: https://github.com/sammo3182/regioncode/issues

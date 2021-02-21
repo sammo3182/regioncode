@@ -6,3 +6,5 @@
 ^dev$
 ^CONDUCT\.md$
 ^CRAN-RELEASE$
+^doc$
+^Meta$
