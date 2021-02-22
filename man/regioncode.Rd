@@ -45,13 +45,12 @@ The argument makes a difference only when \code{name2code} or \code{name2name} a
 }
 \examples{
 
-library(regioncode)
+# library(regioncode)
 
-data(corruption)
 
-regioncode(data_input = corruption$prefecture_id,
-           year_from = 2019,
-           year_to = 1999)
+# regioncode(data_input = corruption$prefecture_id,
+#            year_from = 2019,
+#           year_to = 1999)
 
 
 }

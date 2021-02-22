@@ -12,11 +12,39 @@
 
 <meta name="author" content="Yue Hu, Yufei Sun, and Wenquan Wu" />
 
-<meta name="date" content="2021-02-13" />
+<meta name="date" content="2021-02-21" />
 
 <title>regioncode: Convert Region Names and Division Codes of China Over Years</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -28,19 +56,11 @@
     </style>
 
 
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -127,7 +147,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -141,7 +341,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">regioncode: Convert Region Names and Division Codes of China Over Years</h1>
 <h4 class="author">Yue Hu, Yufei Sun, and Wenquan Wu</h4>
-<h4 class="date">2021-02-13</h4>
+<h4 class="date">2021-02-21</h4>
 
 
 
@@ -162,25 +362,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loading-toy-data-and-the-package" class="section level2">
 <h2>Loading Toy Data and the Package</h2>
 <p>The toy data was created based on a chunk from Yuhua Wang’s <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD"><code>China’s Corruption Investigations Dataset</code></a>. The data includes information on almost 20,000 officials who were investigated during Xi Jinping’s anti-corruption campaign. We randomly drew an eighteen-line sample. The division codes in the original data were based on the 2019 version. We kept the variables of prefectural names and division codes. We added a column of to short names of the prefectures to further illustrate how the software works.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(regioncode)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>corruption</span></code></pre></div>
-<pre><code>## # A tibble: 62 x 14
-##    caseid province prefecture county province_id prefecture_id county_id name 
-##     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
-##  1     52       11 &lt;NA&gt;       &lt;NA&gt;        110000            NA        NA 罗长友~
-##  2    137       11 昌平区     昌平区      110000        110114    110114 郭连荣~
-##  3    163       12 河东区     河东区      120000        120102    120102 孙基刚~
-##  4    238       12 &lt;NA&gt;       &lt;NA&gt;        120000            NA        NA 袁东升~
-##  5    521       13 保定市     &lt;NA&gt;        130000        130600        NA 高增录~
-##  6    374       13 石家庄市   正定县      130000        130100    130123 吕军 
-##  7   1521       14 大同市     浑源县      140000        140200    140225 袁文钊~
-##  8   1376       14 运城市     平陆县      140000        140800    140829 杜超祥~
-##  9   1870       15 赤峰市     松山区      150000        150400    150404 高志明~
-## 10   1695       15 兴安盟     &lt;NA&gt;        150000        152200        NA 刘晓君~
-## # ... with 52 more rows, and 6 more variables: position &lt;chr&gt;, reason &lt;chr&gt;,
-## #   rank &lt;dbl&gt;, Year &lt;chr&gt;, Month &lt;chr&gt;, prefecture_sname &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(regioncode)</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>corruption</span></code></pre></div>
 </div>
 <div id="usage-and-arguments" class="section level2">
 <h2>Usage and Arguments</h2>
@@ -188,172 +373,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="division-codes-across-years" class="section level3">
 <h3>Division codes across years</h3>
 <p><code>regioncoce</code> function accept numeric and character vectors as the input division codes and region names respectively. To achieve an accurate conversion, users have to specify the year of the source data correctly in the argument <code>year_from</code>. Then they can set the year they want the output is. That’s it. See the following example to convert the 2019-version codes to the 1999 version:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original geocodes. It&#39;s 2019 version</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture_id</span></code></pre></div>
-<pre><code>##  [1]     NA 110114 120102     NA 130600 130100 140200 140800 150400 152200
-## [11] 210300 210900 220100 220500 230100 230100 310118 310112 320200 320300
-## [21] 331000 330900 340100 341200 350500 350900     NA 360400 370800 370300
-## [31] 411300 411200 421300 420600 431200 430500 440200 441600 451300 451100
-## [41]     NA 469024 500226 500240 511600 510100 520300 520400 530100     NA
-## [51]     NA 540100 610900 611000 621000 620700 632300 632600 640500 640200
-## [61] 650200     NA</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># after conversion. It&#39;s 2005 version</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>)</span></code></pre></div>
-<pre><code>##  [1] 130100 130600 150400 152200 210300 210900 220100 220500 230100 230100
-## [11] 340100 350500 350900 360400 420600 429001 440200 441600 452200 452400
-## [21] 500240 510100 513900 511600 540100     NA     NA     NA     NA     NA
-## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [61]     NA     NA     NA</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># original geocodes. It&#39;s 2019 version</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>corruption<span class="op">$</span>prefecture_id</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># after conversion. It&#39;s 1999 version</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="kw">regioncode</span>(<span class="dt">data_input =</span> corruption<span class="op">$</span>prefecture_id, </span>
+<span id="cb2-6"><a href="#cb2-6"></a>           <span class="dt">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb2-7"><a href="#cb2-7"></a>           <span class="dt">year_to =</span> <span class="dv">1999</span>)</span></code></pre></div>
 </div>
 <div id="division-codes-region-name" class="section level3">
 <h3>Division codes ↓ region name</h3>
 <p>In some cases, the original data may only have division codes or region names, but users needs the other form or both formats of data. In such cases, <code>regioncode</code> offers a function to convert division codes from any year to region names in any year. Users only need to alter the converting method, for example, to “code2name” in order to convert division codes to region names.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;code2name&quot;</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;石家庄市&quot;         &quot;保定市&quot;           &quot;赤峰市&quot;           &quot;兴安盟&quot;          
-##  [5] &quot;鞍山市&quot;           &quot;阜新市&quot;           &quot;长春市&quot;           &quot;通化市&quot;          
-##  [9] &quot;哈尔滨市&quot;         &quot;哈尔滨市&quot;         &quot;合肥市&quot;           &quot;泉州市&quot;          
-## [13] &quot;宁德市&quot;           &quot;九江市&quot;           &quot;襄樊市&quot;           &quot;随州市&quot;          
-## [17] &quot;韶关市&quot;           &quot;河源市&quot;           &quot;柳州地区&quot;         &quot;贺州地区&quot;        
-## [21] &quot;石柱土家族自治县&quot; &quot;成都市&quot;           &quot;资阳地区&quot;         &quot;广安市&quot;          
-## [25] &quot;拉萨市&quot;           NA                 NA                 NA                
-## [29] NA                 NA                 NA                 NA                
-## [33] NA                 NA                 NA                 NA                
-## [37] NA                 NA                 NA                 NA                
-## [41] NA                 NA                 NA                 NA                
-## [45] NA                 NA                 NA                 NA                
-## [49] NA                 NA                 NA                 NA                
-## [53] NA                 NA                 NA                 NA                
-## [57] NA                 NA                 NA                 NA                
-## [61] NA                 NA                 NA</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">regioncode</span>(<span class="dt">data_input =</span> corruption<span class="op">$</span>prefecture_id, </span>
+<span id="cb3-2"><a href="#cb3-2"></a>           <span class="dt">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb3-3"><a href="#cb3-3"></a>           <span class="dt">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb3-4"><a href="#cb3-4"></a>           <span class="dt">method =</span> <span class="st">&quot;code2name&quot;</span>)</span></code></pre></div>
 <p>Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. Users need to change the <code>method</code> argument to “name2code” or “name2name” to achieve these conversions.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture</span></code></pre></div>
-<pre><code>##  [1] NA                 &quot;昌平区&quot;           &quot;河东区&quot;           NA                
-##  [5] &quot;保定市&quot;           &quot;石家庄市&quot;         &quot;大同市&quot;           &quot;运城市&quot;          
-##  [9] &quot;赤峰市&quot;           &quot;兴安盟&quot;           &quot;鞍山市&quot;           &quot;阜新市&quot;          
-## [13] &quot;长春市&quot;           &quot;通化市&quot;           &quot;哈尔滨市&quot;         &quot;哈尔滨市&quot;        
-## [17] &quot;青浦区&quot;           &quot;闵行区&quot;           &quot;无锡市&quot;           &quot;徐州市&quot;          
-## [21] &quot;台州市&quot;           &quot;舟山市&quot;           &quot;合肥市&quot;           &quot;阜阳市&quot;          
-## [25] &quot;泉州市&quot;           &quot;宁德市&quot;           NA                 &quot;九江市&quot;          
-## [29] &quot;济宁市&quot;           &quot;淄博市&quot;           &quot;南阳市&quot;           &quot;三门峡市&quot;        
-## [33] &quot;随州市&quot;           &quot;襄阳市&quot;           &quot;怀化市&quot;           &quot;邵阳市&quot;          
-## [37] &quot;韶关市&quot;           &quot;河源市&quot;           &quot;来宾市&quot;           &quot;贺州市&quot;          
-## [41] NA                 &quot;临高县&quot;           &quot;荣昌县&quot;           &quot;石柱土家族自治县&quot;
-## [45] &quot;广安市&quot;           &quot;成都市&quot;           &quot;遵义市&quot;           &quot;安顺市&quot;          
-## [49] &quot;昆明市&quot;           &quot;怒江僳僳族自治州&quot; NA                 &quot;拉萨市&quot;          
-## [53] &quot;安康市&quot;           &quot;商洛市&quot;           &quot;庆阳市&quot;           &quot;张掖市&quot;          
-## [57] &quot;黄南藏族自治州&quot;   &quot;果洛藏族自治州&quot;   &quot;中卫市&quot;           &quot;石嘴山市&quot;        
-## [61] &quot;克拉玛依市&quot;       NA</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2code&quot;</span>)</span></code></pre></div>
-<pre><code>##  [1] 130100 130600 150400 152200 210300 210900 220100 220500 230100 230100
-## [11] 340100 342100 350500 350900 360400 420600 429001 440200 441600 452200
-## [21] 452400 460028 500226 500240 510100 513900 511600 540100     NA     NA
-## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [61]     NA     NA     NA</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2name&quot;</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;石家庄市&quot;         &quot;保定市&quot;           &quot;赤峰市&quot;           &quot;兴安盟&quot;          
-##  [5] &quot;鞍山市&quot;           &quot;阜新市&quot;           &quot;长春市&quot;           &quot;通化市&quot;          
-##  [9] &quot;哈尔滨市&quot;         &quot;哈尔滨市&quot;         &quot;合肥市&quot;           &quot;阜阳市&quot;          
-## [13] &quot;泉州市&quot;           &quot;宁德市&quot;           &quot;九江市&quot;           &quot;襄樊市&quot;          
-## [17] &quot;随州市&quot;           &quot;韶关市&quot;           &quot;河源市&quot;           &quot;柳州地区&quot;        
-## [21] &quot;贺州地区&quot;         &quot;临高县&quot;           &quot;荣昌县&quot;           &quot;石柱土家族自治县&quot;
-## [25] &quot;成都市&quot;           &quot;资阳地区&quot;         &quot;广安市&quot;           &quot;拉萨市&quot;          
-## [29] NA                 NA                 NA                 NA                
-## [33] NA                 NA                 NA                 NA                
-## [37] NA                 NA                 NA                 NA                
-## [41] NA                 NA                 NA                 NA                
-## [45] NA                 NA                 NA                 NA                
-## [49] NA                 NA                 NA                 NA                
-## [53] NA                 NA                 NA                 NA                
-## [57] NA                 NA                 NA                 NA                
-## [61] NA                 NA                 NA</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>corruption<span class="op">$</span>prefecture</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">regioncode</span>(<span class="dt">data_input =</span> corruption<span class="op">$</span>prefecture, </span>
+<span id="cb4-4"><a href="#cb4-4"></a>           <span class="dt">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb4-5"><a href="#cb4-5"></a>           <span class="dt">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb4-6"><a href="#cb4-6"></a>           <span class="dt">method =</span> <span class="st">&quot;name2code&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="kw">regioncode</span>(<span class="dt">data_input =</span> corruption<span class="op">$</span>prefecture, </span>
+<span id="cb4-9"><a href="#cb4-9"></a>           <span class="dt">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>           <span class="dt">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb4-11"><a href="#cb4-11"></a>           <span class="dt">method =</span> <span class="st">&quot;name2name&quot;</span>)</span></code></pre></div>
 </div>
 <div id="advanced-usages" class="section level3">
 <h3>Advanced Usages</h3>
 <p><code>regioncode</code> provides two advanced functions to achieve more complicated conversions. One of the occasions occurs when the data source includes only common-used short names of the cities instead of the full, official ones. <code>regioncode</code> can still accomplish the conversion in this case when the users specify the <code>incompleteName</code> to “from”. (<code>regioncode</code> can also produce short names from inputs of full or short names and division code. See the Details of the help file for more information.)</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full, official names</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture</span></code></pre></div>
-<pre><code>##  [1] NA                 &quot;昌平区&quot;           &quot;河东区&quot;           NA                
-##  [5] &quot;保定市&quot;           &quot;石家庄市&quot;         &quot;大同市&quot;           &quot;运城市&quot;          
-##  [9] &quot;赤峰市&quot;           &quot;兴安盟&quot;           &quot;鞍山市&quot;           &quot;阜新市&quot;          
-## [13] &quot;长春市&quot;           &quot;通化市&quot;           &quot;哈尔滨市&quot;         &quot;哈尔滨市&quot;        
-## [17] &quot;青浦区&quot;           &quot;闵行区&quot;           &quot;无锡市&quot;           &quot;徐州市&quot;          
-## [21] &quot;台州市&quot;           &quot;舟山市&quot;           &quot;合肥市&quot;           &quot;阜阳市&quot;          
-## [25] &quot;泉州市&quot;           &quot;宁德市&quot;           NA                 &quot;九江市&quot;          
-## [29] &quot;济宁市&quot;           &quot;淄博市&quot;           &quot;南阳市&quot;           &quot;三门峡市&quot;        
-## [33] &quot;随州市&quot;           &quot;襄阳市&quot;           &quot;怀化市&quot;           &quot;邵阳市&quot;          
-## [37] &quot;韶关市&quot;           &quot;河源市&quot;           &quot;来宾市&quot;           &quot;贺州市&quot;          
-## [41] NA                 &quot;临高县&quot;           &quot;荣昌县&quot;           &quot;石柱土家族自治县&quot;
-## [45] &quot;广安市&quot;           &quot;成都市&quot;           &quot;遵义市&quot;           &quot;安顺市&quot;          
-## [49] &quot;昆明市&quot;           &quot;怒江僳僳族自治州&quot; NA                 &quot;拉萨市&quot;          
-## [53] &quot;安康市&quot;           &quot;商洛市&quot;           &quot;庆阳市&quot;           &quot;张掖市&quot;          
-## [57] &quot;黄南藏族自治州&quot;   &quot;果洛藏族自治州&quot;   &quot;中卫市&quot;           &quot;石嘴山市&quot;        
-## [61] &quot;克拉玛依市&quot;       NA</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Incomplete names</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture_sname</span></code></pre></div>
-<pre><code>##  [1] NA               &quot;昌平&quot;           &quot;河东&quot;           NA              
-##  [5] &quot;保定&quot;           &quot;石家庄&quot;         &quot;大同&quot;           &quot;运城&quot;          
-##  [9] &quot;赤峰&quot;           &quot;兴安盟&quot;         &quot;鞍山&quot;           &quot;阜新&quot;          
-## [13] &quot;长春&quot;           &quot;通化&quot;           &quot;哈尔滨&quot;         &quot;哈尔滨&quot;        
-## [17] &quot;青浦&quot;           &quot;闵行&quot;           &quot;无锡&quot;           &quot;徐&quot;            
-## [21] &quot;台&quot;             &quot;舟山&quot;           &quot;合肥&quot;           &quot;阜阳&quot;          
-## [25] &quot;泉&quot;             &quot;宁德&quot;           NA               &quot;九江&quot;          
-## [29] &quot;济宁&quot;           &quot;淄博&quot;           &quot;南阳&quot;           &quot;三门峡&quot;        
-## [33] &quot;随&quot;             &quot;襄阳&quot;           &quot;怀化&quot;           &quot;邵阳&quot;          
-## [37] &quot;韶关&quot;           &quot;河源&quot;           &quot;来宾&quot;           &quot;贺&quot;            
-## [41] NA               &quot;临高&quot;           &quot;荣昌&quot;           &quot;石柱&quot;          
-## [45] &quot;广安&quot;           &quot;成都&quot;           &quot;遵义&quot;           &quot;安顺&quot;          
-## [49] &quot;昆明&quot;           &quot;怒江僳僳族自治&quot; NA               &quot;拉萨&quot;          
-## [53] &quot;安康&quot;           &quot;商洛&quot;           &quot;庆阳&quot;           &quot;张掖&quot;          
-## [57] &quot;黄南&quot;           &quot;果洛&quot;           &quot;中卫&quot;           &quot;石嘴山&quot;        
-## [61] &quot;克拉玛依&quot;       NA</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_sname, </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>, </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">&quot;name2code&quot;</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">incompleteName =</span> <span class="st">&quot;from&quot;</span>)</span></code></pre></div>
-<pre><code>##  [1] 130100 130600 150400 210300 210900 220100 220500 230100 230100 340100
-## [11] 342100 350900 360400 420600 440200 441600 452200 460028 500226 500240
-## [21] 510100 511600 540100     NA     NA     NA     NA     NA     NA     NA
-## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [61]     NA     NA</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Full, official names</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>corruption<span class="op">$</span>prefecture</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># Incomplete names</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>corruption<span class="op">$</span>prefecture_sname</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># Converting</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="kw">regioncode</span>(<span class="dt">data_input =</span> corruption<span class="op">$</span>prefecture_sname, </span>
+<span id="cb5-9"><a href="#cb5-9"></a>           <span class="dt">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb5-10"><a href="#cb5-10"></a>           <span class="dt">year_to =</span> <span class="dv">1999</span>, </span>
+<span id="cb5-11"><a href="#cb5-11"></a>           <span class="dt">method =</span> <span class="st">&quot;name2code&quot;</span>,</span>
+<span id="cb5-12"><a href="#cb5-12"></a>           <span class="dt">incompleteName =</span> <span class="st">&quot;from&quot;</span>)</span></code></pre></div>
 <p>Another advanced application involves in the case when the municipalities directly under the central government (“zhixiashi” in Chinese Pinyin). This is common for national survey data. <code>regioncode</code> can fit this case with no problem as long as the user sets the argument <code>zhixiashi</code> as TRUE.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces&#39; codes.</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>code_zhixiashi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;110000&quot;</span>, <span class="st">&quot;120000&quot;</span>, <span class="st">&quot;310000&quot;</span>, <span class="st">&quot;400000&quot;</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>corruption <span class="ot">&lt;-</span> corruption <span class="sc">%&gt;%</span> </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prefecture_id =</span> <span class="fu">ifelse</span>(province_id <span class="sc">%in%</span> code_zhixiashi, province_id, prefecture_id))</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1999</span>,</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">zhixiashi =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>##  [1] 110000 110000 120000 120000 130100 130600 150400 152200 210300 210900
-## [11] 220100 220500 230100 230100 340100 350500 350900 360400 420600 429001
-## [21] 440200 441600 452200 452400 500240 510100 513900 511600 540100     NA
-## [31]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [41]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [51]     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
-## [61]     NA     NA     NA</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces&#39; codes.</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>code_zhixiashi &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;110000&quot;</span>, <span class="st">&quot;120000&quot;</span>, <span class="st">&quot;310000&quot;</span>, <span class="st">&quot;400000&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a>corruption &lt;-<span class="st"> </span>corruption <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prefecture_id =</span> <span class="kw">ifelse</span>(province_id <span class="op">%in%</span><span class="st"> </span>code_zhixiashi, province_id, prefecture_id))</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Converting</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="kw">regioncode</span>(<span class="dt">data_input =</span> corruption<span class="op">$</span>prefecture_id, </span>
+<span id="cb6-10"><a href="#cb6-10"></a>           <span class="dt">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb6-11"><a href="#cb6-11"></a>           <span class="dt">year_to =</span> <span class="dv">1999</span>,</span>
+<span id="cb6-12"><a href="#cb6-12"></a>           <span class="dt">zhixiashi =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="conclusion" class="section level2">
@@ -369,7 +444,13 @@ Tsinghua University,<br />
 Email: <a href="mailto:yuehu@tsinghua.edu.cn" class="email">yuehu@tsinghua.edu.cn</a><br />
 Website: <a href="https://sammo3182.github.io" class="uri">https://sammo3182.github.io</a></p>
 <p>Yufei Sun</p>
+<p>Department of Political Science,<br />
+Tsinghua University,<br />
+Email: <a href="mailto:sunyf20@mails.tsinghua.edu.cn" class="email">sunyf20@mails.tsinghua.edu.cn</a></p>
 <p>Wenquan Wu</p>
+<p>Department of Political Science,<br />
+Tsinghua University,<br />
+Email: <a href="mailto:wuwq20@mails.tsinghua.edu.cn" class="email">wuwq20@mails.tsinghua.edu.cn</a></p>
 </div>
 
 
