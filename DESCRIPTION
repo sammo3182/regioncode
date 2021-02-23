@@ -21,7 +21,7 @@ Author: Yue Hu [aut, cre],
   Weihang Shao [ctb],
   Yuanqian Chen [ctb]
 Maintainer: Yue Hu <yuehu@tsinghua.edu.cn>
-Description: This package is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. The current version enables seamlessly converting Chinese regions' formal names, common-used names, and codes between each other at the city level from 1986 to 2019.
+Description: A fast tool to conquer the difficulties to convert various region names and administration division codes of Chinese regions. The current version enables seamlessly converting Chinese regions' formal names, common-used names, and codes between each other at the city level from 1986 to 2019.
 License: MIT + file LICENSE
 Encoding: UTF-8
 BugReports: https://github.com/sammo3182/regioncode/issues
