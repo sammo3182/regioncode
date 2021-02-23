@@ -1,4 +1,0 @@
-"0","p20 <- lm(kid_score ~ mom_iq + mom_hs + momiq*mom_hs, data = data)
-"
-"2","Error in eval(predvars, data, env) : object 'momiq' not found
-"
