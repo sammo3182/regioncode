@@ -29,7 +29,8 @@ Depends:
   R(>= 3.6.0)
 Imports:
   dplyr,
-  knitr
+  knitr,
+  textshaping
 Suggests:
   rmarkdown
 LazyData: true
