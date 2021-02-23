@@ -1,0 +1,74 @@
+---
+title: "HW1"
+author: "Yufei_Sun"
+date: "2/22/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require(pacman)) install.packages("pacman")
+library(pacman)
+p_load(
+  qs,
+  tidyverse,
+  haven,
+  modelsummary
+)
+set.seed(19960916)
+setwd("/Users/sunyufei/SeaDrive/My Libraries/Yufei_Sun/THU/Education/Course/2021Spring/Quantitative_Analysis(II)/Homework/HW1_due20200301")
+data <- read_dta("kidiq.dta")
+```
+
+```{R p8}
+p8 <- lm(kid_score ~ mom_hs, data = data)
+modelsummary(p8)
+```
+
+```{R p10}
+data <- read_dta("kidiq.dta")
+p8 <- lm(kid_score ~ mom_hs, data = data)
+```
+
+```{R p11}
+p10 <- lm(kid_score ~ mom_iq, data = data)
+modelsummary(p10)
+```
+```{R p13}
+p10 <- lm(kid_score ~ mom_iq, data = data)
+modelsummary(p10)
+```
+
+```{R p14}
+p14 <- lm(kid_score ~ mom_iq + mom_hs, data = data)
+modelsummary(p14)
+```
+
+```{R p16}
+p14 <- lm(kid_score ~ mom_iq + mom_hs, data = data)
+modelsummary(p14)
+```
+
+```{R p20}
+p20 <- lm(kid_score ~ mom_iq + mom_hs + mom_iq*mom_hs, data = data)
+modelsummary(p20)
+```
+
+```{R p22}
+p20 <- lm(kid_score ~ mom_iq + mom_hs + mom_iq*mom_hs, data = data)
+modelsummary(p20)
+```
+
+```{R p25}
+egen s_mom_iq = sd(mom_iq)
+gen stdmom_iq = cmom_iq / s_mom_iq
+egen s_mom_hs = sd(mom_hs)
+gen stdmom_hs = cmom_hs/s_mom_hs
+gen stdmomiqhs = stdmom_iq*stdmom_hs . reg kid_score cmom_iq cmom_hs cmomiqhs
+
+
+p20 <- lm(kid_score ~ mom_iq + mom_hs + mom_iq*mom_hs, data = data)
+modelsummary(p20)
+```
+
+不要用包而是透过编程来处理

@@ -1,0 +1,512 @@
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "A", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "B", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "inferno", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "F", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_d(direction = 1, option = "inferno", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_d(direction = 1, option = "inferno", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_d(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_d(direction = 1, option = "A", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "inferno", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c( 'Medium', 'Strong', 'Weak'), name = 'PHERCI', breaks= c(0.7, 0, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'PHERCI', breaks= c(0, 0.7, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'Health-SRI', breaks= c(0, 0.7, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=10), legend.text=element_text(size=8)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read.csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'Health-SRI', breaks= c(0, 0.7, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=10), legend.text=element_text(size=8)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+ggsave('/Users/sunyufei/Desktop/Public Health Emergency Risk Capability Index.png', width = 5, height = 3)
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = index)) +
+scale_fill_viridis_c(direction = 1, option = "D", labels = c('Strong', 'Medium', 'Weak'), name = 'Health-SRI', breaks= c(0, 0.7, -3), guide = "legend") +
+theme(text = element_text(family='Times'), legend.title=element_text(size=8), legend.text=element_text(size=6)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+ggsave('/Users/sunyufei/Desktop/Public Health Emergency Risk Capability Index.png', width = 5, height = 3)
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f1)) +
+scale_fill_viridis_c(direction = 1, name = 'Institutional', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+map
+mapdat <- read_csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = Country)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f1)) +
+scale_fill_viridis_c(direction = 1, name = 'institutional resilience', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+ggsave('/Users/sunyufei/Desktop/institutional resilience.png', width = 5, height = 3)
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f2)) +
+scale_fill_viridis_c(direction = 1, name = 'Physical resilience', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+ggsave('/Users/sunyufei/Desktop/Physical resilience.png', width = 5, height = 3)
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f3)) +
+scale_fill_viridis_c(direction = 1, name = 'participation resilience', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+ggsave('/Users/sunyufei/Desktop/participation resilience.png', width = 5, height = 3)
+mapdat <- read_csv('/Users/sunyufei/Desktop/Untitled.csv') %>%
+rename(region = countryname)
+world_map <- map_data("world")
+map.dat <- left_join(mapdat, world_map, by = "region")
+map.lable.data <- map.dat %>%
+group_by(region) %>%
+summarise(long = mean(long), lat = mean(lat), group = mean(group))
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f1)) +
+scale_fill_viridis_c(direction = 1, name = 'institutional resilience', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+ggsave('/Users/sunyufei/Desktop/institutional resilience.png', width = 5, height = 3)
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f2)) +
+scale_fill_viridis_c(direction = 1, name = 'Physical resilience', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+ggsave('/Users/sunyufei/Desktop/Physical resilience.png', width = 5, height = 3)
+map <- ggplot(map.dat, aes(long, lat, group = group)) +
+geom_polygon(aes(fill = f3)) +
+scale_fill_viridis_c(direction = 1, name = 'participation resilience', option = "inferno") +
+theme(text = element_text(), legend.title=element_text(size=8), legend.text=element_text(size=5)) +
+theme(panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(),
+panel.background = element_blank()) +
+theme(legend.key.size = unit(6, "pt"),
+legend.key.height = unit(6, "pt"),
+legend.key.width = unit(6, "pt")) +
+theme(axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank()) +
+theme(axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank())
+ggsave('/Users/sunyufei/Desktop/participation resilience.png', width = 5, height = 3)
+roxygen2::update_collate()
+devtools::document()
+devtools::load_all()
+check()
+devtools::document()
+devtools::check()
+docunment()
+devtools::document()
+?regioncode
+usethis::use_data():
+usethis::use_data()
+usethis::use_data("/Users/sunyufei/Documents/GitHub/regioncode/data/corruption.rda")
+data(corruption)
+data(region_table)
+devtools::document()
+usethis::use_data(corruption, internal = TRUE)
+usethis::use_data(region_table, internal = TRUE)
+usethis::use_data(corruption, region_table, internal = TRUE)
+usethis::use_data(corruption, region_table, internal = TRUE, overwrite = TRUE)
+devtools::document()
+devtools::document()
+devtools::document()
+rm(list = c("corruption", "region_table"))
+load_all()
+devtools::document()
+devtools::check()
+devtools::document()
+devtools::check()
+devtools::document()
+devtools::check()
+devtools::document()
+devtools::check()

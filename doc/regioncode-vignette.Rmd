@@ -1,0 +1,176 @@
+---
+title: "regioncode: Convert Region Names and Division Codes of China Over Years"
+author: "Yue Hu, Yufei Sun, and Wenquan Wu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{regioncode: Convert Region Names and Division Codes of China Over Years}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+
+Sys.setlocale(category = "LC_COLLATE", locale = "Chinese")
+Sys.setlocale(category = "LC_CTYPE", locale = "Chinese")
+```
+
+
+Inspired by Vincent Arel-Bundock's well-known [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848), we created `regioncode` to achieve similar functions specifically for China studies. `regioncode` enables seamlessly converting regions' formal names, common-used names, and administrative division codes between each other.
+
+## Why `regioncode`?
+
+The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. The so-called "administrative division codes" were consistently adjusted to matched national and regional plans of development. Geocode adjustments disturb researchers when they merge data with different versions of geocodes or region names. Especially, when researchers render statistical data on Chinese map, different geocodes between map data and statistical data may cause mess-up data output or visualization.
+
+The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. 
+In the current version, `regioncode` enables seamlessly converting formal names, common-used names, and division codes of Chinese prefecture regions(named '地级市' in Chinese) between each other and across thirty-four years from 1986 to 2019.
+
+## Installation
+
+To install:
+
+* the latest released version: `install.packages("regioncode")`.
+* the latest developing version: `remotes::install_github("sammo3182/regioncode")`.
+
+
+## Loading Toy Data and the Package
+
+The toy data was created based on a chunk from Yuhua Wang's [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD). 
+The data includes information on almost 20,000 officials who were investigated during Xi Jinping's anti-corruption campaign.
+We randomly drew an eighteen-line sample.
+The division codes in the original data were based on the 2019 version.
+We kept the variables of prefectural names and division codes.
+We added a column of to short names of the prefectures to further illustrate how the software works.
+
+```{r toy, eval=FALSE}
+library(dplyr)
+library(regioncode)
+
+corruption
+```
+## Usage and Arguments
+
+In `regioncode` package, we named administrative division codes as `code`, regions' formal names as `name`, and their commonly used short names as `sname`.
+The current version enable to convert any pair of them mutually:
+
+### Division codes across years
+
+`regioncoce` function accept numeric and character vectors as the input division codes and region names respectively.
+To achieve an accurate conversion, users have to specify the year of the source data correctly in the argument `year_from`.
+Then they can set the year they want the output is.
+That's it. 
+See the following example to convert the 2019-version codes to the 1999 version:
+
+```{r code2code, eval=FALSE}
+# original geocodes. It's 2019 version
+corruption$prefecture_id
+
+# after conversion. It's 1999 version
+regioncode(data_input = corruption$prefecture_id, 
+           year_from = 2019,
+           year_to = 1999)
+```
+
+### Division codes &darr; region name
+
+In some cases, the original data may only have division codes or region names, but users needs the other form or both formats of data. 
+In such cases, `regioncode` offers a function to convert division codes from any year to region names in any year.
+Users only need to alter the converting method, for example, to "code2name" in order to convert division codes to region names.
+
+```{r code2name, eval=FALSE}
+regioncode(data_input = corruption$prefecture_id, 
+           year_from = 2019,
+           year_to = 1999, 
+           method = "code2name")
+```
+
+Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. 
+Users need to change the `method` argument to "name2code" or "name2name" to achieve these conversions.
+
+```{r name2code, eval=FALSE}
+corruption$prefecture
+
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1999, 
+           method = "name2code")
+
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1999, 
+           method = "name2name")
+```
+
+### Advanced Usages
+
+`regioncode` provides two advanced functions to achieve more complicated conversions.
+One of the occasions occurs when the data source includes only common-used short names of the cities instead of the full, official ones. 
+`regioncode` can still accomplish the conversion in this case when the users specify the `incompleteName` to "from". 
+(`regioncode` can also produce short names from inputs of full or short names and division code. See the Details of the help file for more information.)
+
+```{r incompleteName, eval=FALSE}
+# Full, official names
+corruption$prefecture
+
+# Incomplete names
+corruption$prefecture_sname
+
+# Converting
+regioncode(data_input = corruption$prefecture_sname, 
+           year_from = 2019,
+           year_to = 1999, 
+           method = "name2code",
+           incompleteName = "from")
+```
+
+Another advanced application involves in the case when the municipalities directly under the central government ("zhixiashi" in Chinese Pinyin).
+This is common for national survey data.
+`regioncode` can fit this case with no problem as long as the user sets the argument `zhixiashi` as TRUE.
+
+```{r zhixiashi, eval=FALSE}
+# In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces' codes.
+code_zhixiashi <- c("110000", "120000", "310000", "400000")
+
+corruption <- corruption %>% 
+  mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, province_id, prefecture_id))
+
+# Converting
+
+regioncode(data_input = corruption$prefecture_id, 
+           year_from = 2019,
+           year_to = 1999,
+           zhixiashi = TRUE)
+```
+
+
+## Conclusion
+`regioncode` rovides a convenient way to convert Chinese administrative division codes, official names, and common-used short names between each other. 
+This vignette offers a quick view of package features and a short tutorial for users.
+
+The development of the package is ongoing.
+Future versions aim to add more administrative level choice, from province level to county level. 
+Data are also enriching. 
+Please contact us with any questions, bug reports, and comments.
+
+## Affiliation
+
+Dr. Yue Hu
+
+Department of Political Science,    
+Tsinghua University,    
+Email: yuehu@tsinghua.edu.cn    
+Website: https://sammo3182.github.io
+
+Yufei Sun
+
+Department of Political Science,    
+Tsinghua University,    
+Email: sunyf20@mails.tsinghua.edu.cn
+
+Wenquan Wu
+
+Department of Political Science,    
+Tsinghua University,    
+Email: wuwq20@mails.tsinghua.edu.cn
+

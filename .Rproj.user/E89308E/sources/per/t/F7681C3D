@@ -1,0 +1,32 @@
+{
+    "id": "F7681C3D",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1613962105620.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "expression": "data",
+        "caption": "data",
+        "totalObservations": 434,
+        "displayedObservations": 434,
+        "variables": 5,
+        "cacheKey": "B07FA5D4",
+        "object": "data",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=data&cache_key=B07FA5D4&max_cols=50",
+        "preview": 0
+    },
+    "folds": "",
+    "lastKnownWriteTime": 3766193742855745602,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1613962105620,
+    "read_only": false,
+    "read_only_alternatives": []
+}
