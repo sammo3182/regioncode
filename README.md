@@ -1,3 +1,5 @@
+pkgdown <img src="man/figures/logo.png" width = "135" height = "135" align="right" />
+
 [![CRAN version](http://www.r-pkg.org/badges/version/regioncode)](https://cran.r-project.org/package=regioncode) ![](http://cranlogs.r-pkg.org/badges/grand-total/regioncode)
 
 ------------------------------------------------------------------------
