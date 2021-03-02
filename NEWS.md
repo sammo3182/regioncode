@@ -1,3 +1,3 @@
-# interplot 0.1.0
+# regioncode 0.0.9
 
-The initial release of the package.
+* Added a `NEWS.md` file to track changes to the package.
