@@ -1,2 +1,7 @@
 .Rproj.user
 .Rhistory
+docs
+.DS_Store
+.Rbuildignore
+regioncode.Rproj
+.Rproj.user
