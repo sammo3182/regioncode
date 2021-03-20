@@ -1,3 +1,5 @@
 # regioncode 0.0.9
 
-* Added a `NEWS.md` file to track changes to the package.
++ Enable to provincial-level conversion with `province`
++ Fixed the error of `incompleteName`
++ Simplified the codes.
