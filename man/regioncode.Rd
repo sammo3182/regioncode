@@ -9,6 +9,7 @@ regioncode(
   year_from = 1999,
   year_to = 2015,
   method = "code2code",
+  province = FALSE,
   zhixiashi = TRUE,
   incompleteName = "none"
 )
@@ -20,9 +21,12 @@ regioncode(
 
 \item{year_to}{A integer to define the year to convert. The default value is 2015.}
 
-\item{method}{A character indicating the converting methods. Valid methods include converting between codes in different years (\code{code2code}), from codes to region names (\code{code2name}), from region names to division codes(\code{name2code}), and between names in different years (\code{name2name}). The default option is \code{code2code}.}
+\item{method}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years (\code{code2code}), from codes to region names (\code{code2name}), from region names to division codes(\code{name2code}), and between names in different years (\code{name2name}). The default option is \code{code2code}.
+At the provincial level, valid methods include converting provincial codes to full names (\code{code2name}) or abbreviations (\code{code2abbre}), names or abbreviations to codes (\code{name2code} and \code{abbre2code}), abbreviations to names (\code{abbre2name}), and provincial name to abbreviations (\code{name2abbre} and \code{name2name}, see Details for the usage of \code{name2name}).}
 
-\item{zhixiashi}{A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default is FALSE.}
+\item{province}{A logic string to indicate the level of converting. The default is FALSE.}
+
+\item{zhixiashi}{(Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default is FALSE.}
 
 \item{incompleteName}{A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both". The default value is "none".}
 }
@@ -42,6 +46,7 @@ In many national and regional data in China studies, the source applies incomple
 }
 
 The argument makes a difference only when \code{name2code} or \code{name2name} are chose in \code{method}.
+Users can use this argument together with \code{name2name} to convert between names and incomplete names.
 }
 \examples{
 
