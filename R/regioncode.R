@@ -5,8 +5,8 @@
 #' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
 #' @param year_from A integer to define the year of the input. The default value is 1999.
 #' @param year_to A integer to define the year to convert. The default value is 2015.
-#' @param method A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years (`code2code`), from codes to region names (`code2name`), from region names to division codes(`name2code`), and between names in different years (`name2name`). The default option is `code2code`.
-#' At the provincial level, valid methods include converting provincial codes to full names (`code2name`) or abbreviations (`code2abbre`), names or abbreviations to codes (`name2code` and `abbre2code`), abbreviations to names (`abbre2name`), and provincial name to abbreviations (`name2abbre` and `name2name`, see Details for the usage of `name2name`).
+#' @param method A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`2code`) or name (`2name`). The default option is `2code`.
+#'  When `province` is TRUE, one can also choose `2abbre`, `abbre2code`, and `abbre2name` to convert between names/codes and abbreviations of provinces.
 #' @param province A logic string to indicate the level of converting. The default is FALSE.
 #' @param zhixiashi (Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default is FALSE.
 #' @param incompleteName A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both". The default value is "none".
@@ -54,11 +54,19 @@ regioncode <- function(data_input,
   if (!is.numeric(year_from))
     stop("Invalid input: Converting years must be integers.")
 
-  if(province){
-    if (!(method %in% c('code2name', 'code2abbre', 'name2name', 'name2code', 'name2abbre', 'abbre2name', 'abbre2code')))
+  if (province) {
+    if (!(
+      method %in% c(
+        '2name',
+        '2abbre',
+        '2code',
+        'abbre2name',
+        'abbre2code'
+      )
+    ))
       stop("Invalid input: please choose a valid converting method.")
   } else {
-    if (!(method %in% c('code2name', 'code2code', 'name2name', 'name2code')))
+    if (!(method %in% c('2name', '2code')))
       stop("Invalid input: please choose a valid converting method.")
   }
 
@@ -66,6 +74,8 @@ regioncode <- function(data_input,
     stop(
       "Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'."
     )
+
+
 
   if (province) {
     if (method == 'code2code')
@@ -80,30 +90,22 @@ regioncode <- function(data_input,
     year_from <- ifelse(year_from < 1999, 1998, 1999)
     year_to <- ifelse(year_to < 1999, 1998, 1999)
 
+    if (is.numeric(data_input))
+      year_from <- "prov_code"
+    if (is.character(data_input))
+      year_from <- "prov_name"
+
     ls_index <- switch (
       method,
-      "code2name" = {
-        year_from <- "prov_code"
+      "2name" = {
         year_to <- "prov_name"
         c(year_from, year_to)
       },
-      "code2abbre" = {
-        year_from <- "prov_code"
-        year_to <- paste0(year_to, "_nickname")
-        c(year_from, year_to)
-      },
-      "name2code" = {
-        year_from <- "prov_name"
+      "2code" = {
         year_to <- "prov_code"
         c(year_from, year_to)
       },
-      "name2name" = {
-        year_from <- "prov_name"
-        year_to <- "prov_name"
-        c(year_from, year_to)
-      },
-      "name2abbre" = {
-        year_from <- "prov_name"
+      "2abbre" = {
         year_to <- paste0(year_to, "_nickname")
         c(year_from, year_to)
       },
@@ -123,29 +125,20 @@ regioncode <- function(data_input,
   } else {
     # when doing prefectural level converting
 
-    ls_index <- switch(
-      method,
-      "code2code" = {
-        year_from <- paste0(year_from, '_code')
-        year_to <- paste0(year_to, '_code')
-        c(year_from, year_to)
-      },
-      "code2name" = {
-        year_from <- paste0(year_from, '_code')
-        year_to <- paste0(year_to, '_name')
-        c(year_from, year_to)
-      },
-      "name2code" = {
-        year_from <- paste0(year_from, '_name')
-        year_to <- paste0(year_to, '_code')
-        c(year_from, year_to)
-      },
-      "name2name" = {
-        year_from <- paste0(year_from, '_name')
-        year_to <- paste0(year_to, '_name')
-        c(year_from, year_to)
-      }
-    )
+    if (is.numeric(data_input))
+      year_from <- paste0(year_from, '_code')
+    if (is.character(data_input))
+      year_from <- paste0(year_from, '_name')
+
+    ls_index <- switch(method,
+                       "2code" = {
+                         year_to <- paste0(year_to, '_code')
+                         c(year_from, year_to)
+                       },
+                       "2name" = {
+                         year_to <- paste0(year_to, '_name')
+                         c(year_from, year_to)
+                       })
 
     # Using the Municipal codes for within region codes
 
@@ -216,11 +209,10 @@ regioncode <- function(data_input,
   names(df_input) <- ls_index[1]
 
   data_output <-
-    select(region_table, !!ls_index) %>%
+    select(region_table,!!ls_index) %>%
     distinct() %>%
-    left_join(df_input,.) %>% # using left_join to keep the order of the input data
+    left_join(df_input, .) %>% # using left_join to keep the order of the input data
     pull(!!year_to)
 
   return(data_output)
 }
-

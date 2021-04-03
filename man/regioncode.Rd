@@ -21,8 +21,8 @@ regioncode(
 
 \item{year_to}{A integer to define the year to convert. The default value is 2015.}
 
-\item{method}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years (\code{code2code}), from codes to region names (\code{code2name}), from region names to division codes(\code{name2code}), and between names in different years (\code{name2name}). The default option is \code{code2code}.
-At the provincial level, valid methods include converting provincial codes to full names (\code{code2name}) or abbreviations (\code{code2abbre}), names or abbreviations to codes (\code{name2code} and \code{abbre2code}), abbreviations to names (\code{abbre2name}), and provincial name to abbreviations (\code{name2abbre} and \code{name2name}, see Details for the usage of \code{name2name}).}
+\item{method}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (\verb{2code}) or name (\verb{2name}). The default option is \verb{2code}.
+When \code{province} is TRUE, one can also choose \verb{2abbre}, \code{abbre2code}, and \code{abbre2name} to convert between names/codes and abbreviations of provinces.}
 
 \item{province}{A logic string to indicate the level of converting. The default is FALSE.}
 

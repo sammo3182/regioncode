@@ -11,6 +11,9 @@ province = FALSE
 zhixiashi = TRUE
 incompleteName = "none"
 
+
+regioncode("河东区", method = "2code", zhixiashi = FALSE)
+
 region_table$prov_scode <- str_sub(region_table$prov_code, end = 2)
 
 provName <- read.csv("provinceName.csv") %>%
