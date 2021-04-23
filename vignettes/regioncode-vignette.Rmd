@@ -24,7 +24,7 @@ Inspired by Vincent Arel-Bundock's well-known [`countrycode`](https://joss.theoj
 The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. The so-called "administrative division codes" were consistently adjusted to matched national and regional plans of development. Geocode adjustments disturb researchers when they merge data with different versions of geocodes or region names. Especially, when researchers render statistical data on Chinese map, different geocodes between map data and statistical data may cause mess-up data output or visualization.
 
 The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. 
-In the current version, `regioncode` enables seamlessly converting formal names, common-used names, and division codes of Chinese prefecture regions(named '地级市' in Chinese) between each other and across thirty-four years from 1986 to 2019.
+In the current version, `regioncode` enables seamlessly converting formal names, common-used names,language zone and division codes of Chinese prefecture regions(named '地级市' in Chinese) between each other and across thirty-four years from 1986 to 2019.
 
 ## Installation
 
@@ -76,17 +76,17 @@ regioncode(data_input = corruption$prefecture_id,
 
 In some cases, the original data may only have division codes or region names, but users needs the other form or both formats of data. 
 In such cases, `regioncode` offers a function to convert division codes from any year to region names in any year.
-Users only need to alter the converting method, for example, to "code2name" in order to convert division codes to region names.
+Users only need to alter the converting method, for example, to "2name" in order to convert division codes to region names.
 
 ```{r code2name, eval=FALSE}
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999, 
-           method = "code2name")
+           method = "2name")
 ```
 
 Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. 
-Users need to change the `method` argument to "name2code" or "name2name" to achieve these conversions.
+Users need to change the `method` argument to "2code" or "2name" to achieve these conversions.
 
 ```{r name2code, eval=FALSE}
 corruption$prefecture
@@ -94,12 +94,12 @@ corruption$prefecture
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
-           method = "name2code")
+           method = "2code")
 
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
-           method = "name2name")
+           method = "2name")
 ```
 
 ### Advanced Usages
@@ -120,7 +120,7 @@ corruption$prefecture_sname
 regioncode(data_input = corruption$prefecture_sname, 
            year_from = 2019,
            year_to = 1999, 
-           method = "name2code",
+           method = "2code",
            incompleteName = "from")
 ```
 
@@ -143,6 +143,20 @@ regioncode(data_input = corruption$prefecture_id,
            zhixiashi = TRUE)
 ```
 
+### Langugae_zone
+`regioncode` also offers a function to convert name of prefecture from any year to language zone.
+Users need to change the `language_zone`as TRUE and change the `language_trans` argument to "dia_group" or "dia_sub_group" to achieve these transformation.
+Similarly, one can get the language zone from province name.
+As long as the user sets the argument `province` as TRUE and change the `language_trans` argument to "dia_super".
+
+```{r language_zone, eval=FALSE}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1999, 
+           province = F,
+           language_zone = T,
+           language_trans = "dia_group")
+```
 
 ## Conclusion
 `regioncode` rovides a convenient way to convert Chinese administrative division codes, official names, and common-used short names between each other. 
@@ -174,3 +188,8 @@ Department of Political Science,
 Tsinghua University,    
 Email: wuwq20@mails.tsinghua.edu.cn
 
+Zhu Meng
+
+Department of Political Science,    
+Tsinghua University,    
+Email:ZhuMeng@mails.uibe.edu.cn
