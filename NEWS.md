@@ -3,3 +3,6 @@
 + Enable to provincial-level conversion with `province`
 + Fixed the error of `incompleteName`
 + Simplified the codes.
++ Add parameter topinyin & method "2area"
++ Remove unnecessary warning about 'code2code'
++ Fix the bug in language_region
