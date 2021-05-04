@@ -32,12 +32,12 @@
 #'
 #' @examples
 #'
-#' # library(regioncode)
+#'  # library(regioncode)
 #'
 #'
-#' # regioncode(data_input = corruption$prefecture_id,
-#' #            year_from = 2019,
-#' #           year_to = 1999)
+#'  # regioncode(data_input = corruption$prefecture_id,
+#'             year_from = 2019,
+#'            year_to = 1999)
 #'
 #'
 #' @export
@@ -254,5 +254,8 @@ regioncode <- function(data_input,
     pull(!!year_to)
 
   return(data_output)
-  }
+}
+
+
+
 
