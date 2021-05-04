@@ -143,6 +143,28 @@ regioncode(data_input = corruption$prefecture_id,
            zhixiashi = TRUE)
 ```
 
+### ToArea
+`regioncode` also offers a method "2area" to convert codes and names of the region into the municipal area that they belong to. 
+```{r 2area, eval=FALSE}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1999, 
+           province = F,
+           method="2area")
+```
+
+### TOPINYIN
+`regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
+```{r topinyin, eval=FALSE}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1999, 
+           province = F,
+           method="2area",
+           topinyin=FALSE
+           )
+```
+
 ### Langugae_zone
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
 Users need to change the `language_zone`as TRUE and change the `language_trans` argument to "dia_group" or "dia_sub_group" to achieve these transformation.
