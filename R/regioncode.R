@@ -32,10 +32,10 @@
 #'
 #' @examples
 #'
-#'  # library(regioncode)
+#'#  library(regioncode)
 #'
 #'
-#'  # regioncode(data_input = corruption$prefecture_id,
+#'#  regioncode(data_input = corruption$prefecture_id,
 #'             year_from = 2019,
 #'            year_to = 1999)
 #'
@@ -90,11 +90,6 @@ regioncode <- function(data_input,
           year_to <- "prov_language"
           c(year_from,year_to)})
     }else{
-      if (method == 'code2code')
-        stop(
-          "Invalid input: there is no provincial level code converting. You may want to set the argument `province` to FALSE."
-        )
-
       prov_table <- region_table %>%
         select(prov_code:`1999_nickname`) %>%
         distinct
