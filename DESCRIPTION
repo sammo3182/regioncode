@@ -10,7 +10,8 @@ Authors@R:
     person(given = "Yuxin",family = "Pan",role = c("ctb"), email = "panyx17@mails.tsinghua.edu.cn"),
     person(given = "Haiting",family = "Tian",role = c("ctb"), email = "tianht.18@sem.tsingha.edu.cn"),
     person(given = "Weihang",family = "Shao",role = c("ctb"), email = "shaowh19@mails.tsinghua.edu.cn"),
-    person(given = "Yuanqian",family = "Chen",role = c("ctb"), email = "yuanqian18@mails.tsinghua.edu.cn"))
+    person(given = "Yuanqian",family = "Chen",role = c("ctb"), email = "yuanqian18@mails.tsinghua.edu.cn"),
+    person(given = "Xueyan",family = "Liu",role = c("ctb"), email = "756843722@qq.com"))
 Author: Yue Hu [aut, cre],
   Yufei Sun [aut],
   Wenquan Wu [aut],
@@ -19,7 +20,8 @@ Author: Yue Hu [aut, cre],
   Yuxin Pan [ctb],
   Haiting Tian [ctb],
   Weihang Shao [ctb],
-  Yuanqian Chen [ctb]
+  Yuanqian Chen [ctb],
+  Xueyan Liu [ctb]
 Maintainer: Yue Hu <yuehu@tsinghua.edu.cn>
 Description: A fast tool to conquer the difficulties to convert various region names and administration division codes of Chinese regions. The current version enables seamlessly converting Chinese regions' formal names, common-used names, and codes between each other at the city level from 1986 to 2019.
 License: MIT + file LICENSE
