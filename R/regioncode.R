@@ -5,8 +5,8 @@
 #' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
 #' @param year_from A integer to define the year of the input. The default value is 1999.
 #' @param year_to A integer to define the year to convert. The default value is 2015.
-#' @param method A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`2code`) or name (`2name`). The default option is `2code`.
-#'  When `province` is TRUE, one can also choose `2abbre`, `abbre2code`, and `abbre2name` to convert between names/codes and abbreviations of provinces.
+#' @param method A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`2code`), names (`2name`) or area (`2area`). The default option is `2code`.
+#'  When `province` is TRUE, one can also choose `2abbre`, `abbre2code`, `abbre2name`, and `abbre2are` to convert between names/codes and abbreviations of provinces.
 #' @param province A logic string to indicate the level of converting. The default is FALSE.
 #' @param language_zone A logic string to indicate the language zone. The default is FALSE.
 #' @param language_trans A character indicating the language transformation.At the prefectural level, valid transformation include `dia_group`,`dia_sub_group`.
