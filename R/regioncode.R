@@ -48,6 +48,7 @@ regioncode <- function(data_input,
                        language_zone = FALSE,
                        language_trans = "dia_super",
                        method = "2code",
+                       topinyin = FALSE,
                        province = TRUE,
                        zhixiashi = TRUE,
                        incompleteName = "none") {
@@ -248,9 +249,14 @@ regioncode <- function(data_input,
     left_join(df_input, .) %>% # using left_join to keep the order of the input data
     pull(!!year_to)
 
+  if(topinyin){
+    library(pinyin)
+    if (is.character(data_output))
+      data_output<-py(char=data_output)
+  }
+
   return(data_output)
 }
-
 
 
 
