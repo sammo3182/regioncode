@@ -252,7 +252,7 @@ regioncode <- function(data_input,
   if(topinyin){
     library(pinyin)
     if (is.character(data_output))
-      data_output<-py(char=data_output)
+      data_output<-py(char=data_output,dic=pydic(method="toneless",dic="pinyin2"))
   }
 
   return(data_output)
