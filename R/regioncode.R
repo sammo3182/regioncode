@@ -93,6 +93,11 @@ regioncode <- function(data_input,
       "Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'."
     )
 
+  if (!(incompleteName == 'to') & input == '2code')
+    stop(
+      "Invalid input: can not complete administrative codes."
+    )
+
   if (!is.logical(province))
     stop(
       'Invalid input: param `zhixiashi` must be logical class.'
@@ -117,7 +122,6 @@ regioncode <- function(data_input,
     stop(
       'Invalid input: param `topinyin` must be logical class.'
     )
-
 
   if (is.logical(topinyin) & method == "2code")
     stop(
