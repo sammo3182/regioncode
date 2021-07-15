@@ -70,7 +70,7 @@ regioncode(data_input = corruption$prefecture_sname,
            method = "name2code",
            incompleteName = "from")
            
-## language zone translation
+## Language zone translation
 
 regioncode(data_input = corruption$prefecture_name, 
            year_from = 2019,
