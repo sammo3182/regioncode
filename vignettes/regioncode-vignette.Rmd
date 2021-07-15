@@ -72,7 +72,7 @@ regioncode(data_input = corruption$prefecture_id,
            year_to = 1999)
 ```
 
-### Division codes &darr; region name
+### Division codes to region name
 
 In some cases, the original data may only have division codes or region names, but users needs the other form or both formats of data. 
 In such cases, `regioncode` offers a function to convert division codes from any year to region names in any year.

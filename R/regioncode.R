@@ -59,23 +59,33 @@ regioncode <- function(data_input,
     )
 
   if (!is.numeric(year_from))
-    stop("Invalid input: Converting years must be integers.")
+    stop(
+      "Invalid input: Converting years must be integers."
+      )
 
 
   if (province){
     if(language_zone){
       if(!(language_trans %in% c("dia_super")))
-        stop("Invalid input: please choose a valid converting transformation.")
+        stop(
+          "Invalid input: please choose a valid converting transformation."
+          )
     }else{
       if(!(method %in% c('2name','2code','2area','2abbre','abbre2name','abbre2code','abbre2area')))
-        stop("Invalid input: please choose a valid converting method.")
+        stop(
+          "Invalid input: please choose a valid converting method."
+          )
     }
   }else if(language_zone){
     if(!(language_trans %in% c('dia_group','dia_sub_group')))
-      stop("Invalid input: please choose a valid converting transformation.")
+      stop(
+        "Invalid input: please choose a valid converting transformation."
+        )
   } else {
     if(!(method %in% c('2name','2code','2area')))
-      stop("Invalid input: please choose a valid converting method.")
+      stop(
+        "Invalid input: please choose a valid converting method."
+        )
   }
 
   if (!(incompleteName %in% c("none", "from", "to", "both")))
@@ -83,10 +93,42 @@ regioncode <- function(data_input,
       "Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'."
     )
 
+  if (!is.logical(province))
+    stop(
+      'Invalid input: param `zhixiashi` must be logical class.'
+    )
+
+  if (!is.logical(language_zone))
+    stop(
+      'Invalid input: param `zhixiashi` must be logical class.'
+    )
+
+  if (language_zone &  !grepl('_name', input, fixed = TRUE))
+    stop(
+      'Invalid input: current version is not supported sname or code as language_zone input.'
+    )
+
+  if (!is.logical(zhixiashi))
+    stop(
+      'Invalid input: param `zhixiashi` must be logical class.'
+    )
+
+  if (!is.logical(topinyin))
+    stop(
+      'Invalid input: param `topinyin` must be logical class.'
+    )
+
+
+  if (is.logical(topinyin) & method == "2code")
+    stop(
+      'Invalid input: can not translate administrative codes to pinyin.'
+         )
+
+
   if (province){
-    # 1 section of province-level converting
+    # 1 Section of province-level converting
     if(language_zone){
-      # 1-1 if convert language zone
+      # 1-1 If convert language zone
       ls_index <- switch(
         language_trans,
         "dia_super" = {
@@ -94,12 +136,12 @@ regioncode <- function(data_input,
           year_to <- "prov_language"
           c(year_from,year_to)})
     }else{
-      # 1-2 if not convert language zone
+      # 1-2 If not convert language zone
       prov_table <- region_table %>%
         select(prov_code:`1999_nickname`) %>%
         distinct
 
-      # because province nicknames changed in 1999
+      # Because province nicknames changed in 1999
       year_from <- ifelse(year_from < 1999, 1998, 1999)
       year_to <- ifelse(year_to < 1999, 1998, 1999)
 
@@ -144,9 +186,9 @@ regioncode <- function(data_input,
       )
     }
   }else {
-    # 2 section of prefectural-level converting
+    # 2 Section of prefectural-level converting
     if(language_zone){
-      # 2-1 if convert language zone
+      # 2-1 If convert language zone
       ls_index <- switch (
         language_trans,
         "dia_group" = {
@@ -160,7 +202,7 @@ regioncode <- function(data_input,
           c(year_from,year_to)
         })
     }else {
-      # 2-2 if not convert language zone
+      # 2-2 If not convert language zone
       if (is.numeric(data_input))
         year_from <- paste0(year_from, '_code')
       if (is.character(data_input))
@@ -256,6 +298,7 @@ regioncode <- function(data_input,
     left_join(df_input, .) %>% # using left_join to keep the order of the input data
     pull(!!year_to)
 
+  # Because '2pinyin' can not be used as a variable name
   if(topinyin){
     library(pinyin)
     if (is.character(data_output))
