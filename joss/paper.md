@@ -60,10 +60,10 @@ regioncode(data_input = corruption$prefecture_id,
 ### Full, official names
 corruption$prefecture
 
-###  Incomplete names
+### Incomplete names
 corruption$prefecture_sname
 
-###  Converting
+### Converting
 regioncode(data_input = corruption$prefecture_sname, 
            year_from = 2019,
            year_to = 1999, 
