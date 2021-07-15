@@ -34,8 +34,8 @@
 #'
 #'#  library(regioncode)
 #'
-#'
-#'#  regioncode(data_input = corruption$prefecture_id,
+#'#  load(url("https://raw.githubusercontent.com/sammo3182/regioncode/master/vignettes/corruption_data.rda"))
+#'#  regioncode(data_input = vignette_data$prefecture_id,
 #'             year_from = 2019,
 #'            year_to = 1999)
 #'
@@ -49,8 +49,8 @@ regioncode <- function(data_input,
                        language_trans = "dia_super",
                        method = "2code",
                        topinyin = FALSE,
-                       province = TRUE,
-                       zhixiashi = TRUE,
+                       province = FALSE,
+                       zhixiashi = FALSE,
                        incompleteName = "none") {
   # check out input param type
   if (!is.character(data_input) & !is.numeric(data_input))
