@@ -71,7 +71,7 @@ regioncode <- function(data_input,
           "Invalid input: please choose a valid converting transformation."
           )
     }else{
-      if(!(method %in% c('2name','2code','2area','2abbre','abbre2name','abbre2code','abbre2area')))
+      if(!(method %in% c('2name','2code','2area','name2abbre','code2abbre','abbre2name','abbre2code','abbre2area')))
         stop(
           "Invalid input: please choose a valid converting method."
           )
@@ -133,10 +133,15 @@ regioncode <- function(data_input,
     # 1 Section of province-level converting
     if(language_zone){
       # 1-1 If convert language zone
+
+      if (is.numeric(data_input))
+        year_from <- "prov_code"
+      if (is.character(data_input))
+        year_from <- "prov_name"
+
       ls_index <- switch(
         language_trans,
         "dia_super" = {
-          year_from <- "prov_name"
           year_to <- "prov_language"
           c(year_from,year_to)})
     }else{
@@ -148,11 +153,6 @@ regioncode <- function(data_input,
       # Because province nicknames changed in 1999
       year_from <- ifelse(year_from < 1999, 1998, 1999)
       year_to <- ifelse(year_to < 1999, 1998, 1999)
-
-      if (is.numeric(data_input))
-        year_from <- "prov_code"
-      if (is.character(data_input))
-        year_from <- "prov_name"
 
       ls_index <- switch (
         method,
@@ -168,17 +168,23 @@ regioncode <- function(data_input,
           year_to <- "area"
           c(year_from, year_to)
         },
-        "2abbre" = {
+        "name2abbre" = {
+          year_from <- "prov_name"
+          year_to <- paste0(year_to, "_nickname")
+          c(year_from, year_to)
+        },
+        "code2abbre" = {
+          year_from <- "prov_code"
           year_to <- paste0(year_to, "_nickname")
           c(year_from, year_to)
         },
         "abbre2name" = {
-          year_from <- paste0(year_from, "_nickname")
+          year_from <- paste0(year_to, "_nickname")
           year_to <- "prov_name"
           c(year_from, year_to)
         },
         "abbre2code" = {
-          year_from <- paste0(year_from, "_nickname")
+          year_from <- paste0(year_to, "_nickname")
           year_to <- "prov_code"
           c(year_from, year_to)
         },
@@ -193,15 +199,19 @@ regioncode <- function(data_input,
     # 2 Section of prefectural-level converting
     if(language_zone){
       # 2-1 If convert language zone
+
+            if (is.numeric(data_input))
+        year_from <- paste0(year_from, '_code')
+      if (is.character(data_input))
+        year_from <- paste0(year_from, '_name')
+
       ls_index <- switch (
         language_trans,
         "dia_group" = {
-          year_from <- paste0(year_from,"_name")
           year_to <- "pref_language"
           c(year_from,year_to)
         },
         "dia_sub_group" = {
-          year_from <- paste0(year_from,"_name")
           year_to <- "dia_sub_language"
           c(year_from,year_to)
         })
