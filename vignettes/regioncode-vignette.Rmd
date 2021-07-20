@@ -167,19 +167,18 @@ regioncode(data_input = corruption$prefecture,
            )
 ```
 
-#### Language_zone
+#### 2dialect
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
-Users need to change the `language_zone`as TRUE and change the `language_trans` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
+Users need to change the `todialect` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
 Similarly, one can get the language zone from the province name.
-As long as the user sets the argument `province` as TRUE and changes the `language_trans` argument to "dia_super".
+As long as the user sets the argument `province` as TRUE and changes the `todialect` argument to "dia_super".
 
 ```{r language_zone, eval=FALSE}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            province = F,
-           language_zone = T,
-           language_trans = "dia_group")
+           todialect = "dia_group")
 ```
 
 ## Conclusion

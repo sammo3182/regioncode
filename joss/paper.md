@@ -29,7 +29,7 @@ The Chinese government gives unique geocodes for each county, city (prefecture),
 
 The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. Inspired by Vincent Arel-Bundock’s well-known `countrycode` [@Arel-Bundock2018], we created `regioncode` to achieve similar functions specifically for China studies. `regioncode` enables seamlessly converting formal names, common-used names, and division codes of Chinese prefecture regions between each other and across thirty-four years from 1986 to 2019.
 
-In the current version, we provide three basic functions` 2code`, `2name`, and `2sname` to convert formal names, common-used names, and division codes between each other. We also provide some useful features: `incompleteName`, which completes incomplete parameters; `2area`, which converts region codes and names of the region into the municipal area that they belong to; `topinyin`, which convert the names or areas into the form of pinyin; and `language_trans`, which offers a function to convert the name of prefecture from any year to language(local dialect) zone.
+In the current version, we provide three basic functions` 2code`, `2name`, and `2sname` to convert formal names, common-used names, and division codes between each other. We also provide some useful features: `incompleteName`, which completes incomplete parameters; `2area`, which converts region codes and names of the region into the municipal area that they belong to; `topinyin`, which convert the names or areas into the form of pinyin; and `todialect`, which offers a function to convert the name of prefecture from any year to language(local dialect) zone.
 
 # Examples
 
@@ -127,6 +127,7 @@ regioncode(data_input = corruption$prefecture,
 
 ## 2pinyin
 `regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
+
 ```r
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
@@ -136,19 +137,18 @@ regioncode(data_input = corruption$prefecture,
            topinyin=FALSE
            )
 ```
-## Language_zone
+## 2dialect 
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
-Users need to change the `language_zone`as TRUE and change the `language_trans` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
+Users need to change the `todialect` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
 Similarly, one can get the language zone from the province name.
-As long as the user sets the argument `province` as TRUE and changes the `language_trans` argument to "dia_super".
+As long as the user sets the argument `province` as TRUE and changes the `todialect` argument to "dia_super".
 
 ```r
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            province = F,
-           language_zone = T,
-           language_trans = "dia_group")
+           todialect = "dia_group")
 ```
 
 # Acknowledgements
