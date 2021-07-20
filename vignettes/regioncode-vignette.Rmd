@@ -21,10 +21,10 @@ Inspired by Vincent Arel-Bundock's well-known [`countrycode`](https://joss.theoj
 
 ## Why `regioncode`?
 
-The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. The so-called "administrative division codes" were consistently adjusted to matched national and regional plans of development. Geocode adjustments disturb researchers when they merge data with different versions of geocodes or region names. Especially, when researchers render statistical data on Chinese map, different geocodes between map data and statistical data may cause mess-up data output or visualization.
+The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. The so-called "administrative division codes" were consistently adjusted to matched national and regional plans of development. Geocode adjustments disturb researchers when they merge data with different versions of geocodes or region names. Especially, when researchers render statistical data on a Chinese map, different geocodes between map data and statistical data may cause mess-up data output or visualization.
 
 The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. 
-In the current version, `regioncode` enables seamlessly converting formal names, common-used names,language zone and division codes of Chinese prefecture regions(named '地级市' in Chinese) between each other and across thirty-four years from 1986 to 2019.
+In the current version, `regioncode` enables seamlessly converting formal names, common-used names, language zone, and division codes of Chinese prefecture regions(named '地级市' in Chinese) between each other and across thirty-four years from 1986 to 2019.
 
 ## Installation
 
@@ -41,7 +41,7 @@ The data includes information on almost 20,000 officials who were investigated d
 We randomly drew an eighteen-line sample.
 The division codes in the original data were based on the 2019 version.
 We kept the variables of prefectural names and division codes.
-We added a column of to short names of the prefectures to further illustrate how the software works.
+We added a column of short names of the prefectures to further illustrate how the software works.
 
 ```{r toy, eval=FALSE}
 library(dplyr)
@@ -52,7 +52,7 @@ corruption
 ## Usage and Arguments
 
 In `regioncode` package, we named administrative division codes as `code`, regions' formal names as `name`, and their commonly used short names as `sname`.
-The current version enable to convert any pair of them mutually:
+The current version enables to convert any pair of them mutually:
 
 ### Division codes across years
 
@@ -74,7 +74,7 @@ regioncode(data_input = corruption$prefecture_id,
 
 ### Division codes to region name
 
-In some cases, the original data may only have division codes or region names, but users needs the other form or both formats of data. 
+In some cases, the original data may only have division codes or region names, but users need the other form or both formats of data. 
 In such cases, `regioncode` offers a function to convert division codes from any year to region names in any year.
 Users only need to alter the converting method, for example, to "2name" in order to convert division codes to region names.
 
@@ -104,10 +104,11 @@ regioncode(data_input = corruption$prefecture,
 
 ### Advanced Usages
 
+#### Completion
 `regioncode` provides two advanced functions to achieve more complicated conversions.
 One of the occasions occurs when the data source includes only common-used short names of the cities instead of the full, official ones. 
 `regioncode` can still accomplish the conversion in this case when the users specify the `incompleteName` to "from". 
-(`regioncode` can also produce short names from inputs of full or short names and division code. See the Details of the help file for more information.)
+(`regioncode` can also produce short names from inputs of full or short names and division code. See the details of the help file for more information.)
 
 ```{r incompleteName, eval=FALSE}
 # Full, official names
@@ -124,7 +125,8 @@ regioncode(data_input = corruption$prefecture_sname,
            incompleteName = "from")
 ```
 
-Another advanced application involves in the case when the municipalities directly under the central government ("zhixiashi" in Chinese Pinyin).
+#### Municipalities
+Another advanced application involves the case when the municipalities directly under the central government ("zhixiashi" in Chinese Pinyin).
 This is common for national survey data.
 `regioncode` can fit this case with no problem as long as the user sets the argument `zhixiashi` as TRUE.
 
@@ -143,7 +145,7 @@ regioncode(data_input = corruption$prefecture_id,
            zhixiashi = TRUE)
 ```
 
-### ToArea
+#### 2area
 `regioncode` also offers a method "2area" to convert codes and names of the region into the municipal area that they belong to. 
 ```{r 2area, eval=FALSE}
 regioncode(data_input = corruption$prefecture, 
@@ -153,7 +155,7 @@ regioncode(data_input = corruption$prefecture,
            method="2area")
 ```
 
-### TOPINYIN
+#### 2pinyin
 `regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
 ```{r topinyin, eval=FALSE}
 regioncode(data_input = corruption$prefecture, 
@@ -165,11 +167,11 @@ regioncode(data_input = corruption$prefecture,
            )
 ```
 
-### Langugae_zone
+#### Language_zone
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
-Users need to change the `language_zone`as TRUE and change the `language_trans` argument to "dia_group" or "dia_sub_group" to achieve these transformation.
-Similarly, one can get the language zone from province name.
-As long as the user sets the argument `province` as TRUE and change the `language_trans` argument to "dia_super".
+Users need to change the `language_zone`as TRUE and change the `language_trans` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
+Similarly, one can get the language zone from the province name.
+As long as the user sets the argument `province` as TRUE and changes the `language_trans` argument to "dia_super".
 
 ```{r language_zone, eval=FALSE}
 regioncode(data_input = corruption$prefecture, 
@@ -181,7 +183,7 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ## Conclusion
-`regioncode` rovides a convenient way to convert Chinese administrative division codes, official names, and common-used short names between each other. 
+`regioncode` provides a convenient way to convert Chinese administrative division codes, official names, and common-used short names between each other. 
 This vignette offers a quick view of package features and a short tutorial for users.
 
 The development of the package is ongoing.
