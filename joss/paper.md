@@ -35,7 +35,7 @@ In the current version, we provide three basic functions` 2code`, `2name`, and `
 
 ## Division codes across years
 
-regioncoce function accept numeric and character vectors as the input division codes and region names respectively. To achieve an accurate conversion, users have to specify the year of the source data correctly in the argument year_from. Then they can set the year they want the output is. That’s it. See the following example to convert the 2019-version codes to the 1999 version:
+`regioncode` function accept numeric and character vectors as the input division codes and region names respectively. To achieve an accurate conversion, users have to specify the year of the source data correctly in the argument year_from. Then they can set the year they want the output is. That’s it. See the following example to convert the 2019-version codes to the 1999 version:
 
 ```R
 # original geocodes. It's 2019 version
