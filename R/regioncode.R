@@ -33,7 +33,6 @@
 #'
 #'#  library(regioncode)
 #'
-#'#  load(url("https://raw.githubusercontent.com/sammo3182/regioncode/master/vignettes/corruption_data.rda"))
 #'#  regioncode(data_input = vignette_data$prefecture_id,
 #'             year_from = 2019,
 #'            year_to = 1999)
