@@ -65,14 +65,14 @@ regioncode(data_input = corruption$prefecture_id,
            method = "2name")
 ```
 
-![1](https://user-images.githubusercontent.com/39488085/127020565-06f00748-aafc-4490-9ff2-305f104ff595.png)
+![](https://user-images.githubusercontent.com/39488085/127020565-06f00748-aafc-4490-9ff2-305f104ff595.png)
 
 Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. Users need to change the method argument to “2code” or “2name” to achieve these conversions.
 
 ```R
 corruption$prefecture
 ```
-![2](https://user-images.githubusercontent.com/39488085/127021257-286da69d-7729-42f1-8862-b34c8f57d33e.png)
+![](https://user-images.githubusercontent.com/39488085/127021257-286da69d-7729-42f1-8862-b34c8f57d33e.png)
 
 ```R
 regioncode(data_input = corruption$prefecture, 
@@ -86,7 +86,7 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1999, 
            method = "2name")
 ```
-![3](https://user-images.githubusercontent.com/39488085/127021422-2429558f-14aa-49d1-af38-74dc91c5da01.png)
+![](https://user-images.githubusercontent.com/39488085/127021422-2429558f-14aa-49d1-af38-74dc91c5da01.png)
 ## Advanced Usages
 
 ## Completion
@@ -97,13 +97,13 @@ regioncode(data_input = corruption$prefecture,
 # Full, official names
 corruption$prefecture
 ```
-![4](https://user-images.githubusercontent.com/39488085/127021654-35afd8c2-db21-4918-b60e-75bb51996ece.png)
+![](https://user-images.githubusercontent.com/39488085/127021654-35afd8c2-db21-4918-b60e-75bb51996ece.png)
 ```R
 # Incomplete names
 corruption$prefecture_sname <- gsub('.{1}$', '', corruption$prefecture)
 corruption$prefecture_sname
 ```
-![5](https://user-images.githubusercontent.com/39488085/127021692-4cf7b063-4658-4d32-a452-bd5f92297a17.png)
+![](https://user-images.githubusercontent.com/39488085/127021692-4cf7b063-4658-4d32-a452-bd5f92297a17.png)
 ```R
 # Converting
 regioncode(data_input = corruption$prefecture_sname, 
@@ -144,7 +144,7 @@ regioncode(data_input = corruption$prefecture,
            province = F,
            method="2area")
 ```
-![6](https://user-images.githubusercontent.com/39488085/127021722-133556f9-ed91-49dd-9b82-20d1a34480c9.png)
+![](https://user-images.githubusercontent.com/39488085/127021722-133556f9-ed91-49dd-9b82-20d1a34480c9.png)
 ## 2pinyin
 `regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
 
@@ -158,7 +158,7 @@ regioncode(data_input = corruption$prefecture,
            )
 
 ```
-![7](https://user-images.githubusercontent.com/39488085/127021764-6322d173-6fd4-4d66-8846-2044aecdc896.png)
+![](https://user-images.githubusercontent.com/39488085/127021764-6322d173-6fd4-4d66-8846-2044aecdc896.png)
 ## 2dialect 
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
 Users need to change the `todialect` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
@@ -172,7 +172,8 @@ regioncode(data_input = corruption$prefecture,
            province = F,
            todialect = "dia_group")
 ```
-![8](https://user-images.githubusercontent.com/39488085/127021793-22f417ce-ebd9-4d9b-86b1-06c418dd4576.png)
+![](https://user-images.githubusercontent.com/39488085/127021793-22f417ce-ebd9-4d9b-86b1-06c418dd4576.png)
+
 # Acknowledgements
 
 We acknowledge contributions from Meng Zhu, Yuyang Shi, Yujia Xu, and Yuxin Pan, Haiting Tian, Weihang Shao, and Yuanqian Chen.
