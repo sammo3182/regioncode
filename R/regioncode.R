@@ -21,8 +21,8 @@
 #'   \item "both": both input and output are using short names.
 #' }
 #'
-#' The argument makes a difference only when `name2code` or `name2name` are chose in `method`.
-#' Users can use this argument together with `name2name` to convert between names and incomplete names.
+#' The argument makes a difference only when `2code` or `2name` are chose in `method`.
+#' Users can use this argument together with `2name` to convert between names and incomplete names.
 #'
 #' @returns The function returns a character or numeric vector depending on what method is specified.
 #'
@@ -33,7 +33,9 @@
 #'
 #' #  library(regioncode)
 #'
-#' #  regioncode(data_input = corruption$prefecture_id)
+#' #  regioncode(data_input = corruption$prefecture_id,
+#' #             year_from = 2000,
+#' #             year_to = 2015)
 #'
 #'
 #' @export

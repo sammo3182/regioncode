@@ -50,14 +50,16 @@ In many national and regional data in China studies, the source applies incomple
 \item "both": both input and output are using short names.
 }
 
-The argument makes a difference only when \code{name2code} or \code{name2name} are chose in \code{method}.
-Users can use this argument together with \code{name2name} to convert between names and incomplete names.
+The argument makes a difference only when \verb{2code} or \verb{2name} are chose in \code{method}.
+Users can use this argument together with \verb{2name} to convert between names and incomplete names.
 }
 \examples{
 
 #  library(regioncode)
 
-#  regioncode(data_input = corruption$prefecture_id)
+#  regioncode(data_input = corruption$prefecture_id,
+#             year_from = 2000,
+#             year_to = 2015)
 
 
 }
