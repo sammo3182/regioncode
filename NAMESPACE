@@ -2,3 +2,4 @@
 
 export(regioncode)
 import(dplyr)
+import(pinyin)
