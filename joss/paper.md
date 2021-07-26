@@ -65,13 +65,8 @@ regioncode(data_input = corruption$prefecture_id,
            method = "2name")
 ```
 
-[1] "长沙市"   "菏泽地区" "昆明市"   "吴忠市"   "永州市"   "定西地区"
-[7] "嘉兴市"   "九江市"   "汕尾市"   "荆州市"
+> [1] "长沙市"   "菏泽地区" "昆明市"   "吴忠市"   "永州市"   "定西地区"
+> [7] "嘉兴市"   "九江市"   "汕尾市"   "荆州市"
 
 
 
-# Acknowledgements
-
-We acknowledge contributions from Meng Zhu, Yuyang Shi, Yujia Xu, and Yuxin Pan, Haiting Tian, Weihang Shao, and Yuanqian Chen.
-
-# References
