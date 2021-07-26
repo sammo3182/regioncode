@@ -33,9 +33,9 @@
 #'
 #' #  library(regioncode)
 #'
-#' #  regioncode(data_input = corruption$prefecture_id,
-#'               year_from = 1999,
-#'               year_to = 2015)
+#' #  regioncode(data_input = corruption$prefecture_id)
+#'
+#'
 #' @export
 
 regioncode <- function(data_input,
