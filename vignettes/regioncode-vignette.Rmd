@@ -34,7 +34,7 @@ To install:
 * the latest developing version: `remotes::install_github("sammo3182/regioncode")`.
 
 
-## Loading Toy Data and the Package
+## Load Toy Data and the Package
 
 The toy data was created based on a chunk from Yuhua Wang's [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD). 
 The data includes information on almost 20,000 officials who were investigated during Xi Jinping's anti-corruption campaign.
@@ -43,10 +43,11 @@ The division codes in the original data were based on the 2019 version.
 We kept the variables of prefectural names and division codes.
 We added a column of short names of the prefectures to further illustrate how the software works.
 
-```{r toy, eval=FALSE}
-library(dplyr)
+```{r toy, echo=TRUE, warning= FALSE, message=FALSE}
 library(regioncode)
+library(dplyr)
 
+corruption <- sample_n(na.exclude(corruption), 10)
 corruption
 ```
 ## Usage and Arguments
@@ -62,7 +63,7 @@ Then they can set the year they want the output is.
 That's it. 
 See the following example to convert the 2019-version codes to the 1999 version:
 
-```{r code2code, eval=FALSE}
+```{r code2code, echo=TRUE, warning= FALSE, message=FALSE}
 # original geocodes. It's 2019 version
 corruption$prefecture_id
 
@@ -78,7 +79,7 @@ In some cases, the original data may only have division codes or region names, b
 In such cases, `regioncode` offers a function to convert division codes from any year to region names in any year.
 Users only need to alter the converting method, for example, to "2name" in order to convert division codes to region names.
 
-```{r code2name, eval=FALSE}
+```{r code2name, echo=TRUE, warning= FALSE, message=FALSE}
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999, 
@@ -88,7 +89,7 @@ regioncode(data_input = corruption$prefecture_id,
 Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. 
 Users need to change the `method` argument to "2code" or "2name" to achieve these conversions.
 
-```{r name2code, eval=FALSE}
+```{r name2code, echo=TRUE, warning= FALSE, message=FALSE}
 corruption$prefecture
 
 regioncode(data_input = corruption$prefecture, 
@@ -110,11 +111,12 @@ One of the occasions occurs when the data source includes only common-used short
 `regioncode` can still accomplish the conversion in this case when the users specify the `incompleteName` to "from". 
 (`regioncode` can also produce short names from inputs of full or short names and division code. See the details of the help file for more information.)
 
-```{r incompleteName, eval=FALSE}
+```{r incompleteName, echo=TRUE, warning= FALSE, message=FALSE}
 # Full, official names
 corruption$prefecture
 
 # Incomplete names
+corruption$prefecture_sname <- gsub('.{1}$', '', corruption$prefecture)
 corruption$prefecture_sname
 
 # Converting
@@ -130,12 +132,16 @@ Another advanced application involves the case when the municipalities directly 
 This is common for national survey data.
 `regioncode` can fit this case with no problem as long as the user sets the argument `zhixiashi` as TRUE.
 
-```{r zhixiashi, eval=FALSE}
-# In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces' codes.
+```{r zhixiashi, echo=TRUE, warning= FALSE, message=FALSE}
+# In the sample data, the division code of municipalities were coded
+# as NA. Filling the codes of municipalities with their provinces' 
+# codes.
 code_zhixiashi <- c("110000", "120000", "310000", "400000")
 
 corruption <- corruption %>% 
-  mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, province_id, prefecture_id))
+  mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, 
+                                province_id, 
+                                prefecture_id))
 
 # Converting
 
@@ -147,7 +153,7 @@ regioncode(data_input = corruption$prefecture_id,
 
 #### 2area
 `regioncode` also offers a method "2area" to convert codes and names of the region into the municipal area that they belong to. 
-```{r 2area, eval=FALSE}
+```{r 2area, echo=TRUE, warning= FALSE, message=FALSE}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
@@ -157,13 +163,13 @@ regioncode(data_input = corruption$prefecture,
 
 #### 2pinyin
 `regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
-```{r topinyin, eval=FALSE}
+```{r topinyin, echo=TRUE, warning= FALSE, message=FALSE}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            province = F,
            method="2area",
-           topinyin=FALSE
+           topinyin=TRUE
            )
 ```
 
@@ -173,7 +179,7 @@ Users need to change the `todialect` argument to "dia_group" or "dia_sub_group" 
 Similarly, one can get the language zone from the province name.
 As long as the user sets the argument `province` as TRUE and changes the `todialect` argument to "dia_super".
 
-```{r language_zone, eval=FALSE}
+```{r language_zone, echo=TRUE, warning= FALSE, message=FALSE}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 

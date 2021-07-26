@@ -8,9 +8,11 @@ regioncode(
   data_input,
   year_from = 1999,
   year_to = 2015,
-  method = "code2code",
+  todialect = "none",
+  method = "2code",
+  topinyin = FALSE,
   province = FALSE,
-  zhixiashi = TRUE,
+  zhixiashi = FALSE,
   incompleteName = "none"
 )
 }
@@ -21,14 +23,17 @@ regioncode(
 
 \item{year_to}{A integer to define the year to convert. The default value is 2015.}
 
-\item{method}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (\verb{2code}) or name (\verb{2name}). The default option is \verb{2code}.
-When \code{province} is TRUE, one can also choose \verb{2abbre}, \code{abbre2code}, and \code{abbre2name} to convert between names/codes and abbreviations of provinces.}
+\item{todialect}{A character indicating the language transformation. At the prefectural level, valid transformation include \code{dia_group},\code{dia_sub_group}. At the province level, valid transformation is \code{dia_super}. The default value is "none".
+When \code{province} is TRUE, one can also choose \code{dia_super} to get the language zone of provinces.}
+
+\item{method}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (\verb{2code}), names (\verb{2name}) or area (\verb{2area}). The default option is \verb{2code}.
+When \code{province} is TRUE, one can also choose \verb{2abbre}, \code{abbre2code}, \code{abbre2name}, and \code{abbre2are} to convert between names/codes and abbreviations of provinces.}
 
 \item{province}{A logic string to indicate the level of converting. The default is FALSE.}
 
-\item{zhixiashi}{(Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default is FALSE.}
+\item{zhixiashi}{(Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default value is FALSE.}
 
-\item{incompleteName}{A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both". The default value is "none".}
+\item{incompleteName}{A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".}
 }
 \value{
 The function returns a character or numeric vector depending on what method is specified.
@@ -45,17 +50,16 @@ In many national and regional data in China studies, the source applies incomple
 \item "both": both input and output are using short names.
 }
 
-The argument makes a difference only when \code{name2code} or \code{name2name} are chose in \code{method}.
-Users can use this argument together with \code{name2name} to convert between names and incomplete names.
+The argument makes a difference only when \verb{2code} or \verb{2name} are chose in \code{method}.
+Users can use this argument together with \verb{2name} to convert between names and incomplete names.
 }
 \examples{
 
-# library(regioncode)
+#  library(regioncode)
 
-
-# regioncode(data_input = corruption$prefecture_id,
-#            year_from = 2019,
-#           year_to = 1999)
+#  regioncode(data_input = corruption$prefecture_id,
+#             year_from = 2000,
+#             year_to = 2015)
 
 
 }

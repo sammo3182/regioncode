@@ -1,4 +1,4 @@
-pkgdown <img src="https://user-images.githubusercontent.com/58319029/109606703-fe189480-7b61-11eb-8235-49d3be2e620a.png" width = "116.9" height = "135" align="right" />
+<img src="https://user-images.githubusercontent.com/58319029/109606703-fe189480-7b61-11eb-8235-49d3be2e620a.png" width = "116.9" height = "135" align="right" />
 
 [![CRAN version](http://www.r-pkg.org/badges/version/regioncode)](https://cran.r-project.org/package=regioncode) ![](http://cranlogs.r-pkg.org/badges/grand-total/regioncode)
 

@@ -1,3 +1,10 @@
+# regioncode 0.2.0
+
++ Styled function with tidyverse style
++ Rewrote `language_region` and `language_trans`  as `todialect`
++ Simplified the codes.
++ Added more detailed warning messages.
+
 # regioncode 0.0.9
 
 + Enable to provincial-level conversion with `province`

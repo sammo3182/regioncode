@@ -21,8 +21,8 @@
 #'   \item "both": both input and output are using short names.
 #' }
 #'
-#' The argument makes a difference only when `name2code` or `name2name` are chose in `method`.
-#' Users can use this argument together with `name2name` to convert between names and incomplete names.
+#' The argument makes a difference only when `2code` or `2name` are chose in `method`.
+#' Users can use this argument together with `2name` to convert between names and incomplete names.
 #'
 #' @returns The function returns a character or numeric vector depending on what method is specified.
 #'
@@ -31,11 +31,11 @@
 #'
 #' @examples
 #'
-#'#  library(regioncode)
+#' #  library(regioncode)
 #'
-#'#  regioncode(data_input = vignette_data$prefecture_id,
-#'             year_from = 2019,
-#'            year_to = 1999)
+#' #  regioncode(data_input = corruption$prefecture_id,
+#' #             year_from = 2000,
+#' #             year_to = 2015)
 #'
 #'
 #' @export
@@ -50,109 +50,112 @@ regioncode <- function(data_input,
                        zhixiashi = FALSE,
                        incompleteName = "none") {
   # check out input param type
-  if (!is.character(data_input) & !is.numeric(data_input))
+  if (!is.character(data_input) & !is.numeric(data_input)) {
     stop(
-      'Invalid input: only region names as a character vector or division codes as an integer vector are valid.'
+      "Invalid input: only region names as a character vector or division codes as an integer vector are valid."
     )
-
-  if (!is.numeric(year_from))
-    stop(
-      "Invalid input: Converting years must be integers."
-      )
-
-
-  if (province){
-    if(todialect != 'none'){
-      if(todialect != "dia_super")
-        stop(
-          "Invalid input: please choose a valid converting transformation."
-          )
-    }else{
-      if(!(method %in% c('2name','2code','2area','name2abbre','code2abbre','abbre2name','abbre2code','abbre2area')))
-        stop(
-          "Invalid input: please choose a valid converting method."
-          )
-    }
-  }else if(todialect != 'none'){
-    if(!(todialect %in% c('dia_group','dia_sub_group')))
-      stop(
-        "Invalid input: please choose a valid converting transformation."
-        )
-  } else {
-    if(!(method %in% c('2name','2code','2area')))
-      stop(
-        "Invalid input: please choose a valid converting method."
-        )
   }
 
-  if (!(incompleteName %in% c("none", "from", "to", "both")))
+  if (!is.numeric(year_from)) {
+    stop("Invalid input: Converting years must be integers.")
+  }
+
+
+  if (province) {
+    if (todialect != "none") {
+      if (todialect != "dia_super") {
+        stop("Invalid input: please choose a valid converting transformation.")
+      }
+    } else {
+      if (!(
+        method %in% c(
+          "2name",
+          "2code",
+          "2area",
+          "name2abbre",
+          "code2abbre",
+          "abbre2name",
+          "abbre2code",
+          "abbre2area"
+        )
+      )) {
+        stop("Invalid input: please choose a valid converting method.")
+      }
+    }
+  } else if (todialect != "none") {
+    if (!(todialect %in% c("dia_group", "dia_sub_group"))) {
+      stop("Invalid input: please choose a valid converting transformation.")
+    }
+  } else {
+    if (!(method %in% c("2name", "2code", "2area"))) {
+      stop("Invalid input: please choose a valid converting method.")
+    }
+  }
+
+  if (!(incompleteName %in% c("none", "from", "to", "both"))) {
     stop(
       "Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'."
     )
+  }
 
-  if (!(incompleteName == 'to') & data_input == '2code')
-    stop(
-      "Invalid input: can not complete administrative codes."
-    )
+  if (!(incompleteName == "to") & data_input == "2code") {
+    stop("Invalid input: can not complete administrative codes.")
+  }
 
-  if (!is.logical(province))
-    stop(
-      'Invalid input: param `zhixiashi` must be logical class.'
-    )
+  if (!is.logical(province)) {
+    stop("Invalid input: param `zhixiashi` must be logical class.")
+  }
 
-  if (!is.character(todialect))
-    stop(
-      'Invalid input: param `todialect` must be character class.'
-    )
+  if (!is.character(todialect)) {
+    stop("Invalid input: param `todialect` must be character class.")
+  }
 
   # if (language_zone &  !grepl('_name', data_input, fixed = TRUE))
   #   stop(
   #     'Invalid input: current version is not supported sname or code as language_zone input.'
   #   )
 
-  if (!is.logical(zhixiashi))
-    stop(
-      'Invalid input: param `zhixiashi` must be logical class.'
-    )
+  if (!is.logical(zhixiashi)) {
+    stop("Invalid input: param `zhixiashi` must be logical class.")
+  }
 
-  if (!is.logical(topinyin))
-    stop(
-      'Invalid input: param `topinyin` must be logical class.'
-    )
+  if (!is.logical(topinyin)) {
+    stop("Invalid input: param `topinyin` must be logical class.")
+  }
 
-  if (topinyin & method == "2code" & todialect  == FALSE)
-    stop(
-      'Invalid input: can not translate administrative codes to pinyin.'
-         )
+  if (topinyin & method == "2code" & todialect == FALSE) {
+    stop("Invalid input: can not translate administrative codes to pinyin.")
+  }
 
 
-  if (province){
+  if (province) {
     # 1 Section of province-level converting
-    if(todialect != 'none'){
+    if (todialect != "none") {
       # 1-1 If convert language zone
-
-      if (is.numeric(data_input))
+      if (is.numeric(data_input)) {
         year_from <- "prov_code"
-      if (is.character(data_input))
+      }
+      if (is.character(data_input)) {
         year_from <- "prov_name"
+      }
 
-      ls_index <- switch(
-        todialect,
+      ls_index <- switch(todialect,
         "dia_super" = {
           year_to <- "prov_language"
-          c(year_from,year_to)})
-    }else{
+          c(year_from, year_to)
+        }
+      )
+    } else {
       # 1-2 If not convert language zone
       prov_table <- region_table %>%
         select(prov_code:`1999_nickname`) %>%
-        distinct
+        distinct()
 
       # Because province nicknames changed in 1999
       year_from <- ifelse(year_from < 1999, 1998, 1999)
       year_to <- ifelse(year_to < 1999, 1998, 1999)
 
-      ls_index <- switch (
-        method,
+      ls_index <- switch(method,
         "2name" = {
           year_to <- "prov_name"
           c(year_from, year_to)
@@ -192,49 +195,52 @@ regioncode <- function(data_input,
         }
       )
     }
-  }else {
+  } else {
     # 2 Section of prefectural-level converting
-    if(todialect != 'none'){
+    if (todialect != "none") {
       # 2-1 If convert language zone
+      if (is.numeric(data_input)) {
+        year_from <- paste0(year_from, "_code")
+      }
+      if (is.character(data_input)) {
+        year_from <- paste0(year_from, "_name")
+      }
 
-      if (is.numeric(data_input))
-        year_from <- paste0(year_from, '_code')
-      if (is.character(data_input))
-        year_from <- paste0(year_from, '_name')
-
-      ls_index <- switch (
-        todialect,
+      ls_index <- switch(todialect,
         "dia_group" = {
           year_to <- "pref_language"
-          c(year_from,year_to)
+          c(year_from, year_to)
         },
         "dia_sub_group" = {
           year_to <- "dia_sub_language"
-          c(year_from,year_to)
-        })
-    }else {
+          c(year_from, year_to)
+        }
+      )
+    } else {
       # 2-2 If not convert language zone
-      if (is.numeric(data_input))
-        year_from <- paste0(year_from, '_code')
-      if (is.character(data_input))
-        year_from <- paste0(year_from, '_name')
+      if (is.numeric(data_input)) {
+        year_from <- paste0(year_from, "_code")
+      }
+      if (is.character(data_input)) {
+        year_from <- paste0(year_from, "_name")
+      }
 
       ls_index <- switch(method,
-                         "2code" = {
-                           year_to <- paste0(year_to, '_code')
-                           c(year_from, year_to)
-                         },
-                         "2area" = {
-                           year_to <- "area"
-                           c(year_from, year_to)
-                         },
-                         "2name" = {
-                           year_to <- paste0(year_to, '_name')
-                           c(year_from, year_to)
-                         })
+        "2code" = {
+          year_to <- paste0(year_to, "_code")
+          c(year_from, year_to)
+        },
+        "2area" = {
+          year_to <- "area"
+          c(year_from, year_to)
+        },
+        "2name" = {
+          year_to <- paste0(year_to, "_name")
+          c(year_from, year_to)
+        }
+      )
 
       # Using the Municipal codes for within region codes
-
       if (zhixiashi) {
         region_zhixiashi <- region_table %>%
           filter(zhixiashi)
@@ -278,7 +284,6 @@ regioncode <- function(data_input,
 
         region_table <- bind_rows(region_zhixiashi, region_province)
       }
-
     }
   }
 
@@ -300,19 +305,25 @@ regioncode <- function(data_input,
 
   # Convert the input to a data.frame for later merging
 
-  df_input <- data_input %>% as.data.frame
+  df_input <- data_input %>% as.data.frame()
   names(df_input) <- ls_index[1]
 
   data_output <-
-    select(region_table,!!ls_index) %>%
+    select(region_table, !!ls_index) %>%
     distinct() %>%
-    left_join(df_input, .) %>% # using left_join to keep the order of the input data
+    left_join(df_input, .) %>%
+    # using left_join to keep the order of the input data
     pull(!!year_to)
 
   # Because '2pinyin' can not be used as a variable name
-  if(topinyin){
-    if (is.character(data_output))
-      data_output<-py(char=data_output,dic=pydic(method="toneless",dic="pinyin2"))
+  if (topinyin) {
+    if (is.character(data_output)) {
+      data_output <-
+        py(
+          char = data_output,
+          dic = pydic(method = "toneless", dic = "pinyin2")
+        )
+    }
   }
 
   return(data_output)
