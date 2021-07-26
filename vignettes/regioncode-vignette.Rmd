@@ -133,11 +133,15 @@ This is common for national survey data.
 `regioncode` can fit this case with no problem as long as the user sets the argument `zhixiashi` as TRUE.
 
 ```{r zhixiashi, echo=TRUE, warning= FALSE, message=FALSE}
-# In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces' codes.
+# In the sample data, the division code of municipalities were coded
+# as NA. Filling the codes of municipalities with their provinces' 
+# codes.
 code_zhixiashi <- c("110000", "120000", "310000", "400000")
 
 corruption <- corruption %>% 
-  mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, province_id, prefecture_id))
+  mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, 
+                                province_id, 
+                                prefecture_id))
 
 # Converting
 
