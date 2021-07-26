@@ -34,7 +34,7 @@ To install:
 * the latest developing version: `remotes::install_github("sammo3182/regioncode")`.
 
 
-## Loading Toy Data and the Package
+## Load Toy Data and the Package
 
 The toy data was created based on a chunk from Yuhua Wang's [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD). 
 The data includes information on almost 20,000 officials who were investigated during Xi Jinping's anti-corruption campaign.
