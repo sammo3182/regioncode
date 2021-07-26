@@ -38,13 +38,20 @@ In the current version, we provide three basic functions` 2code`, `2name`, and `
 `regioncode` function accept numeric and character vectors as the input division codes and region names respectively. To achieve an accurate conversion, users have to specify the year of the source data correctly in the argument year_from. Then they can set the year they want the output is. That’s it. See the following example to convert the 2019-version codes to the 1999 version:
 
 ```R
+# load toy data and package
+library(regioncode)
+library(dplyr)
+corruption <- sample_n(na.exclude(corruption), 10)
+
 # original geocodes. It's 2019 version
 corruption$prefecture_id
+[1] 430100 371700 530100 640300 431100 621100 330400 360400 441500 421000
 
 # after conversion. It's 1999 version
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999)
+[1] 430100 372900 530100 640300 431100 622400 330400 360400 441500 421000
 ```
 
 ## Division codes to region name
@@ -56,22 +63,29 @@ regioncode(data_input = corruption$prefecture_id,
            year_from = 2019,
            year_to = 1999, 
            method = "2name")
+[1] "长沙市"   "菏泽地区" "昆明市"   "吴忠市"   "永州市"   "定西地区"
+[7] "嘉兴市"   "九江市"   "汕尾市"   "荆州市"
 ```
 
 Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. Users need to change the method argument to “2code” or “2name” to achieve these conversions.
 
 ```R
 corruption$prefecture
+[1] "长沙市" "菏泽市" "昆明市" "吴忠市" "永州市" "定西市" "嘉兴市" "九江市"
+[9] "汕尾市" "荆州市"
 
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            method = "2code")
+[1] 430100 372900 530100 640300 431100 622400 330400 360400 441500 421000
 
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
            method = "2name")
+[1] "长沙市"   "菏泽地区" "昆明市"   "吴忠市"   "永州市"   "定西地区"
+[7] "嘉兴市"   "九江市"   "汕尾市"   "荆州市"
 ```
 
 ## Advanced Usages
@@ -83,9 +97,13 @@ regioncode(data_input = corruption$prefecture,
 ```R
 # Full, official names
 corruption$prefecture
+[1] "长沙市" "菏泽市" "昆明市" "吴忠市" "永州市" "定西市" "嘉兴市" "九江市"
+[9] "汕尾市" "荆州市"
 
 # Incomplete names
+corruption$prefecture_sname <- gsub('.{1}$', '', corruption$prefecture)
 corruption$prefecture_sname
+[1] "长沙" "菏泽" "昆明" "吴忠" "永州" "定西" "嘉兴" "九江" "汕尾" "荆州"
 
 # Converting
 regioncode(data_input = corruption$prefecture_sname, 
@@ -93,6 +111,7 @@ regioncode(data_input = corruption$prefecture_sname,
            year_to = 1999, 
            method = "2code",
            incompleteName = "from")
+[1] 430100 372900 530100 640300 431100 622400 330400 360400 441500 421000
 ```
 
 ## Municipalities
@@ -112,6 +131,7 @@ regioncode(data_input = corruption$prefecture_id,
            year_from = 2019,
            year_to = 1999,
            zhixiashi = TRUE)
+[1] 430100 372900 530100 640300 431100 622400 330400 360400 441500 421000
 ```
 
 ## 2area
@@ -123,6 +143,7 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1999, 
            province = F,
            method="2area")
+[1] "华中" "华东" "西南" "西北" "华中" "西北" "华东" "华东" "华南" "华中"
 ```
 
 ## 2pinyin
@@ -136,6 +157,10 @@ regioncode(data_input = corruption$prefecture,
            method="2area",
            topinyin=FALSE
            )
+[1]      华中        华东        西南        西北        华中        西北 
+   "hua_zhong"  "hua_dong"    "xi_nan"    "xi_bei" "hua_zhong"    "xi_bei" 
+         华东        华东        华南        华中 
+[7]"hua_dong"  "hua_dong"   "hua_nan" "hua_zhong"
 ```
 ## 2dialect 
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
@@ -149,6 +174,8 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1999, 
            province = F,
            todialect = "dia_group")
+[1] "湘语"     "中原官话" "西南官话" "兰银官话" "西南官话" "中原官话"
+[7] "吴语"     "赣语"     "闽南区"   "西南官话"
 ```
 
 # Acknowledgements
