@@ -1,4 +1,4 @@
-# regioncode 0.1.0
+# regioncode 0.2.0
 
 + Styled function with tidyverse style
 + Rewrote `language_region` and `language_trans`  as `todialect`
