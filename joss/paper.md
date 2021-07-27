@@ -126,7 +126,7 @@ code_zhixiashi <- c("110000", "120000", "310000", "400000")
 corruption <- corruption %>% 
   mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, province_id, prefecture_id))
 
-## Converting
+# Converting
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999,
