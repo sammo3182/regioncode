@@ -5,15 +5,16 @@
 #' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
 #' @param year_from A integer to define the year of the input. The default value is 1999.
 #' @param year_to A integer to define the year to convert. The default value is 2015.
-#' @param method A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`2code`), names (`2name`) or area (`2area`). The default option is `2code`.
-#'  When `province` is TRUE, one can also choose `2abbre`, `abbre2code`, `abbre2name`, and `abbre2are` to convert between names/codes and abbreviations of provinces.
-#' @param province A logic string to indicate the level of converting. The default is FALSE.
-#' @param todialect A character indicating the language transformation. At the prefectural level, valid transformation include `dia_group`,`dia_sub_group`. At the province level, valid transformation is `dia_super`. The default value is "none".
+#' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) or area (`area`). The default option is `code`.
+#'  When `province` is TRUE, one can also choose `abbre`, `abbreTocode`, `abbreToname`, and `abbreToarea` to convert between names/codes and abbreviations of provinces.
+#' @param incomplete_name A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
+#' @param zhixiashi A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.
+#' @param to_pinyin A logic string to indicate whether the output is in pinyin spelling instead of Chinese characters. The default is FALSE.
+#' @param to_dialect A character indicating the language transformation. At the prefectural level, valid transformation include `dia_group`,`dia_sub_group`. At the province level, valid transformation is `dia_super`. The default value is "none".
 #'  When `province` is TRUE, one can also choose `dia_super` to get the language zone of provinces.
-#' @param zhixiashi (Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default value is FALSE.
-#' @param incompleteName A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
+#' @param province A logic string to indicate the level of converting. The default is FALSE.
 #'
-#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incompleteName`. The argument has four options: "none", "from", "to", and "both".
+#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incomplete_name`. The argument has four options: "none", "from", "to", and "both".
 #' \itemize{
 #'   \item "none": no short name will be used for either input or output;
 #'   \item "from": input data is short names instead of the full, official ones;
@@ -21,8 +22,8 @@
 #'   \item "both": both input and output are using short names.
 #' }
 #'
-#' The argument makes a difference only when `2code` or `2name` are chose in `method`.
-#' Users can use this argument together with `2name` to convert between names and incomplete names.
+#' The argument makes a difference only when `code` or `name` are chose in `convert_to`.
+#' Users can use this argument together with `name` to convert between names and incomplete names.
 #'
 #' @returns The function returns a character or numeric vector depending on what method is specified.
 #'
@@ -43,12 +44,12 @@
 regioncode <- function(data_input,
                        year_from = 1999,
                        year_to = 2015,
-                       todialect = "none",
-                       method = "2code",
-                       topinyin = FALSE,
-                       province = FALSE,
+                       convert_to = "code",
+                       incomplete_name = "none",
                        zhixiashi = FALSE,
-                       incompleteName = "none") {
+                       to_dialect = "none",
+                       to_pinyin = FALSE,
+                       province = FALSE) {
   # check out input param type
   if (!is.character(data_input) & !is.numeric(data_input)) {
     stop(
@@ -62,43 +63,43 @@ regioncode <- function(data_input,
 
 
   if (province) {
-    if (todialect != "none") {
-      if (todialect != "dia_super") {
+    if (to_dialect != "none") {
+      if (to_dialect != "dia_super") {
         stop("Invalid input: please choose a valid converting transformation.")
       }
     } else {
       if (!(
-        method %in% c(
-          "2name",
-          "2code",
-          "2area",
-          "name2abbre",
-          "code2abbre",
-          "abbre2name",
-          "abbre2code",
-          "abbre2area"
+        convert_to %in% c(
+          "name",
+          "code",
+          "area",
+          "nameToabbre",
+          "codeToabbre",
+          "abbreToname",
+          "abbreTocode",
+          "abbreToarea"
         )
       )) {
         stop("Invalid input: please choose a valid converting method.")
       }
     }
-  } else if (todialect != "none") {
-    if (!(todialect %in% c("dia_group", "dia_sub_group"))) {
+  } else if (to_dialect != "none") {
+    if (!(to_dialect %in% c("dia_group", "dia_sub_group"))) {
       stop("Invalid input: please choose a valid converting transformation.")
     }
   } else {
-    if (!(method %in% c("2name", "2code", "2area"))) {
+    if (!(convert_to %in% c("name", "code", "area"))) {
       stop("Invalid input: please choose a valid converting method.")
     }
   }
 
-  if (!(incompleteName %in% c("none", "from", "to", "both"))) {
+  if (!(incomplete_name %in% c("none", "from", "to", "both"))) {
     stop(
-      "Invalid input: the options of `incompleteName` are one of 'none', 'from', 'to', and 'both'."
+      "Invalid input: the options of `incomplete_name` are one of 'none', 'from', 'to', and 'both'."
     )
   }
 
-  if (!(incompleteName == "to") & data_input == "2code") {
+  if (!(incomplete_name == "to") & data_input == "code") {
     stop("Invalid input: can not complete administrative codes.")
   }
 
@@ -106,8 +107,8 @@ regioncode <- function(data_input,
     stop("Invalid input: param `zhixiashi` must be logical class.")
   }
 
-  if (!is.character(todialect)) {
-    stop("Invalid input: param `todialect` must be character class.")
+  if (!is.character(to_dialect)) {
+    stop("Invalid input: param `to_dialect` must be character class.")
   }
 
   # if (language_zone &  !grepl('_name', data_input, fixed = TRUE))
@@ -119,18 +120,18 @@ regioncode <- function(data_input,
     stop("Invalid input: param `zhixiashi` must be logical class.")
   }
 
-  if (!is.logical(topinyin)) {
-    stop("Invalid input: param `topinyin` must be logical class.")
+  if (!is.logical(to_pinyin)) {
+    stop("Invalid input: param `to_pinyin` must be logical class.")
   }
 
-  if (topinyin & method == "2code" & todialect == FALSE) {
+  if (to_pinyin & convert_to == "code" & to_dialect == FALSE) {
     stop("Invalid input: can not translate administrative codes to pinyin.")
   }
 
 
   if (province) {
     # 1 Section of province-level converting
-    if (todialect != "none") {
+    if (to_dialect != "none") {
       # 1-1 If convert language zone
       if (is.numeric(data_input)) {
         year_from <- "prov_code"
@@ -139,7 +140,7 @@ regioncode <- function(data_input,
         year_from <- "prov_name"
       }
 
-      ls_index <- switch(todialect,
+      ls_index <- switch(to_dialect,
         "dia_super" = {
           year_to <- "prov_language"
           c(year_from, year_to)
@@ -155,40 +156,40 @@ regioncode <- function(data_input,
       year_from <- ifelse(year_from < 1999, 1998, 1999)
       year_to <- ifelse(year_to < 1999, 1998, 1999)
 
-      ls_index <- switch(method,
-        "2name" = {
+      ls_index <- switch(convert_to,
+        "name" = {
           year_to <- "prov_name"
           c(year_from, year_to)
         },
-        "2code" = {
+        "code" = {
           year_to <- "prov_code"
           c(year_from, year_to)
         },
-        "2area" = {
+        "area" = {
           year_to <- "area"
           c(year_from, year_to)
         },
-        "name2abbre" = {
+        "nameToabbre" = {
           year_from <- "prov_name"
           year_to <- paste0(year_to, "_nickname")
           c(year_from, year_to)
         },
-        "code2abbre" = {
+        "codeToabbre" = {
           year_from <- "prov_code"
           year_to <- paste0(year_to, "_nickname")
           c(year_from, year_to)
         },
-        "abbre2name" = {
+        "abbreToname" = {
           year_from <- paste0(year_to, "_nickname")
           year_to <- "prov_name"
           c(year_from, year_to)
         },
-        "abbre2code" = {
+        "abbreTocode" = {
           year_from <- paste0(year_to, "_nickname")
           year_to <- "prov_code"
           c(year_from, year_to)
         },
-        "abbre2area" = {
+        "abbreToarea" = {
           year_from <- paste0(year_from, "_nickname")
           year_to <- "area"
           c(year_from, year_to)
@@ -197,7 +198,7 @@ regioncode <- function(data_input,
     }
   } else {
     # 2 Section of prefectural-level converting
-    if (todialect != "none") {
+    if (to_dialect != "none") {
       # 2-1 If convert language zone
       if (is.numeric(data_input)) {
         year_from <- paste0(year_from, "_code")
@@ -206,7 +207,7 @@ regioncode <- function(data_input,
         year_from <- paste0(year_from, "_name")
       }
 
-      ls_index <- switch(todialect,
+      ls_index <- switch(to_dialect,
         "dia_group" = {
           year_to <- "pref_language"
           c(year_from, year_to)
@@ -225,16 +226,16 @@ regioncode <- function(data_input,
         year_from <- paste0(year_from, "_name")
       }
 
-      ls_index <- switch(method,
-        "2code" = {
+      ls_index <- switch(convert_to,
+        "code" = {
           year_to <- paste0(year_to, "_code")
           c(year_from, year_to)
         },
-        "2area" = {
+        "area" = {
           year_to <- "area"
           c(year_from, year_to)
         },
-        "2name" = {
+        "name" = {
           year_to <- paste0(year_to, "_name")
           c(year_from, year_to)
         }
@@ -290,14 +291,14 @@ regioncode <- function(data_input,
   # When using sname instead of the official name
 
   ls_index <- case_when(
-    incompleteName == "both" ~ gsub("_name", "_sname", ls_index),
-    incompleteName == "from" ~ c(gsub("_name", "_sname", ls_index[1]), ls_index[2]),
-    incompleteName == "to" ~ c(ls_index[1], gsub("_name", "_sname", ls_index[2])),
-    incompleteName == "none" ~ ls_index
+    incomplete_name == "both" ~ gsub("_name", "_sname", ls_index),
+    incomplete_name == "from" ~ c(gsub("_name", "_sname", ls_index[1]), ls_index[2]),
+    incomplete_name == "to" ~ c(ls_index[1], gsub("_name", "_sname", ls_index[2])),
+    incomplete_name == "none" ~ ls_index
   )
 
-  # Updating the year_from/to after the evaluation of `incompleteName`
-  if (incompleteName != "none") {
+  # Updating the year_from/to after the evaluation of `incomplete_name`
+  if (incomplete_name != "none") {
     year_from <- ls_index[1]
     year_to <- ls_index[2]
   }
@@ -316,7 +317,7 @@ regioncode <- function(data_input,
     pull(!!year_to)
 
   # Because '2pinyin' can not be used as a variable name
-  if (topinyin) {
+  if (to_pinyin) {
     if (is.character(data_output)) {
       data_output <-
         py(
