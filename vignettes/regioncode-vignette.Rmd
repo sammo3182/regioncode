@@ -23,7 +23,7 @@ Inspired by Vincent Arel-Bundock's amazing [`countrycode`](https://joss.theoj.or
 
 The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. 
 These "administrative division codes" are consistently [adjusted and updated](http://www.mca.gov.cn/article/sj/xzqh/1980/) to matched national and regional plans of development. 
-The adjustments however may disturb researchers when they conduct studies overtime or merge geo-based data from different years. 
+The adjustments however may disturb researchers when they conduct studies over time or merge geo-based data from different years. 
 Especially, when researchers render statistical data on a Chinese map, different geocodes between map data and statistical data can cause mess-up outputs.
 
 This package aims to conquer such difficulties by a one-step solution.
@@ -39,15 +39,15 @@ To install:
 
 # Basic Usage
 
-We uses a randomly drawed sample of Yuhua Wang's  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) to illustrate how the package works. 
-In the data, the division codes were recorded with the 2019 version, and we added prefectural abbreviation for the sake of illustration.
+We uses a randomly drawn sample of Yuhua Wang's  [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) to illustrate how the package works. 
+In the data, the division codes were recorded with the 2019 version, and we added prefectural abbreviations for the sake of illustration.
 
 In `regioncode` package, we named administrative division codes as `code`, regions' formal names as `name`, and their commonly used abbreviation as `sname`.
-The current version enables mutually conversion between any pair of them.
+The current version enables mutual conversion between any pair of them.
 To do so, users just need to pass a character vector of names or a numeric vector of geocodes into the function. 
-In the current version, the function can produce three types of output at both the prefectual and provincial levels: codes (`code`), names (`name`) and area (`area`, such as Huabei, Dongbei, Hua'nan, etc.).
-One just need to specify which type of the output they want in the argument `convert_to` and corresponding years of the input and output. 
-For example, the following codes convert the 2019 geocodes in the `corruption`data to their 1989 version:
+In the current version, the function can produce three types of output at both the prefectural and provincial levels: codes (`code`), names (`name`) and area (`area`, such as 华北, 东北, 华南, etc.).
+One just needs to specify which type of the output they want in the argument `convert_to` and corresponding years of the input and output. 
+For example, the following codes convert the 2019 geocodes in the `corruption` data to their 1989 version:
 
 ```{r code2code}
 library(regioncode)
@@ -68,7 +68,7 @@ Note that if a region was initially geocoded in e.g., 1989 and included in a new
 If a big place was broken into several regions, the later-year codes will be aligned with the first region according to the ascendant order of the regions' numeric geocodes.
 
 By altering the output format to `name`, one can easily convert codes or region names of a given year to region names in another year. 
-`regioncode` automatically detect the input format, so users needs to specify the *output* format only (together with the input and output years) to gain what they want. 
+`regioncode` automatically detects the input format, so users need to specify the *output* format only (together with the input and output years) to gain what they want. 
 In the following example, we convert the geocode variable in the `corruption` dataset to region names and the name variable to codes and names in another year.
 
 
@@ -127,9 +127,9 @@ regioncode(data_input = corruption$prefecture,
 
 Municipalities ("直辖市") are geographically cities but administratively provincial.
 The districts within these municipalities are thus prefectural. 
-Different analyses treats these districts differently: some parallel the districts aligned with other prefectures, while the others treat the entire municipality as one prefecture.
+Different analyses treat these districts differently: some parallel the districts aligned with other prefectures, while the others treat the entire municipality as one prefecture.
 To deal with the latter situation, `regioncode` sets an argument `zhixiashi`.
-When the argument is set `TRUE`, the munipalities are treated as whole prefectures, and their provincial codes are used as the geocodes.
+When the argument is set `TRUE`, the municipalities are treated as whole prefectures, and their provincial codes are used as the geocodes.
 
 
 ## Sociopolitical and Linguistic Areas
@@ -148,11 +148,11 @@ regioncode(data_input = corruption$prefecture,
            convert_to="area")
 ```
 
-China is an multilingual countries with a variety of dialects.
-These dialects may be used by several prefectures in a province or provinces.
+China is a multilingual country with a variety of dialects.
+These dialects may be used by several prefectures in a province or province.
 Prefectures from different provinces may also share the same dialect.
 
-`regioncode` allows users to gain linguistic zones the prefectures belongs as an output. Users can gain two levels of linguistic zones, dialect groups and dialect sub-groups by setting the argument `to_pinyin` to `dia_group` or `dia_sub_group`.
+`regioncode` allows users to gain linguistic zones the prefectures belong as an output. Users can gain two levels of linguistic zones, dialect groups and dialect sub-groups by setting the argument `to_pinyin` to `dia_group` or `dia_sub_group`.
 Note that, the linguistic distribution in China is too complex for precisely gauging at the prefectural level.
 The linguistic zone output from `regioncode` is thus at most for reference rather than rigorous linguistic research.
 
@@ -223,8 +223,9 @@ The development of the package is ongoing.
 Future versions aim to add more administrative level choices, from province level to county level. 
 Data are also enriching. 
 Welcome to join us if you are also interested (see the affiliations below).
-Also, please contact with us for any questions or comments.
+Please contact us with any questions or comments.
 Bug reports can be conducted by [Github Issues](https://github.com/sammo3182/regioncode/issues).
+
 Also thanks ZHU Meng and LIU Xueyan for helping writing the 'Advanced Application' section of this vignette.
 
 ## Affiliation
