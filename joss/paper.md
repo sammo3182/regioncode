@@ -87,6 +87,7 @@ regioncode(data_input = corruption$prefecture,
            method = "2name")
 ```
 ![](https://user-images.githubusercontent.com/39488085/127021422-2429558f-14aa-49d1-af38-74dc91c5da01.png)
+
 ## Advanced Usages
 
 ## Completion
@@ -126,7 +127,6 @@ corruption <- corruption %>%
   mutate(prefecture_id = ifelse(province_id %in% code_zhixiashi, province_id, prefecture_id))
 
 ## Converting
-
 regioncode(data_input = corruption$prefecture_id, 
            year_from = 2019,
            year_to = 1999,
@@ -135,6 +135,7 @@ regioncode(data_input = corruption$prefecture_id,
 ```
 
 ## 2area
+
 `regioncode` also offers a method "2area" to convert codes and names of the region into the municipal area that they belong to. 
 
 ```R
@@ -145,7 +146,9 @@ regioncode(data_input = corruption$prefecture,
            method="2area")
 ```
 ![](https://user-images.githubusercontent.com/39488085/127021722-133556f9-ed91-49dd-9b82-20d1a34480c9.png)
+
 ## 2pinyin
+
 `regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
 
 ```r
@@ -159,7 +162,9 @@ regioncode(data_input = corruption$prefecture,
 
 ```
 ![](https://user-images.githubusercontent.com/39488085/127021764-6322d173-6fd4-4d66-8846-2044aecdc896.png)
+
 ## 2dialect 
+
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
 Users need to change the `todialect` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
 Similarly, one can get the language zone from the province name.
