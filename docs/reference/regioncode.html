@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">regioncode</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -144,8 +144,11 @@
   <span class='va'>data_input</span>,
   year_from <span class='op'>=</span> <span class='fl'>1999</span>,
   year_to <span class='op'>=</span> <span class='fl'>2015</span>,
-  method <span class='op'>=</span> <span class='st'>"code2code"</span>,
-  zhixiashi <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  todialect <span class='op'>=</span> <span class='st'>"none"</span>,
+  method <span class='op'>=</span> <span class='st'>"2code"</span>,
+  topinyin <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  province <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  zhixiashi <span class='op'>=</span> <span class='cn'>FALSE</span>,
   incompleteName <span class='op'>=</span> <span class='st'>"none"</span>
 <span class='op'>)</span></pre>
 
@@ -165,16 +168,26 @@
       <td><p>A integer to define the year to convert. The default value is 2015.</p></td>
     </tr>
     <tr>
+      <th>todialect</th>
+      <td><p>A character indicating the language transformation. At the prefectural level, valid transformation include <code>dia_group</code>,<code>dia_sub_group</code>. At the province level, valid transformation is <code>dia_super</code>. The default value is "none".
+When <code>province</code> is TRUE, one can also choose <code>dia_super</code> to get the language zone of provinces.</p></td>
+    </tr>
+    <tr>
       <th>method</th>
-      <td><p>A character indicating the converting methods. Valid methods include converting between codes in different years (<code>code2code</code>), from codes to region names (<code>code2name</code>), from region names to division codes(<code>name2code</code>), and between names in different years (<code>name2name</code>). The default option is <code>code2code</code>.</p></td>
+      <td><p>A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (<code>2code</code>), names (<code>2name</code>) or area (<code>2area</code>). The default option is <code>2code</code>.
+When <code>province</code> is TRUE, one can also choose <code>2abbre</code>, <code>abbre2code</code>, <code>abbre2name</code>, and <code>abbre2are</code> to convert between names/codes and abbreviations of provinces.</p></td>
+    </tr>
+    <tr>
+      <th>province</th>
+      <td><p>A logic string to indicate the level of converting. The default is FALSE.</p></td>
     </tr>
     <tr>
       <th>zhixiashi</th>
-      <td><p>A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default is FALSE.</p></td>
+      <td><p>(Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default value is FALSE.</p></td>
     </tr>
     <tr>
       <th>incompleteName</th>
-      <td><p>A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both". The default value is "none".</p></td>
+      <td><p>A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".</p></td>
     </tr>
     </table>
 
@@ -190,16 +203,16 @@
 <li><p>"both": both input and output are using short names.</p></li>
 </ul>
 
-<p>The argument makes a difference only when <code>name2code</code> or <code>name2name</code> are chose in <code>method</code>.</p>
+<p>The argument makes a difference only when <code>2code</code> or <code>2name</code> are chose in <code>method</code>.
+Users can use this argument together with <code>2name</code> to convert between names and incomplete names.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># library(regioncode)</span>
+<span class='co'>#  library(regioncode)</span>
 
-
-<span class='co'># regioncode(data_input = corruption$prefecture_id,</span>
-<span class='co'>#            year_from = 2019,</span>
-<span class='co'>#           year_to = 1999)</span>
+<span class='co'>#  regioncode(data_input = corruption$prefecture_id,</span>
+<span class='co'>#             year_from = 2000,</span>
+<span class='co'>#             year_to = 2015)</span>
 
 
 </div></pre>

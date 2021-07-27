@@ -63,18 +63,17 @@ regioncode(data_input = corruption$prefecture_id,
            year_from = 2019,
            year_to = 1999, 
            method = "2name")
+[1] "长沙市"   "菏泽地区" "昆明市"   "吴忠市"   "永州市"   "定西地区"
+[7] "嘉兴市"   "九江市"   "汕尾市"   "荆州市"
 ```
-
-![](https://user-images.githubusercontent.com/39488085/127020565-06f00748-aafc-4490-9ff2-305f104ff595.png)
 
 Similarly, one can get the code from names, or in a less-often case get the names in a different year from the names from a given year. Users need to change the method argument to “2code” or “2name” to achieve these conversions.
 
 ```R
 corruption$prefecture
-```
-![](https://user-images.githubusercontent.com/39488085/127021257-286da69d-7729-42f1-8862-b34c8f57d33e.png)
+[1] "长沙市" "菏泽市" "昆明市" "吴忠市" "永州市" "定西市" "嘉兴市" "九江市"
+[9] "汕尾市" "荆州市"
 
-```R
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1999, 
@@ -85,8 +84,10 @@ regioncode(data_input = corruption$prefecture,
            year_from = 2019,
            year_to = 1999, 
            method = "2name")
+[1] "长沙市"   "菏泽地区" "昆明市"   "吴忠市"   "永州市"   "定西地区"
+[7] "嘉兴市"   "九江市"   "汕尾市"   "荆州市"
 ```
-![](https://user-images.githubusercontent.com/39488085/127021422-2429558f-14aa-49d1-af38-74dc91c5da01.png)
+
 ## Advanced Usages
 
 ## Completion
@@ -96,15 +97,14 @@ regioncode(data_input = corruption$prefecture,
 ```R
 # Full, official names
 corruption$prefecture
-```
-![](https://user-images.githubusercontent.com/39488085/127021654-35afd8c2-db21-4918-b60e-75bb51996ece.png)
-```R
+[1] "长沙市" "菏泽市" "昆明市" "吴忠市" "永州市" "定西市" "嘉兴市" "九江市"
+[9] "汕尾市" "荆州市"
+
 # Incomplete names
 corruption$prefecture_sname <- gsub('.{1}$', '', corruption$prefecture)
 corruption$prefecture_sname
-```
-![](https://user-images.githubusercontent.com/39488085/127021692-4cf7b063-4658-4d32-a452-bd5f92297a17.png)
-```R
+[1] "长沙" "菏泽" "昆明" "吴忠" "永州" "定西" "嘉兴" "九江" "汕尾" "荆州"
+
 # Converting
 regioncode(data_input = corruption$prefecture_sname, 
            year_from = 2019,
@@ -143,8 +143,9 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1999, 
            province = F,
            method="2area")
+[1] "华中" "华东" "西南" "西北" "华中" "西北" "华东" "华东" "华南" "华中"
 ```
-![](https://user-images.githubusercontent.com/39488085/127021722-133556f9-ed91-49dd-9b82-20d1a34480c9.png)
+
 ## 2pinyin
 `regioncode` offers a parameter "topinyin" to convert the names or areas into the form of pinyin. The default of topinyin is set as FALSE, and only when the output form is character that the converting process will begin.
 
@@ -156,9 +157,11 @@ regioncode(data_input = corruption$prefecture,
            method="2area",
            topinyin=FALSE
            )
-
+[1]      华中        华东        西南        西北        华中        西北 
+   "hua_zhong"  "hua_dong"    "xi_nan"    "xi_bei" "hua_zhong"    "xi_bei" 
+         华东        华东        华南        华中 
+[7]"hua_dong"  "hua_dong"   "hua_nan" "hua_zhong"
 ```
-![](https://user-images.githubusercontent.com/39488085/127021764-6322d173-6fd4-4d66-8846-2044aecdc896.png)
 ## 2dialect 
 `regioncode` also offers a function to convert name of prefecture from any year to language zone.
 Users need to change the `todialect` argument to "dia_group" or "dia_sub_group" to achieve these transformations.
@@ -171,8 +174,9 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1999, 
            province = F,
            todialect = "dia_group")
+[1] "湘语"     "中原官话" "西南官话" "兰银官话" "西南官话" "中原官话"
+[7] "吴语"     "赣语"     "闽南区"   "西南官话"
 ```
-![](https://user-images.githubusercontent.com/39488085/127021793-22f417ce-ebd9-4d9b-86b1-06c418dd4576.png)
 
 # Acknowledgements
 
