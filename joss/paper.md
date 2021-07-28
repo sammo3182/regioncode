@@ -46,7 +46,7 @@ data("corruption")
 corruption$prefecture_id
 ```
 
-![1](https://user-images.githubusercontent.com/39488085/127256350-6e40d218-49f0-4c88-b996-08a375b83fcf.png)
+![](https://user-images.githubusercontent.com/39488085/127256350-6e40d218-49f0-4c88-b996-08a375b83fcf.png)
 
 ```r
 # 1999 version
@@ -56,7 +56,7 @@ regioncode(data_input = corruption$prefecture_id,
            year_to = 1989)
 ```
 
-![1_2](https://user-images.githubusercontent.com/39488085/127259452-0c807d54-dc3a-4aa3-9c5f-48caa53ff2e5.png)
+![](https://user-images.githubusercontent.com/39488085/127259452-0c807d54-dc3a-4aa3-9c5f-48caa53ff2e5.png)
 
 Note that if a region was initially geocoded in e.g., 1989 and included in a new region, in 2019, the new region geocode will be used hereafter.If a big place was broken into several regions, the later-year codes will be aligned with the first region according to the ascendant order of the regions' numeric geocodes.
 
@@ -67,7 +67,7 @@ By altering the output format to `name`, one can easily convert codes or region 
 corruption$prefecture
 ```
 
-![2](https://user-images.githubusercontent.com/39488085/127256356-768cd2bc-fdf7-43ca-b755-5256264bd57e.png)
+![](https://user-images.githubusercontent.com/39488085/127256356-768cd2bc-fdf7-43ca-b755-5256264bd57e.png)
 
 ```R
 # Codes to name
@@ -78,7 +78,7 @@ regioncode(data_input = corruption$prefecture_id,
            year_to = 1989)
 ```
 
-![3](https://user-images.githubusercontent.com/39488085/127256360-70c87af1-f180-4eb2-9530-5f167b57d2a9.png)
+![](https://user-images.githubusercontent.com/39488085/127256360-70c87af1-f180-4eb2-9530-5f167b57d2a9.png)
 
 ```R
 # Name to codes of the same year
@@ -89,7 +89,7 @@ regioncode(data_input = corruption$prefecture,
            year_to = 2019)
 ```
 
-![4](https://user-images.githubusercontent.com/39488085/127256361-ad389b45-a30f-4bba-929d-3024fe608e83.png)
+![](https://user-images.githubusercontent.com/39488085/127256361-ad389b45-a30f-4bba-929d-3024fe608e83.png)
 
 # Advanced Applications
 
@@ -104,7 +104,7 @@ More than often, data codes may omit the administrative level when recording geo
 corruption$prefecture
 ```
 
-![6](https://user-images.githubusercontent.com/39488085/127256365-a8a22896-0527-4877-b756-3536ff62a33f.png)
+![](https://user-images.githubusercontent.com/39488085/127256365-a8a22896-0527-4877-b756-3536ff62a33f.png)
 
 ```R
 regioncode(data_input = corruption$prefecture, 
@@ -114,7 +114,7 @@ regioncode(data_input = corruption$prefecture,
            incomplete_name = "to")
 ```
 
-![7](https://user-images.githubusercontent.com/39488085/127256368-eff66803-3e9f-413f-a623-88f78783a624.png)
+![](https://user-images.githubusercontent.com/39488085/127256368-eff66803-3e9f-413f-a623-88f78783a624.png)
 
 ## Municipalities
 
@@ -124,7 +124,7 @@ Municipalities (named "zhixiashi" in Chinese Pinyin) are geographically cities b
 
 Due to social, political, and martial reasons, Chinese regions are divided into eight regions:
 
-<img src="https://user-images.githubusercontent.com/39488085/127256370-51563c5f-def6-4589-b2c4-18b2e032c926.png" alt="8" style="zoom:67%;" />
+![](https://user-images.githubusercontent.com/39488085/127256370-51563c5f-def6-4589-b2c4-18b2e032c926.png)
 
 `regioncode` also offers a method "area" to convert codes and names of the region into such areas.
 
@@ -135,7 +135,7 @@ regioncode(data_input = corruption$prefecture,
            convert_to="area")
 ```
 
-![9](https://user-images.githubusercontent.com/39488085/127256372-67f37c57-da41-4c0b-9a5a-1da8565fc4b4.png)
+![](https://user-images.githubusercontent.com/39488085/127256372-67f37c57-da41-4c0b-9a5a-1da8565fc4b4.png)
 
 China is a multilingual country with a variety of dialects. These dialects may be used by several prefectures in a province or province. Prefectures from different provinces may also share the same dialect. `regioncode` allows users to gain linguistic zones the prefectures belong as an output. Users can gain two levels of linguistic zones, dialect groups and dialect sub-groups by setting the argument `to_pinyin` to `dia_group` or `dia_sub_group`. 
 
@@ -146,7 +146,7 @@ regioncode(data_input = corruption$prefecture,
            to_dialect = "dia_group")
 ```
 
-![10](https://user-images.githubusercontent.com/39488085/127256373-88f4f02e-6653-4971-906a-4f796dab1bb0.png)
+![](https://user-images.githubusercontent.com/39488085/127256373-88f4f02e-6653-4971-906a-4f796dab1bb0.png)
 
 ## Pinyin
 
@@ -161,7 +161,7 @@ regioncode(data_input = corruption$prefecture,
            )
 ```
 
-![12](https://user-images.githubusercontent.com/39488085/127256378-f5063101-049b-4bf3-abe2-adea2f4ee67e.png)
+![](https://user-images.githubusercontent.com/39488085/127256378-f5063101-049b-4bf3-abe2-adea2f4ee67e.png)
 
 ## Provinces
 
@@ -175,7 +175,7 @@ regioncode(data_input = corruption$province_id,
            province = TRUE)
 ```
 
-![15](https://user-images.githubusercontent.com/39488085/127256346-72c3b942-fa32-445f-a74e-4a2440e5cb91.png)
+![](https://user-images.githubusercontent.com/39488085/127256346-72c3b942-fa32-445f-a74e-4a2440e5cb91.png)
 
 # Acknowledgements
 
