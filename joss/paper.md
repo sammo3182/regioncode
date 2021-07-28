@@ -124,7 +124,7 @@ Municipalities (named "zhixiashi" in Chinese Pinyin) are geographically cities b
 
 Due to social, political, and martial reasons, Chinese regions are divided into eight regions:
 
-![](https://user-images.githubusercontent.com/39488085/127285356-fd127c29-0c58-462a-8879-aacea3f8bb50.png)
+![](https://user-images.githubusercontent.com/39488085/127287528-2ed50add-063c-4bec-a881-cce1c0e104d5.png)
 
 `regioncode` also offers a method "area" to convert codes and names of the region into such areas.
 
