@@ -175,8 +175,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>, <span class="co"># default set</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
-<pre><code>##  [1] 370100 329001 310227 420500 422700 452200 433000 350300 512500 460025
-## [11] 420600</code></pre>
+<pre><code>##  [1] &quot;370100&quot; &quot;329001&quot; &quot;310227&quot; &quot;420500&quot; &quot;422700&quot; &quot;452200&quot; &quot;433000&quot; &quot;350300&quot;
+##  [9] &quot;512500&quot; &quot;460025&quot; &quot;420600&quot;</code></pre>
 <p>Note that if a region was initially geocoded in e.g., 1989 and included in a new region, in 2019, the new region geocode will be used hereafter. If a big place was broken into several regions, the later-year codes will be aligned with the first region according to the ascendant order of the regions’ numeric geocodes.</p>
 <p>By altering the output format to <code>name</code>, one can easily convert codes or region names of a given year to region names in another year. <code>regioncode</code> automatically detects the input format, so users need to specify the <em>output</em> format only (together with the input and output years) to gain what they want. In the following example, we convert the geocode variable in the <code>corruption</code> dataset to region names and the name variable to codes and names in another year.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The original name</span></span>
@@ -289,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">to_dialect =</span> <span class="st">&quot;dia_sub_group&quot;</span>)</span></code></pre></div>
 <pre><code>##  [1] &quot;沧惠片-1&quot;  &quot;石济片-8&quot;  &quot;泰如片-1&quot;  &quot;太湖片-1&quot;  &quot;成渝片-3&quot;  &quot;成渝片-9&quot; 
 ##  [7] &quot;桂柳片-10&quot; &quot;岑江片-2&quot;  &quot;吉溆片-3&quot;  &quot;娄邵片-1&quot;  &quot;黔北片-3&quot;  &quot;长益片-3&quot; 
-## [13] &quot;莆仙区-4&quot;  &quot;灌赤片-10&quot; &quot;NA-NA&quot;     &quot;鄂北片-10&quot;</code></pre>
+## [13] &quot;莆仙区-4&quot;  &quot;灌赤片-10&quot; &quot;府城片&quot;    &quot;鄂北片-10&quot;</code></pre>
 </div>
 <div id="pinyin" class="section level2">
 <h2>Pinyin</h2>

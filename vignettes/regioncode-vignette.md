@@ -71,8 +71,8 @@ regioncode(data_input = corruption$prefecture_id,
 ```
 
 ```
-##  [1] 370100 329001 310227 420500 422700 452200 433000 350300 512500 460025
-## [11] 420600
+##  [1] "370100" "329001" "310227" "420500" "422700" "452200" "433000" "350300"
+##  [9] "512500" "460025" "420600"
 ```
 
 Note that if a region was initially geocoded in e.g., 1989 and included in a new region, in 2019, the new region geocode will be used hereafter.
@@ -140,8 +140,11 @@ The current version also allows conversions at the provincial level.
 
 ## Incomplete naming prefectures.
 
-More than often, data codes may omit the administrative level when recording geo-information, e.g., using "北京" instead of "北京市." To accomplish conversions of such data, one needs to specify the `incomplete_name` argument.
-If the input data is incomplete, users should set the argument as "from"; if they want the output name (when `convert_to = "name"`) to be without "city" or "prefecture," they can set the argument to "to" (see the example below); and if users want to gain incomplete names for both input and output names, `incomplete_name = "both"`.
+More than often, data codes may omit the administrative level when recording geo-information, e.g., using "北京" instead of "北京市." 
+To accomplish conversions of such data, one needs to specify the `incomplete_name` argument.
+If the input data is incomplete, users should set the argument as "from"; 
+if they want the output name (when `convert_to = "name"`) to be without "city" or "prefecture," they can set the argument to "to" (see the example below); 
+and if users want to gain incomplete names for both input and output names, `incomplete_name = "both"`.
 All the above conversions can be over years.
 
 
@@ -191,7 +194,6 @@ Due to social, political, and martial reasons, Chinese regions are divided into 
 | 西南   | 重庆市, 四川省, 贵州省, 云南省, 西藏自治区                     |
 | 西北   | 陕西省, 甘肃省, 青海省, 宁夏回族自治区, 新疆维吾尔自治区       |
 
-
 `regioncode` also offers a method "area" to convert codes and names of the region into such areas.
 
 
@@ -210,8 +212,7 @@ China is a multilingual country with a variety of dialects.
 These dialects may be used by several prefectures in a province or province.
 Prefectures from different provinces may also share the same dialect.
 
-`regioncode` allows users to gain linguistic zones the prefectures belong as an output.
-Users can gain two levels of linguistic zones, dialect groups and dialect sub-groups by setting the argument `to_pinyin` to `dia_group` or `dia_sub_group`.
+`regioncode` allows users to gain linguistic zones the prefectures belong as an output. Users can gain two levels of linguistic zones, dialect groups and dialect sub-groups by setting the argument `to_pinyin` to `dia_group` or `dia_sub_group`.
 Note that, the linguistic distribution in China is too complex for precisely gauging at the prefectural level.
 The linguistic zone output from `regioncode` is thus at most for reference rather than rigorous linguistic research.
 
@@ -238,7 +239,7 @@ regioncode(data_input = corruption$prefecture,
 ```
 ##  [1] "沧惠片-1"  "石济片-8"  "泰如片-1"  "太湖片-1"  "成渝片-3"  "成渝片-9" 
 ##  [7] "桂柳片-10" "岑江片-2"  "吉溆片-3"  "娄邵片-1"  "黔北片-3"  "长益片-3" 
-## [13] "莆仙区-4"  "灌赤片-10" "NA-NA"     "鄂北片-10"
+## [13] "莆仙区-4"  "灌赤片-10" "府城片"    "鄂北片-10"
 ```
 
 ## Pinyin
@@ -304,7 +305,8 @@ regioncode(data_input = corruption$prefecture,
 
 `regioncode` allows conversions at not only the prefectural but provincial level.
 By setting the argument `province = TRUE`, users can accomplish all the code, name, and area conversions at the provincial level.
-(Note that, at the provincial level, the linguistic conversion can be only to dialect group.) Moreover, since provinces have fixed abbreviations, `regioncode` allows names not only being, e.g., "宁夏" instead of "宁夏回族自治区" but also "宁".
+(Note that, at the provincial level, the linguistic conversion can be only to dialect group.) 
+Moreover, since provinces have fixed abbreviations, `regioncode` allows names not only being, e.g., "宁夏" instead of "宁夏回族自治区" but also "宁".
 When the inputs are abbreviations, users can set the `convert_to` argument to `abbreTocode`, `abbreToname`, or `abbreToarea`.
 When they want provincial abbreviation outputs, just set `convert_to = "abbre"`.
 
