@@ -117,7 +117,7 @@ regioncode(data_input = corruption$prefecture_sname,
 
 ## Municipalities
 
-Another advanced application involves the case when the municipalities directly under the central government (“zhixiashi” in Chinese Pinyin). This is common for national survey data. `regioncode` can fit this case with no problem as long as the user sets the argument zhixiashi as TRUE.
+Another advanced application involves the case when the municipalities(直辖市) directly under the central government (“zhixiashi” in Chinese Pinyin). This is common for national survey data. `regioncode` can fit this case with no problem as long as the user sets the argument zhixiashi as TRUE.
 
 ```R
 # In the sample data, the division code of municipalities were coded as NA. Filling the codes of municipalities with their provinces' codes.
