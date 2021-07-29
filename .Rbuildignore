@@ -12,3 +12,5 @@
 ^docs$
 ^pkgdown$
 ^README\.Rmd$
+^.github$
+^joss$
