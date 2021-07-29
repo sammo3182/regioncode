@@ -132,7 +132,7 @@ When the argument is set `TRUE`, the municipalities are treated as whole prefect
 
 ## Sociopolitical and Linguistic Areas
 
-Due to social, political, and martial reasons, Chinese regions are divided into eight regions:
+Due to social, political, and martial reasons, Chinese regions are divided into seven regions:
 
 
 | region | provincial-level administrative unit                           |
