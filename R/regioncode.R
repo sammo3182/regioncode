@@ -51,7 +51,7 @@ regioncode <- function(data_input,
                        to_pinyin = FALSE,
                        province = FALSE) {
   # check out input param type
-  if (!is.character(data_input) & !is.numeric(data_input)) {
+  if (!is.character(data_input[1]) & !is.numeric(data_input[1])) {
     stop(
       "Invalid input: only region names as a character vector or division codes as an integer vector are valid."
     )
@@ -99,7 +99,7 @@ regioncode <- function(data_input,
     )
   }
 
-  if (!(incomplete_name == "to") & data_input == "code") {
+  if (incomplete_name == "to" & convert_to == "code") {
     stop("Invalid input: can not complete administrative codes.")
   }
 
@@ -128,15 +128,14 @@ regioncode <- function(data_input,
     stop("Invalid input: can not translate administrative codes to pinyin.")
   }
 
-
   if (province) {
     # 1 Section of province-level converting
     if (to_dialect != "none") {
       # 1-1 If convert language zone
-      if (is.numeric(data_input)) {
+      if (is.numeric(data_input[1])) {
         year_from <- "prov_code"
       }
-      if (is.character(data_input)) {
+      if (is.character(data_input[1])) {
         year_from <- "prov_name"
       }
 
@@ -200,10 +199,10 @@ regioncode <- function(data_input,
     # 2 Section of prefectural-level converting
     if (to_dialect != "none") {
       # 2-1 If convert language zone
-      if (is.numeric(data_input)) {
+      if (is.numeric(data_input[1])) {
         year_from <- paste0(year_from, "_code")
       }
-      if (is.character(data_input)) {
+      if (is.character(data_input[1])) {
         year_from <- paste0(year_from, "_name")
       }
 
@@ -219,10 +218,10 @@ regioncode <- function(data_input,
       )
     } else {
       # 2-2 If not convert language zone
-      if (is.numeric(data_input)) {
+      if (is.numeric(data_input[1])) {
         year_from <- paste0(year_from, "_code")
       }
-      if (is.character(data_input)) {
+      if (is.character(data_input[1])) {
         year_from <- paste0(year_from, "_name")
       }
 
