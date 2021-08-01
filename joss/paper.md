@@ -122,7 +122,7 @@ Municipalities (named "zhixiashi" in Chinese Pinyin) are geographically cities b
 
 ## Sociopolitical and Linguistic Areas
 
-Due to social, political, and martial reasons, Chinese regions are divided into eight regions:
+Due to social, political, and martial reasons, Chinese regions are divided into seven regions:
 
 ![](https://user-images.githubusercontent.com/39488085/127287528-2ed50add-063c-4bec-a881-cce1c0e104d5.png)
 
