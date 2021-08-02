@@ -3,22 +3,25 @@
 \docType{data}
 \name{corruption}
 \alias{corruption}
-\title{\link{Filling the Title}}
+\title{China’s Corruption Investigations Dataset}
 \format{
 A data frame with XXXXXX10 variables:
 \describe{
-\item{name}{description}
-\item{name}{description}
-...
+\item{province}{2-digit province number}
+\item{prefecture}{Prefecture name in Chinese}
+\item{county}{County name in Chinese}
+\item{province_id}{6-digit province number}
+\item{prefecture_id}{6-digit province number}
+\item{county_id}{6-digit province number}
 }
 }
 \source{
-\url{http://www.diamondse.info/} # link where you got the data if there is
+\url{https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD} # link where you got the data if there is
 }
 \usage{
 corruption
 }
 \description{
-A dataset containing \link{Filling the description}
+A dataset containing information on almost 20,000 officials who were investigated during Xi Jinping’s anti-corruption campaign.
 }
 \keyword{datasets}

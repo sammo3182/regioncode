@@ -32,6 +32,7 @@ Depends:
 Imports:
   dplyr,
   knitr,
+  pinyin,
   textshaping
 Suggests:
     testthat (>= 3.0.0),
