@@ -13,9 +13,8 @@ authors:
 - name: Yue Hu
   orcid: 0000-0002-2829-3971
   affiliation: 1
-- name: Yufei Sun
-  affiliation: 1
 - name: Wenquan Wu
+  orcid: 0000-0002-9354-2313
   affiliation: 1
 bibliography: paper.bib
 affiliations:
@@ -180,6 +179,6 @@ regioncode(data_input = corruption$province_id,
 
 # Acknowledgements
 
-We acknowledge contributions from Meng Zhu, Xueyan Liu, Yuyang Shi, Yujia Xu, and Yuxin Pan, Haiting Tian, Weihang Shao, and Yuanqian Chen.
+We acknowledge contributions from Yufei Sun, Meng Zhu, Xueyan Liu, Yuyang Shi, Yujia Xu, and Yuxin Pan, Haiting Tian, Weihang Shao, and Yuanqian Chen.
 
 # References
