@@ -5,7 +5,7 @@
 \alias{corruption}
 \title{China's Corruption Investigations Dataset}
 \format{
-A data frame with XXXXXX10 variables:
+A data frame with 6 variables:
 \describe{
 \item{province}{2-digit province number}
 \item{prefecture}{Prefecture name in Chinese}

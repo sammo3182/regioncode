@@ -2,7 +2,7 @@
 #'
 #' A dataset containing information on almost 20,000 officials who were investigated during Xi Jinping's anti-corruption campaign.
 #'
-#' @format A data frame with XXXXXX10 variables:
+#' @format A data frame with 6 variables:
 #' \describe{
 #'   \item{province}{2-digit province number}
 #'   \item{prefecture}{Prefecture name in Chinese}
