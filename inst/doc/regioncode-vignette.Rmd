@@ -1,7 +1,7 @@
 ---
 title: "regioncode: Convert Region Names and Division Codes of China Over Years"
 author: "HU Yue and WU Wenquan"
-date: "2021-08-02"
+date: "`r Sys.Date()`"
 output: 
     rmarkdown::html_vignette:
       keep_md: TRUE
@@ -14,7 +14,9 @@ editor_options:
     wrap: sentence
 ---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
 
 Inspired by Vincent Arel-Bundock's amazing [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848) package, we created `regioncode`, a package to achieve similar functions but specifically within China.
 `regioncode` aims to enable seamlessly converting regions' formal names, common-used names, and administrative division codes between each other in modern China (1986--2019).
@@ -48,31 +50,19 @@ In the current version, the function can produce three types of output at both t
 One just needs to specify which type of the output they want in the argument `convert_to` and corresponding years of the input and output.
 For example, the following codes convert the 2019 geocodes in the `corruption` data to their 1989 version:
 
-
-```r
+```{r code2code}
 library(regioncode)
 
 data("corruption")
 
 # Original 2019 version
 corruption$prefecture_id
-```
 
-```
-##  [1] 370100 321200 310117 420500 451300 431200 350300 511500 469021 420600
-```
-
-```r
 # 1999 version
 regioncode(data_input = corruption$prefecture_id, 
            convert_to = "code", # default set
            year_from = 2019,
            year_to = 1989)
-```
-
-```
-##  [1] 370100 329001 310227 420500 422700 452200 433000 350300 512500 460025
-## [11] 420600
 ```
 
 Note that if a region was initially geocoded in e.g., 1989 and included in a new region, in 2019, the new region geocode will be used hereafter.
@@ -82,55 +72,29 @@ By altering the output format to `name`, one can easily convert codes or region 
 `regioncode` automatically detects the input format, so users need to specify the *output* format only (together with the input and output years) to gain what they want.
 In the following example, we convert the geocode variable in the `corruption` dataset to region names and the name variable to codes and names in another year.
 
-
-```r
+```{r code2name}
 # The original name
 corruption$prefecture
-```
 
-```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+533A>" "<U+5B9C><U+660C><U+5E02>" "<U+6765><U+5BBE><U+5E02>" "<U+6000><U+5316><U+5E02>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5E02>"
-##  [9] "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+9633><U+5E02>"
-```
-
-```r
 # Codes to name
 
 regioncode(data_input = corruption$prefecture_id, 
            convert_to = "name",
            year_from = 2019,
            year_to = 1989)
-```
 
-```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+53BF>" "<U+5B9C><U+660C><U+5E02>" "<U+5B9C><U+660C><U+5730><U+533A>" "<U+67F3><U+5DDE><U+5730><U+533A>"
-##  [7] "<U+6000><U+5316><U+5730><U+533A>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5730><U+533A>" "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+6A0A><U+5E02>"
-```
-
-```r
 # Name to codes of the same year
 regioncode(data_input = corruption$prefecture, 
            convert_to = "code",
            year_from = 2019,
            year_to = 2019)
-```
 
-```
-##  [1] 370100 321200 310117 420500 451300 431200 350300 511500 469021 420600
-```
-
-```r
 # Name to name of a different year
 
 regioncode(data_input = corruption$prefecture, 
            convert_to = "name",
            year_from = 2019,
            year_to = 1989)
-```
-
-```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+53BF>" "<U+5B9C><U+660C><U+5E02>" "<U+5B9C><U+660C><U+5730><U+533A>" "<U+67F3><U+5DDE><U+5730><U+533A>"
-##  [7] "<U+6000><U+5316><U+5730><U+533A>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5730><U+533A>" "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+6A0A><U+5E02>"
 ```
 
 # Advanced Applications
@@ -147,28 +111,15 @@ if they want the output name (when `convert_to = "name"`) to be without "city" o
 and if users want to gain incomplete names for both input and output names, `incomplete_name = "both"`.
 All the above conversions can be over years.
 
-
-```r
+```{r incomplete_name}
 # Full, official names
 corruption$prefecture
-```
 
-```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+533A>" "<U+5B9C><U+660C><U+5E02>" "<U+6765><U+5BBE><U+5E02>" "<U+6000><U+5316><U+5E02>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5E02>"
-##  [9] "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+9633><U+5E02>"
-```
-
-```r
 regioncode(data_input = corruption$prefecture, 
            convert_to = "name",
            year_from = 2019,
            year_to = 1989,
            incomplete_name = "to")
-```
-
-```
-##  [1] "<U+6D4E><U+5357>" "<U+6CF0><U+5DDE>" "<U+677E><U+6C5F>" "<U+5B9C><U+660C>" "<U+67F3><U+5DDE>" "<U+6765><U+5BBE>" "<U+6000><U+5316>" "<U+8386><U+7530>" "<U+5B9C><U+5BBE>" "<U+5B9A><U+5B89>"
-## [11] "<U+8944><U+6A0A>" "<U+8944><U+9633>"
 ```
 
 ## Municipalities
@@ -196,16 +147,11 @@ Due to social, political, and martial reasons, Chinese regions are divided into 
 
 `regioncode` also offers a method "area" to convert codes and names of the region into such areas.
 
-
-```r
+```{r 2area}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989, 
            convert_to="area")
-```
-
-```
-##  [1] "<U+534E><U+4E1C>" "<U+534E><U+4E1C>" "<U+534E><U+4E1C>" "<U+534E><U+4E2D>" "<U+534E><U+5357>" "<U+534E><U+4E2D>" "<U+534E><U+4E1C>" "<U+897F><U+5357>" "<U+534E><U+5357>" "<U+534E><U+4E2D>"
 ```
 
 China is a multilingual country with a variety of dialects.
@@ -216,30 +162,16 @@ Prefectures from different provinces may also share the same dialect.
 Note that, the linguistic distribution in China is too complex for precisely gauging at the prefectural level.
 The linguistic zone output from `regioncode` is thus at most for reference rather than rigorous linguistic research.
 
-
-```r
+```{r language_zone}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989,
            to_dialect = "dia_group")
-```
 
-```
-##  [1] "<U+5180><U+9C81><U+5B98><U+8BDD>" "<U+6C5F><U+6DEE><U+5B98><U+8BDD>" "<U+5434><U+8BED>" "<U+897F><U+5357><U+5B98><U+8BDD>" "<U+897F><U+5357><U+5B98><U+8BDD>" "<U+6E58><U+8BED>"
-##  [7] "<U+8386><U+4ED9><U+533A>" "<U+897F><U+5357><U+5B98><U+8BDD>" "<U+743C><U+6587><U+533A>" "<U+897F><U+5357><U+5B98><U+8BDD>"
-```
-
-```r
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989,
            to_dialect = "dia_sub_group")
-```
-
-```
-##  [1] "<U+6CA7><U+60E0><U+7247>-1" "<U+77F3><U+6D4E><U+7247>-8" "<U+6CF0><U+5982><U+7247>-1" "<U+592A><U+6E56><U+7247>-1" "<U+6210><U+6E1D><U+7247>-3" "<U+6210><U+6E1D><U+7247>-9"
-##  [7] "<U+6842><U+67F3><U+7247>-10" "<U+5C91><U+6C5F><U+7247>-2" "<U+5409><U+6E86><U+7247>-3" "<U+5A04><U+90B5><U+7247>-1" "<U+9ED4><U+5317><U+7247>-3" "<U+957F><U+76CA><U+7247>-3"
-## [13] "<U+8386><U+4ED9><U+533A>-4" "<U+704C><U+8D64><U+7247>-10" "<U+5E9C><U+57CE><U+7247>-1" "<U+9102><U+5317><U+7247>-10"
 ```
 
 ## Pinyin
@@ -249,26 +181,14 @@ Some data stores the region names with pinyin instead of Chinese characters.
 The default name output of `regioncode` uses Chinese characters, but one can gain pinyin output by setting the argument `to_pinyin = TRUE`.
 The effect can be applied to either official name, incomplete name, or sociopolitical area outputs.
 
-
-```r
+```{r pinyin}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989, 
            convert_to="name",
            to_pinyin=TRUE
            )
-```
 
-```
-## <U+6D4E><U+5357><U+5E02> <U+6CF0><U+5DDE><U+5E02> <U+677E><U+6C5F><U+53BF> <U+5B9C><U+660C><U+5E02> 
-##      "ji_nan_shi"    "tai_zhou_shi" "song_jiang_xian"    "yi_chang_shi" 
-## <U+5B9C><U+660C><U+5730><U+533A> <U+67F3><U+5DDE><U+5730><U+533A> <U+6000><U+5316><U+5730><U+533A> <U+8386><U+7530><U+5E02> 
-##  "yi_chang_di_qu"  "liu_zhou_di_qu"  "huai_hua_di_qu"     "pu_tian_shi" 
-## <U+5B9C><U+5BBE><U+5730><U+533A> <U+5B9A><U+5B89><U+53BF> <U+8944><U+6A0A><U+5E02> 
-##    "yi_bin_di_qu"    "ding_an_xian"   "xiang_fan_shi"
-```
-
-```r
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989, 
@@ -276,29 +196,13 @@ regioncode(data_input = corruption$prefecture,
            incomplete_name = "to",
            to_pinyin=TRUE
            )
-```
 
-```
-## <U+6D4E><U+5357> <U+6CF0><U+5DDE> <U+677E><U+6C5F> <U+5B9C><U+660C> <U+67F3><U+5DDE> <U+6765><U+5BBE> 
-##     "ji_nan"   "tai_zhou" "song_jiang"   "yi_chang"   "liu_zhou"    "lai_bin" 
-## <U+6000><U+5316> <U+8386><U+7530> <U+5B9C><U+5BBE> <U+5B9A><U+5B89> <U+8944><U+6A0A> <U+8944><U+9633> 
-##   "huai_hua"    "pu_tian"     "yi_bin"    "ding_an"  "xiang_fan" "xiang_yang"
-```
-
-```r
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989, 
            convert_to="area",
            to_pinyin=TRUE
            )
-```
-
-```
-## <U+534E><U+4E1C> <U+534E><U+4E1C> <U+534E><U+4E1C> <U+534E><U+4E2D> <U+534E><U+5357> <U+534E><U+4E2D> 
-##  "hua_dong"  "hua_dong"  "hua_dong" "hua_zhong"   "hua_nan" "hua_zhong" 
-## <U+534E><U+4E1C> <U+897F><U+5357> <U+534E><U+5357> <U+534E><U+4E2D> 
-##  "hua_dong"    "xi_nan"   "hua_nan" "hua_zhong"
 ```
 
 ## Provinces
@@ -310,17 +214,12 @@ Moreover, since provinces have fixed abbreviations, `regioncode` allows names no
 When the inputs are abbreviations, users can set the `convert_to` argument to `abbreTocode`, `abbreToname`, or `abbreToarea`.
 When they want provincial abbreviation outputs, just set `convert_to = "abbre"`.
 
-
-```r
+```{r provinces}
 regioncode(data_input = corruption$province_id, 
            convert_to = "codeToabbre",
            year_from = 2019,
            year_to = 1989,
            province = TRUE)
-```
-
-```
-##  [1] "<U+9C81>" "<U+82CF>" "<U+6CAA>" "<U+9102>" "<U+6842>" "<U+6E58>" "<U+95FD>" "<U+8700>" "<U+743C>" "<U+9102>"
 ```
 ## Conclusion
 

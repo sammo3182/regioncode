@@ -3,7 +3,7 @@
 \docType{data}
 \name{corruption}
 \alias{corruption}
-\title{China’s Corruption Investigations Dataset}
+\title{China's Corruption Investigations Dataset}
 \format{
 A data frame with XXXXXX10 variables:
 \describe{
@@ -22,6 +22,6 @@ A data frame with XXXXXX10 variables:
 corruption
 }
 \description{
-A dataset containing information on almost 20,000 officials who were investigated during Xi Jinping’s anti-corruption campaign.
+A dataset containing information on almost 20,000 officials who were investigated during Xi Jinping's anti-corruption campaign.
 }
 \keyword{datasets}

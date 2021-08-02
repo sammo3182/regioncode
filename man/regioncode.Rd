@@ -60,8 +60,8 @@ Users can use this argument together with \code{name} to convert between names a
 #  library(regioncode)
 
 #  regioncode(data_input = corruption$prefecture_id,
-#             year_from = 2000,
-#             year_to = 2015)
+#             year_from = 2016,
+#             year_to = 2017)
 
 
 }

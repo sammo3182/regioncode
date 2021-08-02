@@ -89,3 +89,10 @@ regioncode(data_input = corruption$prefecture,
            to_pinyin=TRUE
            )
 
+## ----provinces----------------------------------------------------------------
+regioncode(data_input = corruption$province_id, 
+           convert_to = "codeToabbre",
+           year_from = 2019,
+           year_to = 1989,
+           province = TRUE)
+

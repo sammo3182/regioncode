@@ -1,6 +1,6 @@
-#' China’s Corruption Investigations Dataset
+#' China's Corruption Investigations Dataset
 #'
-#' A dataset containing information on almost 20,000 officials who were investigated during Xi Jinping’s anti-corruption campaign.
+#' A dataset containing information on almost 20,000 officials who were investigated during Xi Jinping's anti-corruption campaign.
 #'
 #' @format A data frame with XXXXXX10 variables:
 #' \describe{
