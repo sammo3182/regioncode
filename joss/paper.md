@@ -23,7 +23,7 @@ affiliations:
   index: 1
 ---
 
-# Summary：Why `regioncode`?
+# Summary: Why `regioncode`?
 
 The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit.
 These "administrative division codes" are consistently [adjusted and updated](http://www.mca.gov.cn/article/sj/xzqh/1980/) to matched national and regional plans of development. The adjustments however may disturb researchers when they conduct studies over time or merge geo-based data from different years. Especially, when researchers render statistical data on a Chinese map, different geocodes between map data and statistical data can cause mess-up outputs.
