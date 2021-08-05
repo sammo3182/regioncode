@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">regioncode</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -144,12 +144,12 @@
   <span class='va'>data_input</span>,
   year_from <span class='op'>=</span> <span class='fl'>1999</span>,
   year_to <span class='op'>=</span> <span class='fl'>2015</span>,
-  todialect <span class='op'>=</span> <span class='st'>"none"</span>,
-  method <span class='op'>=</span> <span class='st'>"2code"</span>,
-  topinyin <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  province <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  convert_to <span class='op'>=</span> <span class='st'>"code"</span>,
+  incomplete_name <span class='op'>=</span> <span class='st'>"none"</span>,
   zhixiashi <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  incompleteName <span class='op'>=</span> <span class='st'>"none"</span>
+  to_dialect <span class='op'>=</span> <span class='st'>"none"</span>,
+  to_pinyin <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  province <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -168,26 +168,30 @@
       <td><p>A integer to define the year to convert. The default value is 2015.</p></td>
     </tr>
     <tr>
-      <th>todialect</th>
+      <th>convert_to</th>
+      <td><p>A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (<code>code</code>), names (<code>name</code>) or area (<code>area</code>). The default option is <code>code</code>.
+When <code>province</code> is TRUE, one can also choose <code>abbre</code>, <code>abbreTocode</code>, <code>abbreToname</code>, and <code>abbreToarea</code> to convert between names/codes and abbreviations of provinces.</p></td>
+    </tr>
+    <tr>
+      <th>incomplete_name</th>
+      <td><p>A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".</p></td>
+    </tr>
+    <tr>
+      <th>zhixiashi</th>
+      <td><p>A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>to_dialect</th>
       <td><p>A character indicating the language transformation. At the prefectural level, valid transformation include <code>dia_group</code>,<code>dia_sub_group</code>. At the province level, valid transformation is <code>dia_super</code>. The default value is "none".
 When <code>province</code> is TRUE, one can also choose <code>dia_super</code> to get the language zone of provinces.</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (<code>2code</code>), names (<code>2name</code>) or area (<code>2area</code>). The default option is <code>2code</code>.
-When <code>province</code> is TRUE, one can also choose <code>2abbre</code>, <code>abbre2code</code>, <code>abbre2name</code>, and <code>abbre2are</code> to convert between names/codes and abbreviations of provinces.</p></td>
+      <th>to_pinyin</th>
+      <td><p>A logic string to indicate whether the output is in pinyin spelling instead of Chinese characters. The default is FALSE.</p></td>
     </tr>
     <tr>
       <th>province</th>
       <td><p>A logic string to indicate the level of converting. The default is FALSE.</p></td>
-    </tr>
-    <tr>
-      <th>zhixiashi</th>
-      <td><p>(Only makes a difference for prefectural-level conversion) A logic string to indicate whether treat division codes and names of municipality directly under the central government ("zhixiashi" in Chinese Pinyin). The default value is FALSE.</p></td>
-    </tr>
-    <tr>
-      <th>incompleteName</th>
-      <td><p>A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".</p></td>
     </tr>
     </table>
 
@@ -196,23 +200,23 @@ When <code>province</code> is TRUE, one can also choose <code>2abbre</code>, <co
     <p>The function returns a character or numeric vector depending on what method is specified.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. <code>regioncode</code> accounts this issue by offering the argument <code>incompleteName</code>. The argument has four options: "none", "from", "to", and "both".</p><ul>
+    <p>In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. <code>regioncode</code> accounts this issue by offering the argument <code>incomplete_name</code>. The argument has four options: "none", "from", "to", and "both".</p><ul>
 <li><p>"none": no short name will be used for either input or output;</p></li>
 <li><p>"from": input data is short names instead of the full, official ones;</p></li>
 <li><p>"to": output results will be short names;</p></li>
 <li><p>"both": both input and output are using short names.</p></li>
 </ul>
 
-<p>The argument makes a difference only when <code>2code</code> or <code>2name</code> are chose in <code>method</code>.
-Users can use this argument together with <code>2name</code> to convert between names and incomplete names.</p>
+<p>The argument makes a difference only when <code>code</code> or <code>name</code> are chose in <code>convert_to</code>.
+Users can use this argument together with <code>name</code> to convert between names and incomplete names.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>#  library(regioncode)</span>
 
 <span class='co'>#  regioncode(data_input = corruption$prefecture_id,</span>
-<span class='co'>#             year_from = 2000,</span>
-<span class='co'>#             year_to = 2015)</span>
+<span class='co'>#             year_from = 2016,</span>
+<span class='co'>#             year_to = 2017)</span>
 
 
 </div></pre>
@@ -227,7 +231,7 @@ Users can use this argument together with <code>2name</code> to convert between 
 
       <footer>
       <div class="copyright">
-  <p>Developed by Yue Hu, Yufei Sun, Wenquan Wu.</p>
+  <p>Developed by Yue Hu, Yufei Sun, Meng Zhu, Wenquan Wu.</p>
 </div>
 
 <div class="pkgdown">
