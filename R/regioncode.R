@@ -129,6 +129,8 @@ regioncode <- function(data_input,
   }
 
   if (province) {
+    zhixiashi <- FALSE
+
     # 1 Section of province-level converting
     if (to_dialect != "none") {
       # 1-1 If convert language zone
@@ -148,12 +150,19 @@ regioncode <- function(data_input,
     } else {
       # 1-2 If not convert language zone
       prov_table <- region_table %>%
-        select(prov_code:`1999_nickname`) %>%
+        select(prov_code:`1999_nickname`, area) %>%
         distinct()
 
       # Because province nicknames changed in 1999
       year_from <- ifelse(year_from < 1999, 1998, 1999)
       year_to <- ifelse(year_to < 1999, 1998, 1999)
+
+      # Getting the correct "from" column
+      year_from <- case_when(
+        is.numeric(data_input[1]) & nchar(data_input[1]) ~ "prov_scode",
+        is.numeric(data_input[1]) ~ "prov_code",
+        is.character(data_input[1]) ~ "prov_name"
+      )
 
       ls_index <- switch(convert_to,
         "name" = {

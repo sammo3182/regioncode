@@ -6,11 +6,15 @@ library(dplyr)
 
 year_from = 1999
 year_to = 2015
-method = "code2code"
 province = FALSE
-zhixiashi = TRUE
-incompleteName = "none"
+zhixiashi = FALSE
+incomplete_name = "none"
+to_dialect = "none"
+to_pinyin = FALSE
 
+province = TRUE
+data_input <- c("黑龙江省", "天津市")
+convert_to <- "area"
 
 regioncode("河东区", method = "2code", zhixiashi = FALSE)
 
