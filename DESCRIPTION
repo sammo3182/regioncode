@@ -33,14 +33,13 @@ Depends:
   R(>= 3.6.0)
 Imports:
   dplyr,
-  knitr,
-  pinyin,
-  textshaping
+  pinyin
 Suggests:
     testthat (>= 3.0.0),
-    rmarkdown
+    rmarkdown,
+    knitr
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 VignetteBuilder: knitr

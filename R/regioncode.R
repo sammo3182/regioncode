@@ -150,7 +150,7 @@ regioncode <- function(data_input,
     } else {
       # 1-2 If not convert language zone
       prov_table <- region_table %>%
-        select(prov_code:`1999_nickname`, area) %>%
+        select(prov_code:`1999_nickname`, "area") %>%
         distinct()
 
       # Because province nicknames changed in 1999
