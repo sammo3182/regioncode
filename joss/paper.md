@@ -13,9 +13,8 @@ authors:
 - name: Yue Hu
   orcid: 0000-0002-2829-3971
   affiliation: 1
-- name: Yufei Sun
-  affiliation: 1
 - name: Wenquan Wu
+  orcid: 0000-0002-9354-2313
   affiliation: 1
 bibliography: paper.bib
 affiliations:
@@ -23,9 +22,10 @@ affiliations:
   index: 1
 ---
 
-# Summary
+# Summary: Why `regioncode`?
 
-The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit. The so-called “administrative division codes” were consistently adjusted to matched national and regional plans of development. Geocode adjustments disturb researchers when they merge data with different versions of geocodes or region names. Especially, when researchers render statistical data on a Chinese map, different geocodes between map data and statistical data may cause mess-up data output or visualization.
+The Chinese government gives unique geocodes for each county, city (prefecture), and provincial-level administrative unit.
+These "administrative division codes" are consistently [adjusted and updated](http://www.mca.gov.cn/article/sj/xzqh/1980/) to matched national and regional plans of development. The adjustments however may disturb researchers when they conduct studies over time or merge geo-based data from different years. Especially, when researchers render statistical data on a Chinese map, different geocodes between map data and statistical data can cause mess-up outputs.
 
 The package is developed to conquer such difficulties to match regional data across years more conveniently and correctly. Inspired by Vincent Arel-Bundock’s well-known `countrycode` [@Arel-Bundock2018], we created `regioncode` to achieve similar functions specifically for China studies. `regioncode` enables seamlessly converting formal names, common-used names, and division codes of Chinese prefecture regions between each other and across thirty-four years from 1986 to 2019.
 
@@ -179,6 +179,6 @@ regioncode(data_input = corruption$province_id,
 
 # Acknowledgements
 
-We acknowledge contributions from Meng Zhu, Xueyan Liu, Yuyang Shi, Yujia Xu, and Yuxin Pan, Haiting Tian, Weihang Shao, and Yuanqian Chen.
+We acknowledge contributions from Yufei Sun, Meng Zhu, Xueyan Liu, Yuyang Shi, Yujia Xu, and Yuxin Pan, Haiting Tian, Weihang Shao, and Yuanqian Chen.
 
 # References
