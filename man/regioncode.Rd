@@ -23,7 +23,7 @@ regioncode(
 
 \item{year_to}{A integer to define the year to convert. The default value is 2015.}
 
-\item{convert_to}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (\code{code}), names (\code{name}) or area (\code{area}). The default option is \code{code}.
+\item{convert_to}{A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (\code{code}), names (\code{name}) , area (\code{area}) or the ranking of city(\code{cityranking}). The default option is \code{code}.
 When \code{province} is TRUE, one can also choose \code{abbre}, \code{abbreTocode}, \code{abbreToname}, and \code{abbreToarea} to convert between names/codes and abbreviations of provinces.}
 
 \item{incomplete_name}{A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".}

@@ -3,6 +3,9 @@
 # 数据：《2022城市商业魅力排行榜》
 # 数据来源：第一财经·新一线城市研究所（https://www.datayicai.com/readReport/286）
 # preparation
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  install.packages("pacman")
+}
 library(pacman)
 p_load("rio",
        "tidyverse")

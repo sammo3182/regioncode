@@ -1,7 +1,7 @@
 ---
 title: "regioncode: Convert Region Names and Division Codes of China Over Years"
 author: "HU Yue and WU Wenquan"
-date: "2021-08-02"
+date: "2023-08-06"
 output: 
     rmarkdown::html_vignette:
       keep_md: TRUE
@@ -71,7 +71,7 @@ regioncode(data_input = corruption$prefecture_id,
 ```
 
 ```
-##  [1] 370100 329001 310227 420500 422700 452200 433000 350300 512500 460025
+##  [1] 370100 329001 310227 422700 420500 452200 433000 350300 512500     NA
 ## [11] 420600
 ```
 
@@ -89,8 +89,8 @@ corruption$prefecture
 ```
 
 ```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+533A>" "<U+5B9C><U+660C><U+5E02>" "<U+6765><U+5BBE><U+5E02>" "<U+6000><U+5316><U+5E02>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5E02>"
-##  [9] "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+9633><U+5E02>"
+##  [1] "济南市" "泰州市" "松江区" "宜昌市" "来宾市" "怀化市" "莆田市" "宜宾市"
+##  [9] "定安县" "襄阳市"
 ```
 
 ```r
@@ -103,8 +103,8 @@ regioncode(data_input = corruption$prefecture_id,
 ```
 
 ```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+53BF>" "<U+5B9C><U+660C><U+5E02>" "<U+5B9C><U+660C><U+5730><U+533A>" "<U+67F3><U+5DDE><U+5730><U+533A>"
-##  [7] "<U+6000><U+5316><U+5730><U+533A>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5730><U+533A>" "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+6A0A><U+5E02>"
+##  [1] "济南市"   "泰州市"   "松江县"   "宜昌地区" "宜昌市"   "柳州地区"
+##  [7] "怀化地区" "莆田市"   "宜宾地区" NA         "襄樊市"
 ```
 
 ```r
@@ -116,7 +116,7 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-##  [1] 370100 321200 310117 420500 451300 431200 350300 511500 469021 420600
+##  [1] 370100 321200 310117 420500 451300 431200 350300 511500     NA 420600
 ```
 
 ```r
@@ -129,8 +129,8 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+53BF>" "<U+5B9C><U+660C><U+5E02>" "<U+5B9C><U+660C><U+5730><U+533A>" "<U+67F3><U+5DDE><U+5730><U+533A>"
-##  [7] "<U+6000><U+5316><U+5730><U+533A>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5730><U+533A>" "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+6A0A><U+5E02>"
+##  [1] "济南市"   "泰州市"   "松江县"   "宜昌地区" "宜昌市"   "柳州地区"
+##  [7] "怀化地区" "莆田市"   "宜宾地区" NA         "襄樊市"
 ```
 
 # Advanced Applications
@@ -154,8 +154,8 @@ corruption$prefecture
 ```
 
 ```
-##  [1] "<U+6D4E><U+5357><U+5E02>" "<U+6CF0><U+5DDE><U+5E02>" "<U+677E><U+6C5F><U+533A>" "<U+5B9C><U+660C><U+5E02>" "<U+6765><U+5BBE><U+5E02>" "<U+6000><U+5316><U+5E02>" "<U+8386><U+7530><U+5E02>" "<U+5B9C><U+5BBE><U+5E02>"
-##  [9] "<U+5B9A><U+5B89><U+53BF>" "<U+8944><U+9633><U+5E02>"
+##  [1] "济南市" "泰州市" "松江区" "宜昌市" "来宾市" "怀化市" "莆田市" "宜宾市"
+##  [9] "定安县" "襄阳市"
 ```
 
 ```r
@@ -167,8 +167,8 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-##  [1] "<U+6D4E><U+5357>" "<U+6CF0><U+5DDE>" "<U+677E><U+6C5F>" "<U+5B9C><U+660C>" "<U+67F3><U+5DDE>" "<U+6765><U+5BBE>" "<U+6000><U+5316>" "<U+8386><U+7530>" "<U+5B9C><U+5BBE>" "<U+5B9A><U+5B89>"
-## [11] "<U+8944><U+6A0A>" "<U+8944><U+9633>"
+##  [1] "济南" "泰州" "松江" "宜昌" "来宾" "柳州" "怀化" "莆田" "宜宾" NA    
+## [11] "襄阳" "襄樊"
 ```
 
 ## Municipalities
@@ -205,7 +205,37 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-##  [1] "<U+534E><U+4E1C>" "<U+534E><U+4E1C>" "<U+534E><U+4E1C>" "<U+534E><U+4E2D>" "<U+534E><U+5357>" "<U+534E><U+4E2D>" "<U+534E><U+4E1C>" "<U+897F><U+5357>" "<U+534E><U+5357>" "<U+534E><U+4E2D>"
+##  [1] "华东" "华东" "华东" "华中" "华南" "华中" "华东" "西南" NA     "华中"
+```
+
+`regioncode` provides a feature to query the ranking of cities, which has two standards: the old criteria from 1989 and the new criteria from 2014. Therefore, the old criteria is used for cities before 2014, while the new criteria is used for cities after 2014.
+
+| criteria           | population                cityranking         
+|:-------------------|-----------------------|------------------|
+| old criteria(1989) | >1 million            |   超大城市       |
+|                    | 500,000 ~ 1 million   |   大城市         |
+|                    | 200,000 ~ 500,000     |   中等城市       |
+|                    | <200,000              |   小城市         |
+|                    |                       |                  |
+|new criteria(2014)  | >10 million           |   超大城市       |
+|                    | 5 million ~ 10 million|   特大城市       |
+|                    | 3 million ~ 5 million |   I型大城市      |
+|                    | 1 million ~ 3 million |   II型大城市     |
+|                    | 500,000 ~ 1 million   |   中等城市       | 
+|                    | 200,000 ~ 500,000     |   I型小城市      |
+|                    | <200,000              |   II型小城市     |  
+
+
+```r
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2011,
+           year_to = 1989, 
+           convert_to="cityranking")
+```
+
+```
+##  [1] "特大城市" "小城市"   "特大城市" "中等城市" NA         "小城市"  
+##  [7] "小城市"   "中等城市" NA         "中等城市"
 ```
 
 China is a multilingual country with a variety of dialects.
@@ -225,8 +255,8 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-##  [1] "<U+5180><U+9C81><U+5B98><U+8BDD>" "<U+6C5F><U+6DEE><U+5B98><U+8BDD>" "<U+5434><U+8BED>" "<U+897F><U+5357><U+5B98><U+8BDD>" "<U+897F><U+5357><U+5B98><U+8BDD>" "<U+6E58><U+8BED>"
-##  [7] "<U+8386><U+4ED9><U+533A>" "<U+897F><U+5357><U+5B98><U+8BDD>" "<U+743C><U+6587><U+533A>" "<U+897F><U+5357><U+5B98><U+8BDD>"
+##  [1] "冀鲁官话" "江淮官话" "吴语"     "西南官话" "西南官话" "湘语"    
+##  [7] "莆仙区"   "西南官话" NA         "西南官话"
 ```
 
 ```r
@@ -237,9 +267,9 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-##  [1] "<U+6CA7><U+60E0><U+7247>-1" "<U+77F3><U+6D4E><U+7247>-8" "<U+6CF0><U+5982><U+7247>-1" "<U+592A><U+6E56><U+7247>-1" "<U+6210><U+6E1D><U+7247>-3" "<U+6210><U+6E1D><U+7247>-9"
-##  [7] "<U+6842><U+67F3><U+7247>-10" "<U+5C91><U+6C5F><U+7247>-2" "<U+5409><U+6E86><U+7247>-3" "<U+5A04><U+90B5><U+7247>-1" "<U+9ED4><U+5317><U+7247>-3" "<U+957F><U+76CA><U+7247>-3"
-## [13] "<U+8386><U+4ED9><U+533A>-4" "<U+704C><U+8D64><U+7247>-10" "<U+5E9C><U+57CE><U+7247>-1" "<U+9102><U+5317><U+7247>-10"
+##  [1] "石济片-8"  "沧惠片-1"  "泰如片-1"  "太湖片-1"  "成渝片-9"  "成渝片-3" 
+##  [7] "桂柳片-10" "岑江片-2"  "吉溆片-3"  "娄邵片-1"  "黔北片-3"  "长益片-3" 
+## [13] "莆仙区-4"  "灌赤片-10" NA          "鄂北片-10"
 ```
 
 ## Pinyin
@@ -260,12 +290,12 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-## <U+6D4E><U+5357><U+5E02> <U+6CF0><U+5DDE><U+5E02> <U+677E><U+6C5F><U+53BF> <U+5B9C><U+660C><U+5E02> 
-##      "ji_nan_shi"    "tai_zhou_shi" "song_jiang_xian"    "yi_chang_shi" 
-## <U+5B9C><U+660C><U+5730><U+533A> <U+67F3><U+5DDE><U+5730><U+533A> <U+6000><U+5316><U+5730><U+533A> <U+8386><U+7530><U+5E02> 
-##  "yi_chang_di_qu"  "liu_zhou_di_qu"  "huai_hua_di_qu"     "pu_tian_shi" 
-## <U+5B9C><U+5BBE><U+5730><U+533A> <U+5B9A><U+5B89><U+53BF> <U+8944><U+6A0A><U+5E02> 
-##    "yi_bin_di_qu"    "ding_an_xian"   "xiang_fan_shi"
+##            济南市            泰州市            松江县          宜昌地区 
+##      "ji_nan_shi"    "tai_zhou_shi" "song_jiang_xian"  "yi_chang_di_qu" 
+##            宜昌市          柳州地区          怀化地区            莆田市 
+##    "yi_chang_shi"  "liu_zhou_di_qu"  "huai_hua_di_qu"     "pu_tian_shi" 
+##          宜宾地区              <NA>            襄樊市 
+##    "yi_bin_di_qu"              "NA"   "xiang_fan_shi"
 ```
 
 ```r
@@ -279,10 +309,10 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-## <U+6D4E><U+5357> <U+6CF0><U+5DDE> <U+677E><U+6C5F> <U+5B9C><U+660C> <U+67F3><U+5DDE> <U+6765><U+5BBE> 
-##     "ji_nan"   "tai_zhou" "song_jiang"   "yi_chang"   "liu_zhou"    "lai_bin" 
-## <U+6000><U+5316> <U+8386><U+7530> <U+5B9C><U+5BBE> <U+5B9A><U+5B89> <U+8944><U+6A0A> <U+8944><U+9633> 
-##   "huai_hua"    "pu_tian"     "yi_bin"    "ding_an"  "xiang_fan" "xiang_yang"
+##         济南         泰州         松江         宜昌         来宾         柳州 
+##     "ji_nan"   "tai_zhou" "song_jiang"   "yi_chang"    "lai_bin"   "liu_zhou" 
+##         怀化         莆田         宜宾         <NA>         襄阳         襄樊 
+##   "huai_hua"    "pu_tian"     "yi_bin"         "NA" "xiang_yang"  "xiang_fan"
 ```
 
 ```r
@@ -295,10 +325,10 @@ regioncode(data_input = corruption$prefecture,
 ```
 
 ```
-## <U+534E><U+4E1C> <U+534E><U+4E1C> <U+534E><U+4E1C> <U+534E><U+4E2D> <U+534E><U+5357> <U+534E><U+4E2D> 
+##        华东        华东        华东        华中        华南        华中 
 ##  "hua_dong"  "hua_dong"  "hua_dong" "hua_zhong"   "hua_nan" "hua_zhong" 
-## <U+534E><U+4E1C> <U+897F><U+5357> <U+534E><U+5357> <U+534E><U+4E2D> 
-##  "hua_dong"    "xi_nan"   "hua_nan" "hua_zhong"
+##        华东        西南        <NA>        华中 
+##  "hua_dong"    "xi_nan"        "NA" "hua_zhong"
 ```
 
 ## Provinces
@@ -320,7 +350,7 @@ regioncode(data_input = corruption$province_id,
 ```
 
 ```
-##  [1] "<U+9C81>" "<U+82CF>" "<U+6CAA>" "<U+9102>" "<U+6842>" "<U+6E58>" "<U+95FD>" "<U+8700>" "<U+743C>" "<U+9102>"
+##  [1] "鲁" "苏" "沪" "鄂" "桂" "湘" "闽" "蜀" "琼" "鄂"
 ```
 ## Conclusion
 

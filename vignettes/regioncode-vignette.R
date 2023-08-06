@@ -55,6 +55,12 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1989, 
            convert_to="area")
 
+## ----cityranking--------------------------------------------------------------
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2011,
+           year_to = 1989, 
+           convert_to="cityranking")
+
 ## ----language_zone------------------------------------------------------------
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
