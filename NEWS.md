@@ -1,3 +1,8 @@
+# regioncode 0.1.2
+
+- Bug fix
+  - Full name of "Ning Xia"
+
 # regioncode 0.1.1
 
 + Styled function with tidyverse style
