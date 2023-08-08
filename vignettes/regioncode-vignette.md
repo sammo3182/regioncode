@@ -210,7 +210,7 @@ regioncode(data_input = corruption$prefecture,
 
 `regioncode` provides a feature to query the ranking of cities, which has two standards: the old criteria from 1989 and the new criteria from 2014. Therefore, the old criteria is used for cities before 2014, while the new criteria is used for cities after 2014.
 
-| criteria           | population                cityranking         
+| criteria           | population                cityrank         
 |:-------------------|-----------------------|------------------|
 | old criteria(1989) | >1 million            |   超大城市       |
 |                    | 500,000 ~ 1 million   |   大城市         |
@@ -230,7 +230,7 @@ regioncode(data_input = corruption$prefecture,
 regioncode(data_input = corruption$prefecture, 
            year_from = 2011,
            year_to = 1989, 
-           convert_to="cityranking")
+           convert_to="cityrank")
 ```
 
 ```
