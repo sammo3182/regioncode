@@ -161,7 +161,11 @@ regioncode(data_input = corruption$prefecture,
 
 `regioncode` provides a feature to query the ranking of cities, which has two standards: the old criteria from 1989 and the new criteria from 2014. Therefore, the old criteria is used for cities before 2014, while the new criteria is used for cities after 2014.
 
+<<<<<<< HEAD
 | criteria           | population                rank         
+=======
+| criteria           | population                cityrank         
+>>>>>>> 6beed1b4db5b05037e5b2e5c2ad7947327786aa3
 |:-------------------|-----------------------|------------------|
 | old criteria(1989) | >1 million            |   超大城市       |
 |                    | 500,000 ~ 1 million   |   大城市         |
@@ -176,11 +180,19 @@ regioncode(data_input = corruption$prefecture,
 |                    | 200,000 ~ 500,000     |   I型小城市      |
 |                    | <200,000              |   II型小城市     |  
 
+<<<<<<< HEAD
 ```{r rank}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2011,
            year_to = 1989, 
            convert_to="rank")
+=======
+```{r cityrank}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2011,
+           year_to = 1989, 
+           convert_to="cityrank")
+>>>>>>> 6beed1b4db5b05037e5b2e5c2ad7947327786aa3
 ```
 
 China is a multilingual country with a variety of dialects.
