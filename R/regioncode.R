@@ -5,7 +5,7 @@
 #' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
 #' @param year_from A integer to define the year of the input. The default value is 1999.
 #' @param year_to A integer to define the year to convert. The default value is 2015.
-#' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or the ranking of city(`cityrank`). The default option is `code`.
+#' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or the ranking of city(`rank`). The default option is `code`.
 #'  When `province` is TRUE, one can also choose `abbre`, `abbreTocode`, `abbreToname`, and `abbreToarea` to convert between names/codes and abbreviations of provinces.
 #' @param incomplete_name A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
 #' @param zhixiashi A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.
@@ -73,7 +73,7 @@ regioncode <- function(data_input,
           "name",
           "code",
           "area",
-          "cityrank",
+          "rank",
           "nameToabbre",
           "codeToabbre",
           "abbreToname",
@@ -89,13 +89,13 @@ regioncode <- function(data_input,
       stop("Invalid input: please choose a valid converting transformation.")
     }
   } else {
-    if (!(convert_to %in% c("name", "code", "area","cityrank"))) {
+    if (!(convert_to %in% c("name", "code", "area","rank"))) {
       stop("Invalid input: please choose a valid converting method.")
     }
   }
 
-  if (province=="TRUE"&zhixiashi=="FALSE"&convert_to %in% c("cityrank"))
-    stop("Invalid input: province can not convert to cityrank.")
+  if (province=="TRUE"&zhixiashi=="FALSE"&convert_to %in% c("rank"))
+    stop("Invalid input: province can not convert to rank.")
 
   if (!(incomplete_name %in% c("none", "from", "to", "both"))) {
     stop(
@@ -252,8 +252,8 @@ regioncode <- function(data_input,
                            year_to <- paste0(year_to, "_name")
                            c(year_from, year_to)
                          },
-                         "cityrank" = {
-                           year_to <- paste0(year_to, "_cityrank")
+                         "rank" = {
+                           year_to <- paste0(year_to, "_rank")
                            c(year_from, year_to)
                          }
       )
@@ -272,8 +272,8 @@ regioncode <- function(data_input,
         region_code <- region_zhixiashi %>%
           select(ends_with("_code"))
 
-        region_cityrank <- region_zhixiashi %>%
-          select(ends_with("_cityrank"))
+        region_rank <- region_zhixiashi %>%
+          select(ends_with("_rank"))
 
 
         # replacing the prefectural names and codes with provincial names and codes
@@ -294,7 +294,7 @@ regioncode <- function(data_input,
 
 
         region_zhixiashi <-
-          bind_cols(region_sname2, region_name2, region_code2, region_cityrank)
+          bind_cols(region_sname2, region_name2, region_code2, region_rank)
         region_zhixiashi <-
           region_zhixiashi[, order(colnames(region_zhixiashi))]
 
