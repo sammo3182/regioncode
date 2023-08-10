@@ -1,0 +1,651 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  article]{jss}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{orcidlink,thumbpdf,lmodern}
+
+\newcommand{\class}[1]{`\code{#1}'}
+\newcommand{\fct}[1]{\code{#1()}}
+\usepackage{xeCJK}
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={regioncode: Convert Region Names and Division Codes of China Over Years},
+  pdfauthor={Yue Hu; Wenquan Wu},
+  pdfkeywords={regioncode, geocodes, administrative division
+codes, linguistic zone, Pinyin},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+%% -- Article metainformation (author, title, ...) -----------------------------
+
+%% Author information
+\author{Yue Hu\\Tsinghua University \And Wenquan Wu\\Tsinghua
+University,}
+\Plainauthor{Yue Hu, Wenquan Wu} %% comma-separated
+
+\title{regioncode: Convert Region Names and Division Codes of China Over
+Years}
+\Plaintitle{regioncode: Convert Region Names and Division Codes of China
+Over Years} %% without formatting
+
+%% an abstract and keywords
+\Abstract{The Chinese government gives unique geocodes for each county,
+city (prefecture), and provincial-level administrative unit.
+\texttt{regioncode} provides a convenient way to convert Chinese
+administrative division codes, official names, sociopolitical and
+linguistic areas, abbreviations, and so on between each other.}
+
+%% at least one keyword must be supplied
+\Keywords{regioncode, geocodes, administrative division
+codes, linguistic zone, Pinyin}
+\Plainkeywords{regioncode, geocodes, administrative division
+codes, linguistic zone, Pinyin}
+
+%% publication information
+%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{2012-06-04}
+%% \Acceptdate{2012-06-04}
+%% \setcounter{page}{1}
+%% \Pages{1--xx}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+Yue Hu\\
+E-mail: \email{yuehu@tsinghua.edu.cn}\\
+\\~
+Wenquan Wu\\
+E-mail: \email{wuwq20@mails.tsinghua.edu.cn}\\
+\\~
+
+}
+
+\begin{document}
+\maketitle
+\hypertarget{why-regioncode}{%
+\section{Why regioncode?}\label{why-regioncode}}
+
+The Chinese government gives unique geocodes for each county, city
+(prefecture), and provincial-level administrative unit. These
+``administrative division codes'' are consistently
+\href{http://www.mca.gov.cn/article/sj/xzqh/1980/}{adjusted and updated}
+to matched national and regional plans of development. The adjustments
+however may disturb researchers when they conduct studies over time or
+merge geo-based data from different years. Especially, when researchers
+render statistical data on a Chinese map, different geocodes between map
+data and statistical data can cause mess-up outputs.
+
+This package aims to conquer such difficulties by a one-step solution.
+In the current version, \texttt{regioncode} enables seamlessly
+converting formal names, common-used names, language zone, and division
+codes of Chinese provinces and prefectures between each other and across
+thirty-four years from 1986 to 2019.
+
+\hypertarget{installation}{%
+\section{Installation}\label{installation}}
+
+To install:
+
+\begin{itemize}
+\tightlist
+\item
+  the latest released version: \texttt{install.packages("regioncode")}.
+\item
+  the latest developing version:
+  \texttt{remotes::install\_github("sammo3182/regioncode")}.
+\end{itemize}
+
+\hypertarget{basic-usage}{%
+\section{Basic Usage}\label{basic-usage}}
+
+We uses a randomly drawn sample of Yuhua Wang's
+\href{https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD}{\texttt{China’s\ Corruption\ Investigations\ Dataset}}
+to illustrate how the package works. In the data, the division codes
+were recorded with the 2019 version, and we added prefectural
+abbreviations for the sake of illustration.
+
+In \texttt{regioncode} package, we named administrative division codes
+as \texttt{code}, regions' formal names as \texttt{name}, and their
+commonly used abbreviation as \texttt{sname}. The current version
+enables mutual conversion between any pair of them. To do so, users just
+need to pass a character vector of names or a numeric vector of geocodes
+into the function. In the current version, the function can produce
+three types of output at both the prefectural and provincial levels:
+codes (\texttt{code}), names (\texttt{name}) and area (\texttt{area},
+such as 华北, 东北, 华南, etc.). One just needs to specify which type of
+the output they want in the argument \texttt{convert\_to} and
+corresponding years of the input and output. For example, the following
+codes convert the 2019 geocodes in the \texttt{corruption} data to their
+1989 version:
+
+\begin{verbatim}
+library(regioncode)
+\end{verbatim}
+
+\begin{verbatim}
+Warning: package 'regioncode' was built under R version 4.3.1
+\end{verbatim}
+
+\begin{verbatim}
+data("corruption")
+
+# Original 2019 version
+corruption$prefecture_id
+\end{verbatim}
+
+\begin{verbatim}
+ [1] 370100 321200 310117 420500 451300 431200 350300 511500 469021 420600
+\end{verbatim}
+
+\begin{verbatim}
+# 1999 version
+regioncode(data_input = corruption$prefecture_id, 
+           convert_to = "code", # default set
+           year_from = 2019,
+           year_to = 1989)
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_code`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] 370100 329001 310227 420500 422700 452200 433000 350300 512500 460025
+[11] 420600
+\end{verbatim}
+
+Note that if a region was initially geocoded in e.g., 1989 and included
+in a new region, in 2019, the new region geocode will be used hereafter.
+If a big place was broken into several regions, the later-year codes
+will be aligned with the first region according to the ascendant order
+of the regions' numeric geocodes.
+
+By altering the output format to \texttt{name}, one can easily convert
+codes or region names of a given year to region names in another year.
+\texttt{regioncode} automatically detects the input format, so users
+need to specify the \emph{output} format only (together with the input
+and output years) to gain what they want. In the following example, we
+convert the geocode variable in the \texttt{corruption} dataset to
+region names and the name variable to codes and names in another year.
+
+\begin{verbatim}
+# The original name
+corruption$prefecture
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "济南市" "泰州市" "松江区" "宜昌市" "来宾市" "怀化市" "莆田市" "宜宾市"
+ [9] "定安县" "襄阳市"
+\end{verbatim}
+
+\begin{verbatim}
+# Codes to name
+
+regioncode(data_input = corruption$prefecture_id, 
+           convert_to = "name",
+           year_from = 2019,
+           year_to = 1989)
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_code`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "济南市"   "泰州市"   "松江县"   "宜昌市"   "宜昌地区" "柳州地区"
+ [7] "怀化地区" "莆田市"   "宜宾地区" "定安县"   "襄樊市"  
+\end{verbatim}
+
+\begin{verbatim}
+# Name to codes of the same year
+regioncode(data_input = corruption$prefecture, 
+           convert_to = "code",
+           year_from = 2019,
+           year_to = 2019)
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] 370100 321200 310117 420500 451300 431200 350300 511500 469021 420600
+\end{verbatim}
+
+\begin{verbatim}
+# Name to name of a different year
+
+regioncode(data_input = corruption$prefecture, 
+           convert_to = "name",
+           year_from = 2019,
+           year_to = 1989)
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "济南市"   "泰州市"   "松江县"   "宜昌市"   "宜昌地区" "柳州地区"
+ [7] "怀化地区" "莆田市"   "宜宾地区" "定安县"   "襄樊市"  
+\end{verbatim}
+
+\hypertarget{advanced-applications}{%
+\section{Advanced Applications}\label{advanced-applications}}
+
+To further help uses with ``messier'' data and diverse demands,
+\texttt{regioncode} provides five special conversions: conversion from
+data with incomplete data, specification of municipalities, conversion
+sociopolitical areas and linguistic areas, and pinyin output. The
+current version also allows conversions at the provincial level.
+
+\hypertarget{incomplete-naming-prefectures.}{%
+\subsection{Incomplete naming
+prefectures.}\label{incomplete-naming-prefectures.}}
+
+More than often, data codes may omit the administrative level when
+recording geo-information, e.g., using ``北京'' instead of ``北京市.''
+To accomplish conversions of such data, one needs to specify the
+\texttt{incomplete\_name} argument. If the input data is incomplete,
+users should set the argument as ``from''; if they want the output name
+(when \texttt{convert\_to\ =\ "name"}) to be without ``city'' or
+``prefecture,'' they can set the argument to ``to'' (see the example
+below); and if users want to gain incomplete names for both input and
+output names, \texttt{incomplete\_name\ =\ "both"}. All the above
+conversions can be over years.
+
+\begin{verbatim}
+# Full, official names
+corruption$prefecture
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "济南市" "泰州市" "松江区" "宜昌市" "来宾市" "怀化市" "莆田市" "宜宾市"
+ [9] "定安县" "襄阳市"
+\end{verbatim}
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           convert_to = "name",
+           year_from = 2019,
+           year_to = 1989,
+           incomplete_name = "to")
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "济南" "泰州" "松江" "宜昌" "柳州" "来宾" "怀化" "莆田" "宜宾" "定安"
+[11] "襄樊" "襄阳"
+\end{verbatim}
+
+\hypertarget{municipalities}{%
+\subsection{Municipalities}\label{municipalities}}
+
+Municipalities (``直辖市'') are geographically cities but
+administratively provincial. The districts within these municipalities
+are thus prefectural. Different analyses treat these districts
+differently: some parallel the districts aligned with other prefectures,
+while the others treat the entire municipality as one prefecture. To
+deal with the latter situation, \texttt{regioncode} sets an argument
+\texttt{zhixiashi}. When the argument is set \texttt{TRUE}, the
+municipalities are treated as whole prefectures, and their provincial
+codes are used as the geocodes.
+
+\hypertarget{sociopolitical-and-linguistic-areas}{%
+\subsection{Sociopolitical and Linguistic
+Areas}\label{sociopolitical-and-linguistic-areas}}
+
+Due to social, political, and martial reasons, Chinese regions are
+divided into seven regions:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8889}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+region
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+provincial-level administrative unit
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+华北 & 北京市, 天津市, 山西省, 河北省, 内蒙古自治区 \\
+东北 & 黑龙江省, 吉林省, 辽宁省 \\
+华东 & 上海市, 江苏省, 浙江省, 安徽省, 福建省, 台湾省, 江西省, 山东省 \\
+华中 & 河南省, 湖北省, 湖南省 \\
+华南 & 广东省, 海南省, 广西壮族自治区, 香港特别行政区, 澳门特别行政区 \\
+西南 & 重庆市, 四川省, 贵州省, 云南省, 西藏自治区 \\
+西北 & 陕西省, 甘肃省, 青海省, 宁夏回族自治区, 新疆维吾尔自治区 \\
+\end{longtable}
+
+\texttt{regioncode} also offers a method ``area'' to convert codes and
+names of the region into such areas.
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1989, 
+           convert_to="area")
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "华东" "华东" "华东" "华中" "华南" "华中" "华东" "西南" "华南" "华中"
+\end{verbatim}
+
+China is a multilingual country with a variety of dialects. These
+dialects may be used by several prefectures in a province or province.
+Prefectures from different provinces may also share the same dialect.
+
+\texttt{regioncode} allows users to gain linguistic zones the
+prefectures belong as an output. Users can gain two levels of linguistic
+zones, dialect groups and dialect sub-groups by setting the argument
+\texttt{to\_pinyin} to \texttt{dia\_group} or \texttt{dia\_sub\_group}.
+Note that, the linguistic distribution in China is too complex for
+precisely gauging at the prefectural level. The linguistic zone output
+from \texttt{regioncode} is thus at most for reference rather than
+rigorous linguistic research.
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1989,
+           to_dialect = "dia_group")
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "冀鲁官话" "江淮官话" "吴语"     "西南官话" "西南官话" "湘语"    
+ [7] "莆仙区"   "西南官话" "琼文区"   "西南官话"
+\end{verbatim}
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1989,
+           to_dialect = "dia_sub_group")
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "沧惠片-1"  "石济片-8"  "泰如片-1"  "太湖片-1"  "成渝片-3"  "成渝片-9" 
+ [7] "桂柳片-10" "岑江片-2"  "吉溆片-3"  "娄邵片-1"  "黔北片-3"  "长益片-3" 
+[13] "莆仙区-4"  "灌赤片-10" "府城片-1"  "鄂北片-10"
+\end{verbatim}
+
+\hypertarget{pinyin}{%
+\subsection{Pinyin}\label{pinyin}}
+
+Pinyin is a Chinese phonetic romanization. Some data stores the region
+names with pinyin instead of Chinese characters. The default name output
+of \texttt{regioncode} uses Chinese characters, but one can gain pinyin
+output by setting the argument \texttt{to\_pinyin\ =\ TRUE}. The effect
+can be applied to either official name, incomplete name, or
+sociopolitical area outputs.
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1989, 
+           convert_to="name",
+           to_pinyin=TRUE
+           )
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+           济南市            泰州市            松江县            宜昌市 
+     "ji_nan_shi"    "tai_zhou_shi" "song_jiang_xian"    "yi_chang_shi" 
+         宜昌地区          柳州地区          怀化地区            莆田市 
+ "yi_chang_di_qu"  "liu_zhou_di_qu"  "huai_hua_di_qu"     "pu_tian_shi" 
+         宜宾地区            定安县            襄樊市 
+   "yi_bin_di_qu"    "ding_an_xian"   "xiang_fan_shi" 
+\end{verbatim}
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1989, 
+           convert_to="name",
+           incomplete_name = "to",
+           to_pinyin=TRUE
+           )
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+        济南         泰州         松江         宜昌         柳州         来宾 
+    "ji_nan"   "tai_zhou" "song_jiang"   "yi_chang"   "liu_zhou"    "lai_bin" 
+        怀化         莆田         宜宾         定安         襄樊         襄阳 
+  "huai_hua"    "pu_tian"     "yi_bin"    "ding_an"  "xiang_fan" "xiang_yang" 
+\end{verbatim}
+
+\begin{verbatim}
+regioncode(data_input = corruption$prefecture, 
+           year_from = 2019,
+           year_to = 1989, 
+           convert_to="area",
+           to_pinyin=TRUE
+           )
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(`2019_name`)`
+\end{verbatim}
+
+\begin{verbatim}
+       华东        华东        华东        华中        华南        华中 
+ "hua_dong"  "hua_dong"  "hua_dong" "hua_zhong"   "hua_nan" "hua_zhong" 
+       华东        西南        华南        华中 
+ "hua_dong"    "xi_nan"   "hua_nan" "hua_zhong" 
+\end{verbatim}
+
+\hypertarget{provinces}{%
+\subsection{Provinces}\label{provinces}}
+
+\texttt{regioncode} allows conversions at not only the prefectural but
+provincial level. By setting the argument \texttt{province\ =\ TRUE},
+users can accomplish all the code, name, and area conversions at the
+provincial level. (Note that, at the provincial level, the linguistic
+conversion can be only to dialect group.) Moreover, since provinces have
+fixed abbreviations, \texttt{regioncode} allows names not only being,
+e.g., ``宁夏'' instead of ``宁夏回族自治区'' but also ``宁''. When the
+inputs are abbreviations, users can set the \texttt{convert\_to}
+argument to \texttt{abbreTocode}, \texttt{abbreToname}, or
+\texttt{abbreToarea}. When they want provincial abbreviation outputs,
+just set \texttt{convert\_to\ =\ "abbre"}.
+
+\begin{verbatim}
+regioncode(data_input = corruption$province_id, 
+           convert_to = "codeToabbre",
+           year_from = 2019,
+           year_to = 1989,
+           province = TRUE)
+\end{verbatim}
+
+\begin{verbatim}
+Joining with `by = join_by(prov_code)`
+\end{verbatim}
+
+\begin{verbatim}
+ [1] "鲁" "苏" "沪" "鄂" "桂" "湘" "闽" "蜀" "琼" "鄂"
+\end{verbatim}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\texttt{regioncode} provides a convenient way to convert Chinese
+administrative division codes, official names, sociopolitical and
+linguistic areas, abbreviations, and so on between each other. This
+vignette offers a quick view of package features and a short tutorial
+for users.
+
+The development of the package is ongoing. Future versions aim to add
+more administrative level choices, from province level to county level.
+Data are also enriching. Welcome to join us if you are also interested
+(see the affiliations below). Please contact us with any questions or
+comments. Bug reports can be conducted by
+\href{https://github.com/sammo3182/regioncode/issues}{Github Issues}.
+
+Also thanks ZHU Meng and LIU Xueyan for helping writing the `Advanced
+Application' section of this vignette.
+
+\hypertarget{sec-references}{%
+\section*{References}\label{sec-references}}
+\addcontentsline{toc}{section}{References}
+
+
+
+\end{document}
