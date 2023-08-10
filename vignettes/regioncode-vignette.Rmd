@@ -2,8 +2,9 @@
 title: "regioncode: Convert Region Names and Division Codes of China Over Years"
 author: 
   - Yue Hu
-  - Wenquan Wu
   - Xinyi Ye
+  - Wenquan Wu
+  - Yufei Sun
 date: "`r Sys.Date()`"
 output: 
     rmarkdown::html_vignette:
@@ -12,6 +13,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteIndexEntry{regioncode: Convert Region Names and Division Codes of China Over Years}
   %\VignetteEngine{knitr::rmarkdown}
+
 editor_options: 
   markdown: 
     wrap: sentence
@@ -20,7 +22,7 @@ editor_options:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
-
+if(!require(regioncode)) install.packages("regioncode")
 ```
 
 Inspired by Vincent Arel-Bundock's amazing [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848) package, we created `regioncode`, a package to achieve similar functions but specifically within China.
@@ -135,7 +137,7 @@ Different analyses treat these districts differently: some parallel the district
 To deal with the latter situation, `regioncode` sets an argument `zhixiashi`.
 When the argument is set `TRUE`, the municipalities are treated as whole prefectures, and their provincial codes are used as the geocodes.
 
-## Sociopolitical and Linguistic Areas
+## Sociopolitical and Linguistic Areas^[Thanks ZHU Meng's contribution to this function.]
 
 Due to social, political, and martial reasons, Chinese regions are divided into seven regions:
 
@@ -159,42 +161,6 @@ regioncode(data_input = corruption$prefecture,
            convert_to="area")
 ```
 
-`regioncode` provides a feature to query the ranking of cities, which has two standards: the old criteria from 1989 and the new criteria from 2014. Therefore, the old criteria is used for cities before 2014, while the new criteria is used for cities after 2014.
-
-<<<<<<< HEAD
-| criteria           | population                rank         
-=======
-| criteria           | population                cityrank         
->>>>>>> 6beed1b4db5b05037e5b2e5c2ad7947327786aa3
-|:-------------------|-----------------------|------------------|
-| old criteria(1989) | >1 million            |   超大城市       |
-|                    | 500,000 ~ 1 million   |   大城市         |
-|                    | 200,000 ~ 500,000     |   中等城市       |
-|                    | <200,000              |   小城市         |
-|                    |                       |                  |
-|new criteria(2014)  | >10 million           |   超大城市       |
-|                    | 5 million ~ 10 million|   特大城市       |
-|                    | 3 million ~ 5 million |   I型大城市      |
-|                    | 1 million ~ 3 million |   II型大城市     |
-|                    | 500,000 ~ 1 million   |   中等城市       | 
-|                    | 200,000 ~ 500,000     |   I型小城市      |
-|                    | <200,000              |   II型小城市     |  
-
-<<<<<<< HEAD
-```{r rank}
-regioncode(data_input = corruption$prefecture, 
-           year_from = 2011,
-           year_to = 1989, 
-           convert_to="rank")
-=======
-```{r cityrank}
-regioncode(data_input = corruption$prefecture, 
-           year_from = 2011,
-           year_to = 1989, 
-           convert_to="cityrank")
->>>>>>> 6beed1b4db5b05037e5b2e5c2ad7947327786aa3
-```
-
 China is a multilingual country with a variety of dialects.
 These dialects may be used by several prefectures in a province or province.
 Prefectures from different provinces may also share the same dialect.
@@ -215,7 +181,39 @@ regioncode(data_input = corruption$prefecture,
            to_dialect = "dia_sub_group")
 ```
 
-## Pinyin
+## City ranking
+
+`regioncode` provides a feature to query the ranking of cities, which has two standards: the old criteria from 1989 and the new criteria from 2014. 
+Therefore, the old criteria is used for cities before 2014, while the new criteria is used for cities after 2014.
+
+| criteria           | population                rank         
+|:-------------------|-----------------------|------------------|
+| old criteria(1989) | >1 million            |   超大城市       |
+|                    | 500,000 ~ 1 million   |   大城市         |
+|                    | 200,000 ~ 500,000     |   中等城市       |
+|                    | <200,000              |   小城市         |
+|                    |                       |                  |
+|new criteria(2014)  | >10 million           |   超大城市       |
+|                    | 5 million ~ 10 million|   特大城市       |
+|                    | 3 million ~ 5 million |   I型大城市      |
+|                    | 1 million ~ 3 million |   II型大城市     |
+|                    | 500,000 ~ 1 million   |   中等城市       | 
+|                    | 200,000 ~ 500,000     |   I型小城市      |
+|                    | <200,000              |   II型小城市     |  
+
+
+```{r rank}
+tidyr::tibble(
+  preference = corruption$prefecture,
+  rank = regioncode(data_input = corruption$prefecture, 
+           year_from = 2011,
+           year_to = 1989, 
+           convert_to="rank")
+)
+
+```
+
+## Pinyin^[Thanks Liu Xueyan's contribution to this function.]
 
 Pinyin is a Chinese phonetic romanization.
 Some data stores the region names with pinyin instead of Chinese characters.
@@ -274,7 +272,7 @@ Welcome to join us if you are also interested (see the affiliations below).
 Please contact us with any questions or comments.
 Bug reports can be conducted by [Github Issues](https://github.com/sammo3182/regioncode/issues).
 
-Also thanks ZHU Meng and LIU Xueyan for helping writing the 'Advanced Application' section of this vignette.
+We appreciate the efforts of SHI Yuyang, XU Yujia, TIAN Haiting, SHAO Weihang, CHEN Yuanqian, and  LI Ruizhe's on data collection and function editing of this package. 
 
 ## Affiliation
 
@@ -285,8 +283,8 @@ Tsinghua University,\
 Email: [yuehu\@tsinghua.edu.cn](mailto:yuehu@tsinghua.edu.cn){.email}\
 Website: <https://sammo3182.github.io>
 
-Wenquan Wu
+Xinyi Ye
 
 Department of Political Science,\
 Tsinghua University,\
-Email: [wuwq20\@mails.tsinghua.edu.cn](mailto:wuwq20@mails.tsinghua.edu.cn){.email}
+Email: [yexinyi98\@outlook.com](mailto:yexinyi98@outlook.com){.email}
