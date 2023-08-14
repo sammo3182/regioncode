@@ -1,5 +1,5 @@
-Sys.setlocale(category = "LC_COLLATE", locale = "Chinese")
-Sys.setlocale(category = "LC_CTYPE", locale = "Chinese")
+# Sys.setlocale(category = "LC_COLLATE", locale = "Chinese")
+# Sys.setlocale(category = "LC_CTYPE", locale = "Chinese")
 
 load("R/sysdata.rda")
 library(dplyr)
