@@ -23,9 +23,10 @@ editor_options:
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 if(!require(regioncode)) install.packages("regioncode")
+library(tidyverse)
 ```
 
-Inspired by Vincent Arel-Bundock's amazing [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848) package, we created `regioncode`, a package to achieve similar functions but specifically within China.
+Inspired by Vincent Arel-Bundock's [`countrycode`](https://joss.theoj.org/papers/10.21105/joss.00848) package, we created `regioncode`, a package to achieve similar functions but specifically within China.
 `regioncode` aims to enable seamlessly converting regions' formal names, common-used names, and administrative division codes between each other in modern China (1986--2019).
 
 ## Why `regioncode`?
@@ -47,15 +48,19 @@ To install:
 
 # Basic Usage
 
-We uses a randomly drawn sample of Yuhua Wang's [`China’s Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) to illustrate how the package works.
-In the data, the division codes were recorded with the 2019 version, and we added prefectural abbreviations for the sake of illustration.
+We uses a randomly sample from the [`China's Corruption Investigations Dataset`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD) to illustrate how the functions work.
 
-In `regioncode` package, we named administrative division codes as `code`, regions' formal names as `name`, and their commonly used abbreviation as `sname`.
+
+In `regioncode` package, we named administrative division codes as `code`, regions' formal names as `name`, and their commonly used abbreviation ("short name") as `sname`.
 The current version enables mutual conversion between any pair of them.
-To do so, users just need to pass a character vector of names or a numeric vector of geocodes into the function.
-In the current version, the function can produce three types of output at both the prefectural and provincial levels: codes (`code`), names (`name`) and area (`area`, such as 华北, 东北, 华南, etc.).
-One just needs to specify which type of the output they want in the argument `convert_to` and corresponding years of the input and output.
-For example, the following codes convert the 2019 geocodes in the `corruption` data to their 1989 version:
+To do so, users just need to pass a character vector of names or a numeric vector of geocodes into the function and specify which type of the output they want in the argument `convert_to` to gain the type of output of interest.
+In the current version,three types of output are available: 
+
+1. Geocodes (`code`)
+1. Names of the given cities/provinces (`name`)
+1. Area the given cities/provinces belong (`area`, such as 华北, 东北, 华南, etc.).
+
+In the following example, the 2019 geocodes in the toy data to their 1989 version:
 
 ```{r code2code}
 library(regioncode)
@@ -65,11 +70,23 @@ data("corruption")
 # Original 2019 version
 corruption$prefecture_id
 
-# 1999 version
-regioncode(data_input = corruption$prefecture_id, 
+# 1989 version
+temp <- regioncode(data_input = corruption$prefecture_id, 
            convert_to = "code", # default set
            year_from = 2019,
            year_to = 1989)
+
+# tibble(
+#   code2019 = corruption$prefecture_id,
+#   code1989 = regioncode(data_input = corruption$prefecture_id, 
+#            convert_to = "code", # default set
+#            year_from = 2019,
+#            year_to = 1989),
+#   name1989 = regioncode(data_input = corruption$prefecture_id, 
+#            convert_to = "name", # default set
+#            year_from = 2019,
+#            year_to = 1989)
+# )
 ```
 
 Note that if a region was initially geocoded in e.g., 1989 and included in a new region, in 2019, the new region geocode will be used hereafter.
