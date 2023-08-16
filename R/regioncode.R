@@ -5,7 +5,7 @@
 #' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
 #' @param year_from A integer to define the year of the input. The default value is 1999.
 #' @param year_to A integer to define the year to convert. The default value is 2015.
-#' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to region names, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or the ranking of city(`rank`). The default option is `code`.
+#' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to city ranks, from codes to region names, from region names to city ranks, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or city ranks (`rank`). The default option is `code`.
 #'  When `province` is TRUE, one can also choose `abbre`, `abbreTocode`, `abbreToname`, and `abbreToarea` to convert between names/codes and abbreviations of provinces.
 #' @param incomplete_name A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
 #' @param zhixiashi A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.
@@ -95,8 +95,9 @@ regioncode <- function(data_input,
   }
 
 
-  if (province=="TRUE"&zhixiashi=="FALSE"&convert_to %in% c("rank"))
+  if (province=="TRUE"&zhixiashi=="FALSE"&convert_to %in% c("rank")){
     stop("Invalid input: province can not convert to rank.")
+    }
 
   if (!(incomplete_name %in% c("none", "from", "to", "both"))) {
     stop(
@@ -145,6 +146,7 @@ regioncode <- function(data_input,
       if (is.character(data_input[1])) {
         year_from <- "prov_name"
       }
+
 
       ls_index <- switch(to_dialect,
                          "dia_super" = {
@@ -223,11 +225,11 @@ regioncode <- function(data_input,
 
       ls_index <- switch(to_dialect,
                          "dia_group" = {
-                           year_to <- "pref_language"
+                           year_to <- "pref_language_all"
                            c(year_from, year_to)
                          },
                          "dia_sub_group" = {
-                           year_to <- "dia_sub_language"
+                           year_to <- "dia_sub_language_all"
                            c(year_from, year_to)
                          }
       )
@@ -239,6 +241,8 @@ regioncode <- function(data_input,
       if (is.character(data_input[1])) {
         year_from <- paste0(year_from, "_name")
       }
+
+      region_data <- region_data[!duplicated(region_data$`2019_code`), ]
 
       ls_index <- switch(convert_to,
                          "code" = {
@@ -340,14 +344,15 @@ regioncode <- function(data_input,
   # Because '2pinyin' can not be used as a variable name
   if (to_pinyin) {
     if (is.character(data_output)) {
-      data_output <-
-        py(
-          char = data_output,
-          dic = pydic(method = "toneless", dic = "pinyin2")
-        )
+      data_output <- ifelse(data_output == "陕西", "shaan_xi",
+                            ifelse(data_output == "陕西省", "shaan_xi_sheng",
+                                   ifelse(data_output == "内蒙古", "inner_mongolia",
+                                          ifelse(data_output == "西藏", "tibet",
+                                                 ifelse(data_output == "澳门", "macao",
+                                                        ifelse(data_output == "香港", "hong_kong",
+                                                               py(char = data_output,
+                                                                  dic = pydic(method = "toneless", dic = "pinyin2"))))))))
     }
   }
-
-  return(data_output)
-}
+  return(data_output)  }
 
