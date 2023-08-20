@@ -1,7 +1,8 @@
 ## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
-
+if(!require(regioncode)) install.packages("regioncode")
+library(tidyverse)
 
 ## ----code2code----------------------------------------------------------------
 library(regioncode)
@@ -11,11 +12,23 @@ data("corruption")
 # Original 2019 version
 corruption$prefecture_id
 
-# 1999 version
-regioncode(data_input = corruption$prefecture_id, 
+# 1989 version
+temp <- regioncode(data_input = corruption$prefecture_id, 
            convert_to = "code", # default set
            year_from = 2019,
            year_to = 1989)
+
+# tibble(
+#   code2019 = corruption$prefecture_id,
+#   code1989 = regioncode(data_input = corruption$prefecture_id, 
+#            convert_to = "code", # default set
+#            year_from = 2019,
+#            year_to = 1989),
+#   name1989 = regioncode(data_input = corruption$prefecture_id, 
+#            convert_to = "name", # default set
+#            year_from = 2019,
+#            year_to = 1989)
+# )
 
 ## ----code2name----------------------------------------------------------------
 # The original name
@@ -57,12 +70,6 @@ regioncode(data_input = corruption$prefecture,
            year_to = 1989, 
            convert_to="area")
 
-## ----rank---------------------------------------------------------------------
-regioncode(data_input = corruption$prefecture, 
-           year_from = 2011,
-           year_to = 1989, 
-           convert_to="rank")
-
 ## ----language_zone------------------------------------------------------------
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
@@ -73,6 +80,16 @@ regioncode(data_input = corruption$prefecture,
            year_from = 2019,
            year_to = 1989,
            to_dialect = "dia_sub_group")
+
+## ----rank---------------------------------------------------------------------
+tidyr::tibble(
+  preference = corruption$prefecture,
+  rank = regioncode(data_input = corruption$prefecture, 
+           year_from = 2011,
+           year_to = 1989, 
+           convert_to="rank")
+)
+
 
 ## ----pinyin-------------------------------------------------------------------
 regioncode(data_input = corruption$prefecture, 
