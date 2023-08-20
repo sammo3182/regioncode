@@ -204,19 +204,20 @@ regioncode(data_input = names_municipality,
 
 # When `zhixiashi` is TRUE, muncipalities are 
 
-regioncode(data_input = names_municipality, 
-           year_from = 2019,
-           year_to = 2019, 
-           convert_to = "code",
-           zhixiashi = TRUE)
+# regioncode(data_input = names_municipality, 
+#            year_from = 2019,
+#            year_to = 2019, 
+#            convert_to = "code",
+#            zhixiashi = TRUE)
 ```
 
+## Geographic Units Beyond Provinces
 
+The current version of `regioncode` includes two types of region conversion beyond the provincial level: sociopolitical area and linguistic zones.
 
-## Sociopolitical and Linguistic Areas^[Thanks ZHU Meng's contribution to this function.]
+### Sociopolitical Area
 
-Due to social, political, and martial reasons, Chinese regions are divided into seven regions:
-
+Due to social, political, and martial reasons, Chinese regions are divided into seven areas:
 
 | region | provincial-level administrative unit                           |
 |:-------|----------------------------------------------------------------|
@@ -228,21 +229,27 @@ Due to social, political, and martial reasons, Chinese regions are divided into 
 | 西南   | 重庆市, 四川省, 贵州省, 云南省, 西藏自治区                     |
 | 西北   | 陕西省, 甘肃省, 青海省, 宁夏回族自治区, 新疆维吾尔自治区       |
 
-`regioncode` also offers a method "area" to convert codes and names of the region into such areas.
+
+In some cases, users may want to know which areas a prefecture or province belongs.
+`regioncode` offers a function to convert codes and names of the region into areas by setting the output format as "area":
 
 ```{r 2area}
 regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989, 
-           convert_to="area")
+           convert_to = "area")
 ```
+
+## Linguistic Zone^[Thanks ZHU Meng's contribution to this function.]
 
 China is a multilingual country with a variety of dialects.
 These dialects may be used by several prefectures in a province or province.
 Prefectures from different provinces may also share the same dialect.
 
-`regioncode` allows users to gain linguistic zones the prefectures belong as an output. Users can gain two levels of linguistic zones, dialect groups and dialect sub-groups by setting the argument `to_pinyin` to `dia_group` or `dia_sub_group`.
-Note that, the linguistic distribution in China is too complex for precisely gauging at the prefectural level.
+For the convenience of political and sociolinguistic studies, `regioncode` includes a function to return approximate linguistic zones of the given geocodes or prefectural names.
+In the current version, `regioncode` offers two levels of lignuistic zone identification, i.e., the dialect groups (`dia_group`) and dialect sub-groups (`dia_sub_group`), according to the language atlas 
+
+Note that, the linguistic distribution in China is too complex for precisely gauging at the prefectural level, not saying that they continually change along with the population dynamic.
 The linguistic zone output from `regioncode` is thus at most for reference rather than rigorous linguistic research.
 
 ```{r language_zone}
