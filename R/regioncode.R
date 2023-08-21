@@ -167,7 +167,6 @@ regioncode <- function(data_input,
 
       # Getting the correct "from" column
       year_from <- case_when(
-        is.numeric(data_input[1]) & nchar(data_input[1]) ~ "prov_scode",
         is.numeric(data_input[1]) ~ "prov_code",
         is.character(data_input[1]) ~ "prov_name"
       )
@@ -201,7 +200,7 @@ regioncode <- function(data_input,
                            c(year_from, year_to)
                          },
                          "abbreTocode" = {
-                           year_from <- paste0(year_to, "_nickname")
+                           year_from <- paste0(year_from, "_nickname")
                            year_to <- "prov_code"
                            c(year_from, year_to)
                          },
@@ -265,7 +264,7 @@ regioncode <- function(data_input,
 
       # Using the Municipal codes for within region codes
       if (zhixiashi) {
-        region_zhixiashi <-region_data %>%
+        region_zhixiashi <- region_data %>%
           filter(zhixiashi)
 
         region_sname <- region_zhixiashi %>%
@@ -280,10 +279,9 @@ regioncode <- function(data_input,
         region_rank <- region_zhixiashi %>%
           select(ends_with("_rank"))
 
-
         # replacing the prefectural names and codes with provincial names and codes
         region_sname2 <-
-          replicate(ncol(region_sname), region_zhixiashi$prov_name) %>%
+          replicate(ncol(region_sname), region_zhixiashi$prov_sname) %>%
           as.data.frame()
         names(region_sname2) <- names(region_sname)
 
@@ -298,17 +296,19 @@ regioncode <- function(data_input,
         names(region_code2) <- names(region_code)
 
 
-        region_zhixiashi <- bind_cols(region_sname2, region_name2, region_code2, region_rank)
-
         region_zhixiashi <-
-          region_zhixiashi[, order(colnames(region_zhixiashi))]
+          bind_cols(region_sname2, region_name2, region_code2,region_rank)
+        region_zhixiashi <- distinct(
+          region_zhixiashi[, order(colnames(region_zhixiashi))])
 
-        region_province <-region_data %>%
+        region_province <- region_data %>%
           filter(!zhixiashi)
-        region_province <-
-          region_province[, order(colnames(region_province))]
+        region_province <- distinct(
+          region_province[, order(colnames(region_province))])
 
         region_data <- bind_rows(region_zhixiashi, region_province)
+
+
       }
     }
   }
@@ -344,14 +344,28 @@ regioncode <- function(data_input,
   # Because '2pinyin' can not be used as a variable name
   if (to_pinyin) {
     if (is.character(data_output)) {
-      data_output <- ifelse(data_output == "陕西", "shaan_xi",
-                            ifelse(data_output == "陕西省", "shaan_xi_sheng",
-                                   ifelse(data_output == "内蒙古", "inner_mongolia",
-                                          ifelse(data_output == "西藏", "tibet",
-                                                 ifelse(data_output == "澳门", "macao",
-                                                        ifelse(data_output == "香港", "hong_kong",
-                                                               py(char = data_output,
-                                                                  dic = pydic(method = "toneless", dic = "pinyin2"))))))))
+      data_output <-
+        ifelse(
+          data_output == "陕西", "shaan_xi",
+          ifelse(
+            data_output == "陕西省", "shaan_xi_sheng",
+            ifelse(
+              data_output == "内蒙古", "inner_mongolia",
+              ifelse(
+                data_output == "西藏", "tibet",
+                ifelse(
+                  data_output == "澳门", "macao",
+                  ifelse(
+                    data_output == "香港", "hong_kong",
+                    py(char = data_output,
+                       dic = pydic(method = "toneless", dic = "pinyin2")
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
     }
   }
   return(data_output)  }

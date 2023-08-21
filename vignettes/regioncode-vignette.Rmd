@@ -183,9 +183,9 @@ When set to "TRUE," municipalities are considered as prefectures, and their prov
 The following example illustrates the municipalities identifier with a mixed string of names of municipalities, their districts, and a prefecture:
 
 ```{r municipality}
-names_municipality <- c("北京", # Beijing, a municipality
+names_municipality <- c("北京市", # Beijing, a municipality
                         "海淀区", # A district of Beijing
-                        "上海", # Shanghai, a municipality
+                        "上海市", # Shanghai, a municipality
                         "静安区", # A district of Shanghai
                         "济南市") # A prefecture of Shandong
 
