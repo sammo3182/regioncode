@@ -199,11 +199,11 @@ regioncode(data_input = names_municipality,
            zhixiashi = FALSE)
 
 # When `zhixiashi` is TRUE, municipalities are recognized
-# regioncode(data_input = names_municipality, 
-#            year_from = 2019,
-#            year_to = 2019, 
-#            convert_to = "code",
-#            zhixiashi = TRUE)
+regioncode(data_input = names_municipality,
+           year_from = 2019,
+           year_to = 2019,
+           convert_to = "code",
+           zhixiashi = TRUE)
 ```
 
 ## City Ranking
@@ -401,4 +401,4 @@ Xinyi Ye
 
 Department of Political Science,\
 Tsinghua University,\
-Email: [yexinyi98\@outlook.com](mailto:yexinyi98@outlook.com){.email}
+Email: [yexy23\@mails.tsinghua.edu.cn](mailto:yexy23@mails.tsinghua.edu.cn){.email}
