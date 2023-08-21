@@ -54,8 +54,6 @@ To install:
 -  The latest released version: `install.packages("regioncode")`.
 -  The latest developing version: `remotes::install_github("sammo3182/regioncode")`.
 
-Certainly! Below is the revised text, edited to align with your specified style:
-
 # Basic Usage
 
 We demonstrate the basic application of `regioncode` with a toy data randomly sampled from @Wang2020c's China's Corruption Investigations Dataset. 
