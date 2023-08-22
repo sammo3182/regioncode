@@ -262,8 +262,10 @@ regioncode <- function(data_input,
                          }
       )
 
+
       # Using the Municipal codes for within region codes
       if (zhixiashi) {
+
         region_zhixiashi <- region_data %>%
           filter(zhixiashi)
 
@@ -276,19 +278,27 @@ regioncode <- function(data_input,
         region_code <- region_zhixiashi %>%
           select(ends_with("_code"))
 
-        region_rank <- region_zhixiashi %>%
-          select(ends_with("_rank"))
+        region_remain <- region_zhixiashi %>%
+          select(-ends_with("_code"),
+                 -ends_with("_sname"),
+                 -ends_with("_name"),
+                 -ends_with("language"),
+                 -ends_with("_all"),
+                 -ends_with("_nickname"),
+                 -'dia_sub_group',
+                 -'freq')
 
         # replacing the prefectural names and codes with provincial names and codes
-        region_sname2 <-
-          replicate(ncol(region_sname), region_zhixiashi$prov_sname) %>%
-          as.data.frame()
-        names(region_sname2) <- names(region_sname)
 
         region_name2 <-
           replicate(ncol(region_name), region_zhixiashi$prov_name) %>%
           as.data.frame()
         names(region_name2) <- names(region_name)
+
+        region_sname2 <-
+          replicate(ncol(region_name), region_zhixiashi$prov_name) %>%
+          as.data.frame()
+        names(region_sname2) <- names(region_sname2)
 
         region_code2 <-
           replicate(ncol(region_code), region_zhixiashi$prov_code) %>%
@@ -297,18 +307,24 @@ regioncode <- function(data_input,
 
 
         region_zhixiashi <-
-          bind_cols(region_sname2, region_name2, region_code2,region_rank)
+          cbind(region_name2, region_code2,region_sname2,region_remain)
         region_zhixiashi <- distinct(
           region_zhixiashi[, order(colnames(region_zhixiashi))])
+        region_zhixiashi <- region_zhixiashi %>%
+          select('1986_code':prov_scode)
 
-        region_province <- region_data %>%
-          filter(!zhixiashi)
         region_province <- distinct(
-          region_province[, order(colnames(region_province))])
+          select(region_data,
+                 -ends_with("language"),
+                 -ends_with("_all"),
+                 -ends_with("_nickname"),
+                 -dia_sub_group,
+                 -freq)
+        )
+        region_province <- region_province[, order(colnames(region_province))]
 
-        region_data <- bind_rows(region_zhixiashi, region_province)
 
-
+        region_data<- bind_rows(region_zhixiashi, region_province)
       }
     }
   }
