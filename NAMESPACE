@@ -3,3 +3,4 @@
 export(regioncode)
 import(dplyr)
 import(pinyin)
+import(tidyverse)

@@ -30,6 +30,7 @@
 #'
 #' @import dplyr
 #' @import pinyin
+#' @import tidyverse
 #'
 #' @examples
 #'
@@ -41,7 +42,6 @@
 #'
 #'
 #' @export
-
 regioncode <- function(data_input,
                        year_from = 1999,
                        year_to = 2015,
@@ -161,7 +161,6 @@ regioncode <- function(data_input,
         distinct()
 
       # Because province nicknames changed in 1999
-      #用于判断year_from和year_to的值是否小于1999，如果是，则将其值设为1998，否则设为1999
       year_from <- ifelse(year_from < 1999, 1998, 1999)
       year_to <- ifelse(year_to < 1999, 1998, 1999)
 
@@ -267,7 +266,7 @@ regioncode <- function(data_input,
       if (zhixiashi) {
 
         region_zhixiashi <- region_data %>%
-          filter(zhixiashi)
+          dplyr::filter(zhixiashi)
 
         region_sname <- region_zhixiashi %>%
           select(ends_with("_sname"))
@@ -362,17 +361,17 @@ regioncode <- function(data_input,
     if (is.character(data_output)) {
       data_output <-
         ifelse(
-          data_output == "陕西", "shaan_xi",
+          data_output == "\\u9655\\u897f", "shaan_xi",
           ifelse(
-            data_output == "陕西省", "shaan_xi_sheng",
+            data_output == "\\u9655\\u897f\\u7701", "shaan_xi_sheng",
             ifelse(
-              data_output == "内蒙古", "inner_mongolia",
+              data_output ==  "\\u5185\\u8499\\u53e4", "inner_mongolia",
               ifelse(
-                data_output == "西藏", "tibet",
+                data_output =="\\u897f\\u85cf", "tibet",
                 ifelse(
-                  data_output == "澳门", "macao",
+                  data_output == "\\u6fb3\\u95e8", "macao",
                   ifelse(
-                    data_output == "香港", "hong_kong",
+                    data_output == "\\u9999\\u6e2f", "hong_kong",
                     py(char = data_output,
                        dic = pydic(method = "toneless", dic = "pinyin2")
                     )

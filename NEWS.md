@@ -1,7 +1,9 @@
 # regioncode 0.1.2
 
 - Bug fix
-  - Full name of "Ning Xia"
+  - present Shaanxi, tibet, macao, hongkong, inner_mongolia correctly
+  - full name of "Ning Xia"
++ Add new function `rank` 
 
 # regioncode 0.1.1
 
