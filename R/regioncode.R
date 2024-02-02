@@ -28,9 +28,8 @@
 #'
 #' @returns The function returns a character or numeric vector depending on what method is specified.
 #'
-#' @import dplyr
 #' @import pinyin
-#' @import tidyverse
+#' @import dplyr
 #'
 #' @examples
 #'
@@ -307,7 +306,7 @@ regioncode <- function(data_input,
         region_province <- region_province[, order(colnames(region_province))]
 
 
-        region_data<- bind_rows(region_zhixiashi, region_province)
+        region_data <- bind_rows(region_zhixiashi, region_province)
       }
     }
   }
@@ -333,31 +332,17 @@ regioncode <- function(data_input,
     pull(!!year_to)
 
   # Because '2pinyin' can not be used as a variable name
+
   if (to_pinyin) {
-    if (is.character(data_output)) {
-      data_output <-
-        ifelse(
-          data_output == "\\u9655\\u897f", "shaan_xi",
-          ifelse(
-            data_output == "\\u9655\\u897f\\u7701", "shaan_xi_sheng",
-            ifelse(
-              data_output ==  "\\u5185\\u8499\\u53e4", "inner_mongolia",
-              ifelse(
-                data_output =="\\u897f\\u85cf", "tibet",
-                ifelse(
-                  data_output == "\\u6fb3\\u95e8", "macao",
-                  ifelse(
-                    data_output == "\\u9999\\u6e2f", "hong_kong",
-                    py(char = data_output,
-                       dic = pydic(method = "toneless", dic = "pinyin2")
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-    }
+    data_output <- case_when(
+      substr(data_output, start = 1, stop = 2) == "\u9655\u897f" ~ "shaan_xi",
+      substr(data_output, start = 1, stop = 2) == "\u5185\u8499" ~ "inner_mongolia",
+      substr(data_output, start = 1, stop = 2) == "\u897f\u85cf" ~ "tibet",
+      substr(data_output, start = 1, stop = 2) == "\u6fb3\u95e8" ~ "macao",
+      substr(data_output, start = 1, stop = 2) == "\u9999\u6e2f" ~ "hong_kong",
+      TRUE ~ py(char = substr(data_output, start = 1, stop = 2), dic = pydic(method = "toneless", dic = "pinyin2"))
+    )
   }
+
   return(data_output)  }
 

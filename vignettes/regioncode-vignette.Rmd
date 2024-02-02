@@ -23,7 +23,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 if(!require(regioncode)) install.packages("regioncode")
 library(regioncode)
-library(tidyverse)
+library(dplyr)
 ```
 
 The term "city" in China encompasses a multifaceted concept. 
@@ -154,7 +154,7 @@ fake_incomplete <- corruption$prefecture
 index_incomplete <- sample(seq(length(corruption$prefecture)), 7)
 
 fake_incomplete[index_incomplete] <- fake_incomplete[index_incomplete] |> 
-  str_sub(end = 2)
+  substr(start = 1, stop = 2)
 
 fake_incomplete
 
