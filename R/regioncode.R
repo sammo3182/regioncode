@@ -7,7 +7,7 @@
 #' @param year_to A integer to define the year to convert. The default value is 2015.
 #' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to city ranks, from codes to region names, from region names to city ranks, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or city ranks (`rank`). The default option is `code`.
 #'  When `province` is TRUE, one can also choose `abbre`, `abbreTocode`, `abbreToname`, and `abbreToarea` to convert between names/codes and abbreviations of provinces.
-#' @param incomplete_name A character to specify if a short name of region is used. See the Details for more information. The default is "none". Other options are "from", "to", and "both".
+#' @param incomplete_name A logic strong to indicate if the input has incomplete names (not nickname). See more in "Details".
 #' @param zhixiashi A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.
 #' @param to_pinyin A logic string to indicate whether the output is in pinyin spelling instead of Chinese characters. The default is FALSE.
 #' @param to_dialect A character indicating the language transformation. At the prefectural level, valid transformation include `dia_group`,`dia_sub_group`. At the province level, valid transformation is `dia_super`. The default value is "none".
@@ -15,7 +15,7 @@
 #' @param province A logic string to indicate the level of converting. The default is FALSE.
 #'
 #'
-#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incomplete_name`. The argument has four options: "none", "from", "to", and "both".
+#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city, e.g., "天津" rather than "天津市", or "海淀" rather than "海淀区". `regioncode` accounts this issue by offering the argument `incomplete_name`.
 #' \itemize{
 #'   \item "none": no short name will be used for either input or output;
 #'   \item "from": input data is short names instead of the full, official ones;
@@ -46,7 +46,7 @@ regioncode <- function(data_input,
                        year_from = 1999,
                        year_to = 2015,
                        convert_to = "code",
-                       incomplete_name = "none",
+                       incomplete_name = FALSE,
                        zhixiashi = FALSE,
                        to_dialect = "none",
                        to_pinyin = FALSE,
@@ -94,20 +94,9 @@ regioncode <- function(data_input,
     }
   }
 
-
-  if (province=="TRUE"&zhixiashi=="FALSE"&convert_to %in% c("rank")){
+  if (province == "TRUE" & zhixiashi == "FALSE" & convert_to %in% c("rank")){
     stop("Invalid input: province can not convert to rank.")
     }
-
-  if (!(incomplete_name %in% c("none", "from", "to", "both"))) {
-    stop(
-      "Invalid input: the options of `incomplete_name` are one of 'none', 'from', 'to', and 'both'."
-    )
-  }
-
-  if (incomplete_name == "to" & convert_to == "code") {
-    stop("Invalid input: can not complete administrative codes.")
-  }
 
   if (!is.logical(province)) {
     stop("Invalid input: param `zhixiashi` must be logical class.")
@@ -116,11 +105,6 @@ regioncode <- function(data_input,
   if (!is.character(to_dialect)) {
     stop("Invalid input: param `to_dialect` must be character class.")
   }
-
-  # if (language_zone &  !grepl('_name', data_input, fixed = TRUE))
-  #   stop(
-  #     'Invalid input: current version is not supported sname or code as language_zone input.'
-  #   )
 
   if (!is.logical(zhixiashi)) {
     stop("Invalid input: param `zhixiashi` must be logical class.")
@@ -156,7 +140,7 @@ regioncode <- function(data_input,
       )
     } else {
       # 1-2 If not convert language zone
-      prov_data <-region_data %>%
+      prov_data <- region_data %>%
         select(prov_code:`1999_nickname`, "area") %>%
         distinct()
 
@@ -328,31 +312,23 @@ regioncode <- function(data_input,
     }
   }
 
-  # When using sname instead of the official name
-
-  ls_index <- case_when(
-    incomplete_name == "both" ~ gsub("_name", "_sname", ls_index),
-    incomplete_name == "from" ~ c(gsub("_name", "_sname", ls_index[1]), ls_index[2]),
-    incomplete_name == "to" ~ c(ls_index[1], gsub("_name", "_sname", ls_index[2])),
-    incomplete_name == "none" ~ ls_index
-  )
-
-  # Updating the year_from/to after the evaluation of `incomplete_name`
-  if (incomplete_name != "none") {
-    year_from <- ls_index[1]
-    year_to <- ls_index[2]
-  }
-
-
   # Convert the input to a data.frame for later merging
 
-  df_input <- data_input %>% as.data.frame()
-  names(df_input) <- ls_index[1]
+  data_input <- data_input %>% as.data.frame()
+  names(data_input) <- ls_index[1]
 
-  data_output <-
-    select(region_data, !!ls_index) %>%
-    distinct() %>%
-    left_join(df_input, .) %>%
+  data_output <- select(region_data, !!ls_index) %>%
+    distinct()
+
+  if (incomplete_name) {
+    data_input[[ls_index[1]]] <-
+      substr(data_input[[ls_index[1]]], start = 1, stop = 2) # using the first two characters to match
+
+    data_output[[ls_index[1]]] <-
+      substr(data_output[[ls_index[1]]], start = 1, stop = 2) # using the first two characters to match
+  }
+
+  data_output <- left_join(data_input, data_output) |>
     # using left_join to keep the order of the input data
     pull(!!year_to)
 

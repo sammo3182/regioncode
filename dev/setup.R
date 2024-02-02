@@ -8,7 +8,7 @@ year_from = 1999
 year_to = 2015
 province = FALSE
 zhixiashi = FALSE
-incomplete_name = "none"
+incomplete_name = FALSE
 to_dialect = "none"
 to_pinyin = FALSE
 
@@ -16,7 +16,7 @@ province = TRUE
 data_input <- c("黑龙江省", "天津市")
 convert_to <- "area"
 
-regioncode("河东区", method = "2code", zhixiashi = FALSE)
+regioncode(c("沈阳", "吉林市", "河东"), incomplete_name = TRUE, zhixiashi = FALSE)
 
 region_table$prov_scode <- str_sub(region_table$prov_code, end = 2)
 

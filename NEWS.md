@@ -1,10 +1,11 @@
-# regioncode 0.1.2
+# regioncode 0.2.0
 
+- New function `rank` for level of cities
+- New method in `incomplete_name` so that the function can deal with input with only part of incomplete region names
 - Bug fix
   - present Shaanxi, tibet, macao, hongkong, inner_mongolia correctly
   - full name of "Ning Xia"
   - Correct name of Xinjiang
-+ Add new function `rank` 
 
 # regioncode 0.1.1
 

@@ -1,33 +1,17 @@
 Package: regioncode
 Title: Convert Region Names and Division Codes of China Over Years
-Version: 0.1.9999
+Version: 0.1.2
 Authors@R: 
     c(person(given = "Yue",family = "Hu",role = c("aut","cre"), email = "yuehu@tsinghua.edu.cn"),
+    person(given = "Xinyi",family = "Ye",role = c("aut"), email = "yexy23@mails.tsinghua.edu.cn"),
     person(given = "Yufei",family = "Sun",role = c("aut"), email = "sunyf20@mails.tsinghua.edu.cn"),
-    person(given = "Wenquan",family = "Wu",role = c("aut"), email = "gohuntsuan@gmail.com"),
-    person(given = "Ruizhe",family = "Li",role = c("ctb"), email = "lirz22@mails.tsinghua.edu.cn"),
-    person(given = "Meng",family = "Zhu",role = c("ctb"), email = "zhu-m21@mails.tsinghua.edu.cn"),
-    person(given = "Yuyang",family = "Shi",role = c("ctb"), email = "yangtzesyy@gmail.com"),
-    person(given = "Yujia",family = "Xu",role = c("ctb"), email = "593878126@qq.com"),
-    person(given = "Yuxin",family = "Pan",role = c("ctb"), email = "panyx17@mails.tsinghua.edu.cn"),
-    person(given = "Haiting",family = "Tian",role = c("ctb"), email = "tianht.18@sem.tsingha.edu.cn"),
-    person(given = "Weihang",family = "Shao",role = c("ctb"), email = "shaowh19@mails.tsinghua.edu.cn"),
-    person(given = "Yuanqian",family = "Chen",role = c("ctb"), email = "yuanqian18@mails.tsinghua.edu.cn"),
-    person(given = "Xueyan",family = "Liu",role = c("ctb"), email = "756843722@qq.com"))
+    person(given = "Wenquan",family = "Wu",role = c("aut"), email = "gohuntsuan@gmail.com"))
 Author: Yue Hu [aut, cre],
+  Xinyi Ye [aut],
   Yufei Sun [aut],
-  Wenquan Wu [aut],
-  Ruizhe Li [ctb],
-  Meng Zhu [ctb],
-  Yuyang Shi [ctb],
-  Yujia Xu [ctb],
-  Yuxin Pan [ctb],
-  Haiting Tian [ctb],
-  Weihang Shao [ctb],
-  Yuanqian Chen [ctb],
-  Xueyan Liu [ctb]
+  Wenquan Wu [aut]
 Maintainer: Yue Hu <yuehu@tsinghua.edu.cn>
-Description: A fast tool to conquer the difficulties to convert various region names and administration division codes of Chinese regions. The current version enables seamlessly converting Chinese regions' formal names, common-used names, and codes between each other at the city level from 1986 to 2019.
+Description: A tool to conquer the difficulties to convert various region names and administration division codes of Chinese regions. The current version enables seamlessly converting Chinese regions' formal names, common-used names, and codes between each other at the city level from 1986 to 2019.
 License: MIT + file LICENSE
 Encoding: UTF-8
 BugReports: https://github.com/sammo3182/regioncode/issues
@@ -43,6 +27,6 @@ Suggests:
     knitr
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
 VignetteBuilder: knitr
