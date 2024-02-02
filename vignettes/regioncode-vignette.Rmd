@@ -130,24 +130,20 @@ regioncode(data_input = corruption$prefecture,
 
 The `regioncode` package also offers specialized conversion functions to assist users with more complex data and diverse requirements, including:
 
-1. Conversion from/to incomplete names (without administrative levels).
-2. Different handling of municipalities.
-3. Return of population-based city ranks.
-4. Return of pinyin format of outputs.
-5. Conversion of provincial data.
-6. Return of administrative areas.
-7. Return of linguistic zones.
+1. Conversion from/to incomplete names.
+1. Different handling of municipalities.
+1. Return of population-based city ranks.
+1. Return of pinyin format of outputs.
+1. Conversion of provincial data.
+1. Return of administrative areas.
+1. Return of linguistic zones.
 
 ## Incomplete Naming of Prefectures
 
-Frequently, data codes may exclude the administrative level when recording geographical information, such as "北京" instead of "北京市," referred to as "incomplete names."
-To execute conversions for such data, one must specify the `incomplete_name` argument:
-
-- If the administrative level in the input data is incomplete, users should set `incomplete_name = "from"`.
-- If the output needs to be in the incomplete form (only applicable when `convert_to = "name"`), users should set `incomplete_name = "to"`.
-- If both the input and output need to be in the incomplete form, `incomplete_name = "both"`.
-
-The settings above are exemplified in the subsequent example, where we convert the full names in the 2019 version to incomplete names in the 1989 version, and then to full names in 2008:
+Frequently, data codes may exclude the administrative level when recording geographical information, such as "北京" instead of "北京市," or "内蒙" instead of "内蒙古自治区" referred to as "incomplete names."
+To execute conversions for such data, one can specify the `incomplete_name` argument to "TRUE."
+As long as there are two characters that can help to identify the city or province, `regioncode` can conduct the conversion.
+In the following example, we randomly removed 70% of the input city names to incomplete names and show how `regioncode` can deal with such problems:
 
 ```{r incomplete_name}
 # Original full names
@@ -230,6 +226,9 @@ If the population is untraceable, the rank will be marked as `NA`.
 Users simply need to set `convert_to = "rank"` to perform the conversion.
 For regions in and before 1989, the old ranking system is applied.
 For other region-years, the function will return the new ranks.
+For some cities, we cannot find their populations from the official sources. 
+The `rank` of them will be `NA`.
+
 The following example compares the ranks from the same input in different years:
 
 ```{r rank}
