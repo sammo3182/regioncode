@@ -37,7 +37,7 @@ This package aims to perform similar functions but is tailored specifically for 
 # Why `regioncode`?
 
 The Chinese government assigns unique geocodes to each county, city (prefecture), and provincial-level administrative unit. 
-These "administrative division codes" are consistently [adjusted and updated](http://www.mca.gov.cn/article/sj/xzqh/1980/) to align with national and regional development plans [@MinZhengBu2022]. 
+These "administrative division codes" are consistently [adjusted and updated](https://www.mca.gov.cn/article/sj/xzqh/1980/) to align with national and regional development plans [@MinZhengBu2022]. 
 However, these adjustments may pose challenges for researchers conducting longitudinal studies or merging geo-based data from different years. 
 For instance, inconsistencies between map data and statistical data can result in erroneous outputs when rendering statistical data on a Chinese map.
 
@@ -384,7 +384,7 @@ Yue Hu
 Department of Political Science,\
 Tsinghua University,\
 Email: [yuehu\@tsinghua.edu.cn](mailto:yuehu@tsinghua.edu.cn){.email}\
-Website: <https://sammo3182.github.io>
+Website: <https://www.drhuyue.site>
 
 Xinyi Ye
 
