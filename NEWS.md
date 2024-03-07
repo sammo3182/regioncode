@@ -1,4 +1,8 @@
-# regioncode 0.2.0
+# 0.2.1
+
+- Corrected the region codes of Xinjiang
+
+# 0.2.0
 
 - New function `rank` for level of cities
 - New method in `incomplete_name` so that the function can deal with input with only part of incomplete region names
@@ -7,7 +11,7 @@
   - full name of "Ning Xia"
   - Correct name of Xinjiang
 
-# regioncode 0.1.1
+# 0.1.1
 
 + Styled function with tidyverse style
 + Rewrote `method ` as `convert_to`
@@ -16,7 +20,7 @@
 + Simplified the codes.
 + Added more detailed warning messages.
 
-# regioncode 0.0.9
+# 0.0.9
 
 + Enable to provincial-level conversion with `province`
 + Fixed the error of `incompleteName`
