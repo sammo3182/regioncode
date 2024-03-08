@@ -3,7 +3,7 @@ knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 if(!require(regioncode)) install.packages("regioncode")
 library(regioncode)
-library(tidyverse)
+library(dplyr)
 
 ## ----code2code----------------------------------------------------------------
 library(regioncode)
@@ -62,21 +62,22 @@ regioncode(data_input = corruption$prefecture,
 # Original full names
 corruption$prefecture
 
-# Conversion to incomplete names in 1989
-fake_incomplete <- regioncode(data_input = corruption$prefecture, 
-           convert_to = "name",
-           year_from = 2019,
-           year_to = 1989,
-           incomplete_name = "to")
+fake_incomplete <- corruption$prefecture
+
+index_incomplete <- sample(seq(length(corruption$prefecture)), 7)
+
+fake_incomplete[index_incomplete] <- fake_incomplete[index_incomplete] |> 
+  substr(start = 1, stop = 2)
+
 fake_incomplete
 
 # Conversion to full names in 2008
-fake_full <- regioncode(data_input = fake_incomplete, 
+regioncode(data_input = fake_incomplete, 
            convert_to = "name",
-           year_from = 1989,
+           year_from = 2019,
            year_to = 2008,
-           incomplete_name = "from")
-fake_full
+           incomplete_name = TRUE)
+
 
 ## ----municipality-------------------------------------------------------------
 names_municipality <- c("北京市", # Beijing, a municipality
@@ -121,13 +122,6 @@ tibble(
            convert_to = "name",
            to_pinyin = TRUE
            ),
-  cityIncomplete = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989, 
-           convert_to = "name",
-           incomplete_name = "to",
-           to_pinyin = TRUE
-           ),
   areaPY = regioncode(data_input = corruption$prefecture, 
            year_from = 2019,
            year_to = 1989, 
@@ -141,7 +135,7 @@ regioncode(data_input = c("山西", "陕西", "内蒙古", "香港", "澳门"),
            year_from = 2019,
            year_to = 2008, 
            convert_to = "name",
-           incomplete_name = "both",
+           incomplete_name = TRUE,
            province = TRUE,
            to_pinyin = TRUE
            )

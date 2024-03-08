@@ -10,9 +10,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="HU Yue, YE Xinyi, WU Wenquan, SUN Yufei" />
+<meta name="author" content="HU Yue, YE Xinyi" />
 
-<meta name="date" content="2023-08-28" />
+<meta name="date" content="2024-03-08" />
 
 <title>regioncode: One-Step Solution for Chinese Region Conversions</title>
 
@@ -51,7 +51,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -150,6 +150,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
 margin-left:2em;
@@ -362,8 +363,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">regioncode: One-Step Solution for Chinese
 Region Conversions</h1>
-<h4 class="author">HU Yue, YE Xinyi, WU Wenquan, SUN Yufei</h4>
-<h4 class="date">2023-08-28</h4>
+<h4 class="author">HU Yue, YE Xinyi</h4>
+<h4 class="date">2024-03-08</h4>
 
 
 
@@ -382,7 +383,7 @@ name/code conversions within China for the period 1986–2019.</p>
 <h1>Why <code>regioncode</code>?</h1>
 <p>The Chinese government assigns unique geocodes to each county, city
 (prefecture), and provincial-level administrative unit. These
-“administrative division codes” are consistently <a href="http://www.mca.gov.cn/article/sj/xzqh/1980/">adjusted and
+“administrative division codes” are consistently <a href="https://www.mca.gov.cn/article/sj/xzqh/1980/">adjusted and
 updated</a> to align with national and regional development plans <span class="citation">(民政部 2022)</span>. However, these adjustments may
 pose challenges for researchers conducting longitudinal studies or
 merging geo-based data from different years. For instance,
@@ -516,8 +517,7 @@ types of input to alternative formats of outputs:</p>
 conversion functions to assist users with more complex data and diverse
 requirements, including:</p>
 <ol style="list-style-type: decimal">
-<li>Conversion from/to incomplete names (without administrative
-levels).</li>
+<li>Conversion from/to incomplete names.</li>
 <li>Different handling of municipalities.</li>
 <li>Return of population-based city ranks.</li>
 <li>Return of pinyin format of outputs.</li>
@@ -529,41 +529,36 @@ levels).</li>
 <h2>Incomplete Naming of Prefectures</h2>
 <p>Frequently, data codes may exclude the administrative level when
 recording geographical information, such as “北京” instead of “北京市,”
-referred to as “incomplete names.” To execute conversions for such data,
-one must specify the <code>incomplete_name</code> argument:</p>
-<ul>
-<li>If the administrative level in the input data is incomplete, users
-should set <code>incomplete_name = &quot;from&quot;</code>.</li>
-<li>If the output needs to be in the incomplete form (only applicable
-when <code>convert_to = &quot;name&quot;</code>), users should set
-<code>incomplete_name = &quot;to&quot;</code>.</li>
-<li>If both the input and output need to be in the incomplete form,
-<code>incomplete_name = &quot;both&quot;</code>.</li>
-</ul>
-<p>The settings above are exemplified in the subsequent example, where
-we convert the full names in the 2019 version to incomplete names in the
-1989 version, and then to full names in 2008:</p>
+or “内蒙” instead of “内蒙古自治区” referred to as “incomplete names.”
+To execute conversions for such data, one can specify the
+<code>incomplete_name</code> argument to “TRUE.” As long as there are
+two characters that can help to identify the city or province,
+<code>regioncode</code> can conduct the conversion. In the following
+example, we randomly removed 70% of the input city names to incomplete
+names and show how <code>regioncode</code> can deal with such
+problems:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Original full names</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture</span></code></pre></div>
 <pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot;
 ##  [9] &quot;定安县&quot; &quot;襄阳市&quot;</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="co"># Conversion to incomplete names in 1989</span></span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>fake_incomplete <span class="ot">&lt;-</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="st">&quot;to&quot;</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>fake_incomplete</span></code></pre></div>
-<pre><code>##  [1] &quot;济南&quot; &quot;泰州&quot; &quot;松江&quot; &quot;宜昌&quot; &quot;柳州&quot; &quot;怀化&quot; &quot;莆田&quot; &quot;宜宾&quot; &quot;定安&quot; &quot;襄樊&quot;</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>fake_incomplete <span class="ot">&lt;-</span> corruption<span class="sc">$</span>prefecture</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>index_incomplete <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">length</span>(corruption<span class="sc">$</span>prefecture)), <span class="dv">7</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>fake_incomplete[index_incomplete] <span class="ot">&lt;-</span> fake_incomplete[index_incomplete] <span class="sc">|&gt;</span> </span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">2</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>fake_incomplete</span></code></pre></div>
+<pre><code>##  [1] &quot;济南&quot;   &quot;泰州&quot;   &quot;松江区&quot; &quot;宜昌&quot;   &quot;来宾&quot;   &quot;怀化市&quot; &quot;莆田&quot;   &quot;宜宾&quot;  
+##  [9] &quot;定安&quot;   &quot;襄阳市&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Conversion to full names in 2008</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>fake_full <span class="ot">&lt;-</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> fake_incomplete, </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> fake_incomplete, </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">1989</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2008</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="st">&quot;from&quot;</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>fake_full</span></code></pre></div>
-<pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;柳州市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot;
-##  [9] &quot;宜宾市&quot; &quot;定安县&quot; &quot;襄樊市&quot;</code></pre>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot;
+##  [9] &quot;定安县&quot; &quot;襄樊市&quot;</code></pre>
 </div>
 <div id="municipalities" class="section level2">
 <h2>Municipalities</h2>
@@ -683,9 +678,11 @@ according to their populations for a given year. If the population is
 untraceable, the rank will be marked as <code>NA</code>. Users simply
 need to set <code>convert_to = &quot;rank&quot;</code> to perform the conversion.
 For regions in and before 1989, the old ranking system is applied. For
-other region-years, the function will return the new ranks. The
-following example compares the ranks from the same input in different
-years:</p>
+other region-years, the function will return the new ranks. For some
+cities, we cannot find their populations from the official sources. The
+<code>rank</code> of them will be <code>NA</code>.</p>
+<p>The following example compares the ranks from the same input in
+different years:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="at">city =</span> corruption<span class="sc">$</span>prefecture,</span>
 <span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="at">rank1989 =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
@@ -732,44 +729,39 @@ this function operates on various demands:</p>
 <span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
 <span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
 <span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>           ),</span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  <span class="at">cityIncomplete =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  <span class="at">areaPY =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
 <span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="st">&quot;to&quot;</span>,</span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>           ),</span>
-<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>  <span class="at">areaPY =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
-<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>,</span>
-<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
-<span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a>           )</span>
-<span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## # A tibble: 10 × 4
-##    city   cityPY          cityIncomplete areaPY   
-##    &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    
-##  1 济南市 ji_nan_shi      ji_nan         hua_dong 
-##  2 泰州市 tai_zhou_shi    tai_zhou       hua_dong 
-##  3 松江区 song_jiang_xian song_jiang     hua_dong 
-##  4 宜昌市 yi_chang_shi    yi_chang       hua_zhong
-##  5 来宾市 liu_zhou_di_qu  liu_zhou       hua_nan  
-##  6 怀化市 huai_hua_di_qu  huai_hua       hua_zhong
-##  7 莆田市 pu_tian_shi     pu_tian        hua_dong 
-##  8 宜宾市 yi_bin_di_qu    yi_bin         xi_nan   
-##  9 定安县 ding_an_xian    ding_an        hua_nan  
-## 10 襄阳市 xiang_fan_shi   xiang_fan      hua_zhong</code></pre>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>           )</span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##    city   cityPY     areaPY   
+##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;    
+##  1 济南市 ji_nan     hua_dong 
+##  2 泰州市 tai_zhou   hua_dong 
+##  3 松江区 song_jiang hua_dong 
+##  4 宜昌市 yi_chang   hua_zhong
+##  5 来宾市 liu_zhou   hua_nan  
+##  6 怀化市 huai_hua   hua_zhong
+##  7 莆田市 pu_tian    hua_dong 
+##  8 宜宾市 yi_bin     xi_nan   
+##  9 定安县 ding_an    hua_nan  
+## 10 襄阳市 xiang_fan  hua_zhong</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># Regions with special spelling</span></span>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> <span class="fu">c</span>(<span class="st">&quot;山西&quot;</span>, <span class="st">&quot;陕西&quot;</span>, <span class="st">&quot;内蒙古&quot;</span>, <span class="st">&quot;香港&quot;</span>, <span class="st">&quot;澳门&quot;</span>), </span>
 <span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2008</span>, </span>
 <span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="st">&quot;both&quot;</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>           <span class="at">province =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
 <span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>           )</span></code></pre></div>
-<pre><code>## [1] &quot;shan_xi&quot;        &quot;shaan_xi&quot;       &quot;inner_mongolia&quot; &quot;hong_kong&quot;     
-## [5] &quot;macao&quot;</code></pre>
+<pre><code>##             山西                                                    
+##        &quot;shan_xi&quot;       &quot;shaan_xi&quot; &quot;inner_mongolia&quot;      &quot;hong_kong&quot; 
+##                  
+##          &quot;macao&quot;</code></pre>
 </div>
 <div id="provinces" class="section level2">
 <h2>Provinces</h2>
@@ -927,13 +919,14 @@ with future versions aiming to add more administrative level choices and
 enriching data. Collaboration is welcome, and questions, comments, or
 bug reports can be directed to <a href="https://github.com/sammo3182/regioncode/issues">Github
 Issues</a>.</p>
-<p>We extend our appreciation to SHI Yuyang, XU Yujia, TIAN Haiting,
-SHAO Weihang, CHEN Yuanqian, and LI Ruizhe for their contributions to
-data collection and function editing of this package.</p>
+<p>We extend our appreciation to LI Ruizhe, ZHU Meng, SHI Yuyang, XU
+Yujia, PAN Yuxin, TIAN Haiting, SHAO Weihang, CHEN Yuanqian, and LIU
+Xueyan for their contributions to data collection and function editing
+of this package.</p>
 </div>
 <div id="reference" class="section level1">
 <h1>Reference</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-LiEtAl1987" class="csl-entry">
 Li, Rong, Zhenghui Xiong, and Zhenxing Zhang. 1987. <em>The Language
 Atlas of China</em>. <span>London: Longman</span>.
@@ -945,7 +938,7 @@ Dataset.”</span> <span>Harvard Dataverse</span>. <a href="https://doi.org/10.7
 <div id="ref-GuoJiaTongJiJu2022" class="csl-entry">
 国家统计局. 2022a.
 <span>“关于更新全国统计用区划代码和城乡划分代码的公告.”</span>
-<span>中华人民共和国国家统计局</span>. <a href="http://www.stats.gov.cn/sj/tjbz/tjyqhdmhcxhfdm/2022/index.html">http://www.stats.gov.cn/sj/tjbz/tjyqhdmhcxhfdm/2022/index.html</a>.
+<span>中华人民共和国国家统计局</span>.
 </div>
 <div id="ref-GuoJiaTongJiJu2022a" class="csl-entry">
 ———, ed. 2022b. <em>中国统计年鉴2022（附光盘）
@@ -954,11 +947,11 @@ Dataset.”</span> <span>Harvard Dataverse</span>. <a href="https://doi.org/10.7
 </div>
 <div id="ref-SunPing2020" class="csl-entry">
 孙平. 2020. <span>“把握新时代行政区划优化设置的着力点 -
-中华人民共和国民政部.”</span> <em>中国社会报</em>, December 14, 2020. <a href="https://www.mca.gov.cn/n152/n166/c41451/content.html">https://www.mca.gov.cn/n152/n166/c41451/content.html</a>.
+中华人民共和国民政部.”</span> <em>中国社会报</em>, December 14, 2020.
 </div>
 <div id="ref-MinZhengBu2022" class="csl-entry">
 民政部. 2022. <span>“2021年中华人民共和国行政区划代码.”</span>
-<span>中华人民共和国民政部</span>. <a href="https://www.mca.gov.cn/n156/n186/c110745/content.html">https://www.mca.gov.cn/n156/n186/c110745/content.html</a>.
+<span>中华人民共和国民政部</span>.
 </div>
 </div>
 </div>
@@ -968,7 +961,7 @@ Dataset.”</span> <span>Harvard Dataverse</span>. <a href="https://doi.org/10.7
 <p>Department of Political Science,<br />
 Tsinghua University,<br />
 Email: <a href="mailto:yuehu@tsinghua.edu.cn" class="email">yuehu@tsinghua.edu.cn</a><br />
-Website: <a href="https://sammo3182.github.io" class="uri">https://sammo3182.github.io</a></p>
+Website: <a href="https://www.drhuyue.site" class="uri">https://www.drhuyue.site</a></p>
 <p>Xinyi Ye</p>
 <p>Department of Political Science,<br />
 Tsinghua University,<br />
