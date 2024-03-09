@@ -1,18 +1,22 @@
 # Check List for A New Release
 
-## Vignette building
+library(here)
+load(here("R", "sysdata.rda"))
+save(corruption, region_data, file = here("R", "sysdata.rda"), compress = "bzip2")
 
-devtools::install(build_vignettes = TRUE)
-devtools::check(manual = TRUE)
+
+## Vignette building
+library(devtools)
+
+install(build_vignettes = TRUE)
 pkgdown::build_site()
 
 ## Spell checking
-
-library(devtools)
 library(roxygen2)
 
 spell_check()
 
+rhub::validate_email() # the token needs to gain from email again
 rhub::validate_email(email = "yuehu@tsinghua.edu.cn", token = "345011f4ca60404abf76007e9ae89e3e")
 
 check_rhub(email = "yuehu@tsinghua.edu.cn")

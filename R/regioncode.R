@@ -15,7 +15,7 @@
 #' @param province A logic string to indicate the level of converting. The default is FALSE.
 #'
 #'
-#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city, e.g., "天津" rather than "天津市", or "海淀" rather than "海淀区". `regioncode` accounts this issue by offering the argument `incomplete_name`.
+#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incomplete_name`.
 #' \itemize{
 #'   \item "none": no short name will be used for either input or output;
 #'   \item "from": input data is short names instead of the full, official ones;
@@ -33,11 +33,15 @@
 #'
 #' @examples
 #'
-#' #  library(regioncode)
+#'\dontrun{
+#'# The example can be run well but CRAN does not like Chinese characters, so here just "dontrun" it.
 #'
-#' #  regioncode(data_input = corruption$prefecture_id,
-#' #             year_from = 2016,
-#' #             year_to = 2017)
+#' library(regioncode)
+#'
+#' regioncode(data_input = corruption$prefecture_id,
+#'            year_from = 2016,
+#'            year_to = 2017)
+#'}
 #'
 #'
 #' @export

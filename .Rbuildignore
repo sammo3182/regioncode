@@ -15,3 +15,4 @@
 ^.github$
 ^joss$
 ^CRAN-SUBMISSION$
+^.*\regioncode-manual.tex

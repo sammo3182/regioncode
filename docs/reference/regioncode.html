@@ -124,7 +124,7 @@ When <code>province</code> is TRUE, one can also choose <code>dia_super</code> t
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city, e.g., "天津" rather than "天津市", or "海淀" rather than "海淀区". <code>regioncode</code> accounts this issue by offering the argument <code>incomplete_name</code>.</p><ul><li><p>"none": no short name will be used for either input or output;</p></li>
+    <p>In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. <code>regioncode</code> accounts this issue by offering the argument <code>incomplete_name</code>.</p><ul><li><p>"none": no short name will be used for either input or output;</p></li>
 <li><p>"from": input data is short names instead of the full, official ones;</p></li>
 <li><p>"to": output results will be short names;</p></li>
 <li><p>"both": both input and output are using short names.</p></li>
@@ -135,14 +135,17 @@ Users can use this argument together with <code>name</code> to convert between n
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#  library(regioncode)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># The example can be run well but CRAN does not like Chinese characters, so here just "dontrun" it.</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#  regioncode(data_input = corruption$prefecture_id,</span></span></span>
-<span class="r-in"><span><span class="co">#             year_from = 2016,</span></span></span>
-<span class="r-in"><span><span class="co">#             year_to = 2017)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">regioncode</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">regioncode</span><span class="op">(</span>data_input <span class="op">=</span> <span class="va">corruption</span><span class="op">$</span><span class="va">prefecture_id</span>,</span></span>
+<span class="r-in"><span>           year_from <span class="op">=</span> <span class="fl">2016</span>,</span></span>
+<span class="r-in"><span>           year_to <span class="op">=</span> <span class="fl">2017</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
