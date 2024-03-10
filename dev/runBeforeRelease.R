@@ -16,8 +16,8 @@ library(roxygen2)
 
 spell_check()
 
-rhub::validate_email() # the token needs to gain from email again
-rhub::validate_email(email = "yuehu@tsinghua.edu.cn", token = "345011f4ca60404abf76007e9ae89e3e")
+rhub::validate_email(email = "yuehu@tsinghua.edu.cn") # the token needs to gain from email again
+rhub::validate_email(, token = "345011f4ca60404abf76007e9ae89e3e")
 
 check_rhub(email = "yuehu@tsinghua.edu.cn")
 
