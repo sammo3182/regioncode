@@ -45,6 +45,8 @@
 #'
 #'
 #' @export
+#'
+
 regioncode <- function(data_input,
                        year_from = 1999,
                        year_to = 2015,
@@ -55,71 +57,14 @@ regioncode <- function(data_input,
                        to_pinyin = FALSE,
                        province = FALSE) {
 
-  if (!is.character(data_input[1]) & !is.numeric(data_input[1])) {
-    stop(
-      "Invalid input: only region names as a character vector or division codes as an integer vector are valid."
-    )
-  }
+  validate_input(data_input,
+                 year_from,
+                 province,
+                 to_dialect,
+                 convert_to,
+                 zhixiashi,
+                 to_pinyin)
 
-  if (!is.numeric(year_from)) {
-    stop("Invalid input: Converting years must be integers.")
-  }
-
-  if (province) {
-    if (to_dialect != "none") {
-      if (to_dialect != "dia_super") {
-        stop("Invalid input: please choose a valid converting transformation.")
-      }
-    } else {
-      if (!(
-        convert_to %in% c(
-          "name",
-          "code",
-          "area",
-          "rank",
-          "nameToabbre",
-          "codeToabbre",
-          "abbreToname",
-          "abbreTocode",
-          "abbreToarea"
-        )
-      )) {
-        stop("Invalid input: please choose a valid converting method.")
-      }
-    }
-  } else if (to_dialect != "none") {
-    if (!(to_dialect %in% c("dia_group", "dia_sub_group"))) {
-      stop("Invalid input: please choose a valid converting transformation.")
-    }
-  } else {
-    if (!(convert_to %in% c("name", "code", "area","rank"))) {
-      stop("Invalid input: please choose a valid converting method.")
-    }
-  }
-
-  if (province == "TRUE" & zhixiashi == "FALSE" & convert_to %in% c("rank")){
-    stop("Invalid input: province can not convert to rank.")
-    }
-
-  if (!is.logical(province)) {
-    stop("Invalid input: param `zhixiashi` must be logical class.")
-  }
-
-  if (!is.character(to_dialect)) {
-    stop("Invalid input: param `to_dialect` must be character class.")
-  }
-
-  if (!is.logical(zhixiashi)) {
-    stop("Invalid input: param `zhixiashi` must be logical class.")
-  }
-
-  if (!is.logical(to_pinyin)) {
-    stop("Invalid input: param `to_pinyin` must be logical class.")
-  }
-
-  if (to_pinyin & convert_to == "code" & to_dialect == FALSE) {
-    stop("Invalid input: can not translate administrative codes to pinyin.")
-  }
 
   if (province) {
     zhixiashi <- FALSE
@@ -127,226 +72,221 @@ regioncode <- function(data_input,
     # 1 Section of province-level converting
     if (to_dialect != "none") {
       # 1-1 If convert language zone
-      if (is.numeric(data_input[1])) {
-        year_from <- "prov_code"
-      }
-      if (is.character(data_input[1])) {
-        year_from <- "prov_name"
-      }
+      year_from <- if (is.numeric(data_input[1]))
+        "prov_code"
+      else
+        "prov_name"
 
-
-      ls_index <- switch(to_dialect,
-                         "dia_super" = {
-                           year_to <- "prov_language"
-                           c(year_from, year_to)
-                         }
-      )
+      ls_index <- if (to_dialect == "dia_super") {
+        year_to <- "prov_language"
+        c(year_from, year_to)
+      }
     } else {
       # 1-2 If not convert language zone
-      prov_data <- region_data %>%
-        select(prov_code:`1999_nickname`, "area") %>%
-        distinct()
+      prov_data <- unique(region_data[, c("prov_code", paste0("199", 8:9, "_nickname"), "area")])
 
       # Because province nicknames changed in 1999
-      year_from <- ifelse(year_from < 1999, 1998, 1999)
-      year_to <- ifelse(year_to < 1999, 1998, 1999)
-
-      # Getting the correct "from" column
-      year_from <- case_when(
-        is.numeric(data_input[1]) ~ "prov_code",
-        is.character(data_input[1]) ~ "prov_name"
+      year_num <- ifelse(as.numeric(year_from) < 1999, 1998, 1999)
+      year_from <- if (is.numeric(data_input[1]))
+        "prov_code"
+      else
+        "prov_name"
+      year_to <- switch(
+        convert_to,
+        "name" = "prov_name",
+        "code" = "prov_code",
+        "area" = "area",
+        "nameToabbre" = {
+          year_from <- "prov_name"
+          paste0(year_num, "_nickname")
+        },
+        "codeToabbre" = {
+          year_from <- "prov_code"
+          paste0(year_num, "_nickname")
+        },
+        "abbreToname" = {
+          year_from <- paste0(year_num, "_nickname")
+          "prov_name"
+        },
+        "abbreTocode" = {
+          year_from <- paste0(year_num, "_nickname")
+          "prov_code"
+        },
+        "abbreToarea" = {
+          year_from <- paste0(year_num, "_nickname")
+          "area"
+        }
       )
-
-      ls_index <- switch(convert_to,
-                         "name" = {
-                           year_to <- "prov_name"
-                           c(year_from, year_to)
-                         },
-                         "code" = {
-                           year_to <- "prov_code"
-                           c(year_from, year_to)
-                         },
-                         "area" = {
-                           year_to <- "area"
-                           c(year_from, year_to)
-                         },
-                         "nameToabbre" = {
-                           year_from <- "prov_name"
-                           year_to <- paste0(year_to, "_nickname")
-                           c(year_from, year_to)
-                         },
-                         "codeToabbre" = {
-                           year_from <- "prov_code"
-                           year_to <- paste0(year_to, "_nickname")
-                           c(year_from, year_to)
-                         },
-                         "abbreToname" = {
-                           year_from <- paste0(year_to, "_nickname")
-                           year_to <- "prov_name"
-                           c(year_from, year_to)
-                         },
-                         "abbreTocode" = {
-                           year_from <- paste0(year_from, "_nickname")
-                           year_to <- "prov_code"
-                           c(year_from, year_to)
-                         },
-                         "abbreToarea" = {
-                           year_from <- paste0(year_from, "_nickname")
-                           year_to <- "area"
-                           c(year_from, year_to)
-                         }
-      )
+      ls_index <- c(year_from, year_to)
     }
+
   } else {
     # 2 Section of prefectural-level converting
     if (to_dialect != "none") {
       # 2-1 If convert language zone
-      if (is.numeric(data_input[1])) {
-        year_from <- paste0(year_from, "_code")
-      }
-      if (is.character(data_input[1])) {
-        year_from <- paste0(year_from, "_name")
-      }
+      year_from <- if (is.numeric(data_input[1]))
+        paste0(year_from, "_code")
+      else
+        paste0(year_from, "_name")
 
-      ls_index <- switch(to_dialect,
-                         "dia_group" = {
-                           year_to <- "pref_language_all"
-                           c(year_from, year_to)
-                         },
-                         "dia_sub_group" = {
-                           year_to <- "dia_sub_language_all"
-                           c(year_from, year_to)
-                         }
-      )
+      year_to <- if (to_dialect == "dia_group")
+        "pref_language_all"
+      else if (to_dialect == "dia_sub_group")
+        "dia_sub_language_all"
+      ls_index <- c(year_from, year_to)
     } else {
       # 2-2 If not convert language zone
-      if (is.numeric(data_input[1])) {
-        year_from <- paste0(year_from, "_code")
-      }
-      if (is.character(data_input[1])) {
-        year_from <- paste0(year_from, "_name")
-      }
+      year_from <- if (is.numeric(data_input[1]))
+        paste0(year_from, "_code")
+      else
+        paste0(year_from, "_name")
 
       region_data <- region_data[!duplicated(region_data$`2019_code`), ]
 
-      ls_index <- switch(convert_to,
-                         "code" = {
-                           year_to <- paste0(year_to, "_code")
-                           c(year_from, year_to)
-                         },
-                         "area" = {
-                           year_to <- "area"
-                           c(year_from, year_to)
-                         },
-                         "name" = {
-                           year_to <- paste0(year_to, "_name")
-                           c(year_from, year_to)
-                         },
-                         "rank" = {
-                           year_to <- paste0(year_to, "_rank")
-                           c(year_from, year_to)
-                         }
+      year_to <- switch(
+        convert_to,
+        "code" = paste0(year_to, "_code"),
+        "area" = "area",
+        "name" = paste0(year_to, "_name"),
+        "rank" = paste0(year_to, "_rank")
       )
-
+      ls_index <- c(year_from, year_to)
 
       # Using the Municipal codes for within region codes
       if (zhixiashi) {
+        region_zhixiashi <- subset(region_data, zhixiashi)
 
-        region_zhixiashi <- region_data %>%
-          dplyr::filter(zhixiashi)
+        # Gathering all the needed fields
+        region_sname <- region_zhixiashi[grep("_sname$", names(region_zhixiashi))]
+        region_name <- region_zhixiashi[grep("_name$", names(region_zhixiashi))]
+        region_code <- region_zhixiashi[grep("_code$", names(region_zhixiashi))]
+        region_remain <- region_zhixiashi[!grepl(
+          "(_code$|_sname$|_name$|language$|_all$|_nickname$|dia_sub_group$|freq$)",names(region_zhixiashi))]
 
-        region_sname <- region_zhixiashi %>%
-          select(ends_with("_sname"))
-
-        region_name <- region_zhixiashi %>%
-          select(ends_with("_name"))
-
-        region_code <- region_zhixiashi %>%
-          select(ends_with("_code"))
-
-        region_remain <- region_zhixiashi %>%
-          select(-ends_with("_code"),
-                 -ends_with("_sname"),
-                 -ends_with("_name"),
-                 -ends_with("language"),
-                 -ends_with("_all"),
-                 -ends_with("_nickname"),
-                 -'dia_sub_group',
-                 -'freq')
-
-        # replacing the prefectural names and codes with provincial names and codes
-
-        region_name2 <-
-          replicate(ncol(region_name), region_zhixiashi$prov_name) %>%
-          as.data.frame()
+        # Replacing prefectural names and codes with provincial ones
+        region_name2 <- as.data.frame(matrix(
+          rep(region_zhixiashi$prov_name, ncol(region_name)),
+          ncol = ncol(region_name)
+        ))
         names(region_name2) <- names(region_name)
 
-        region_sname2 <-
-          replicate(ncol(region_name), region_zhixiashi$prov_name) %>%
-          as.data.frame()
-        names(region_sname2) <- names(region_sname2)
+        region_sname2 <- as.data.frame(matrix(
+          rep(region_zhixiashi$prov_sname, ncol(region_sname)),
+          ncol = ncol(region_sname)
+        ))
+        names(region_sname2) <- names(region_sname)
 
-        region_code2 <-
-          replicate(ncol(region_code), region_zhixiashi$prov_code) %>%
-          as.data.frame()
+        region_code2 <- as.data.frame(matrix(
+          rep(region_zhixiashi$prov_code, ncol(region_code)),
+          ncol = ncol(region_code)
+        ))
         names(region_code2) <- names(region_code)
 
+        region_zhixiashi <- cbind(region_name2,
+                                  region_code2,
+                                  region_sname2,
+                                  region_remain)
+        region_zhixiashi <- unique(region_zhixiashi[, order(names(region_zhixiashi))])
 
-        region_zhixiashi <-
-          cbind(region_name2, region_code2,region_sname2,region_remain)
-        region_zhixiashi <- distinct(
-          region_zhixiashi[, order(colnames(region_zhixiashi))])
-        region_zhixiashi <- region_zhixiashi %>%
-          select('1986_code':prov_scode)
+        region_province <- unique(region_data[!grepl("language$|_all$|_nickname$|dia_sub_group$|freq$", names(region_data))])
+        region_province <- region_province[, order(names(region_province))]
 
-        region_province <- distinct(
-          select(region_data,
-                 -ends_with("language"),
-                 -ends_with("_all"),
-                 -ends_with("_nickname"),
-                 -dia_sub_group,
-                 -freq)
-        )
-        region_province <- region_province[, order(colnames(region_province))]
-
-
-        region_data <- bind_rows(region_zhixiashi, region_province)
+        region_data <- rbind(region_zhixiashi, region_province)
       }
     }
   }
 
   # Convert the input to a data.frame for later merging
 
-  data_input <- data_input %>% as.data.frame()
+  data_input <- as.data.frame(data_input)
   names(data_input) <- ls_index[1]
 
-  data_output <- select(region_data, !!ls_index) %>%
-    distinct()
+  data_output <- unique(region_data[ls_index])
 
   if (incomplete_name) {
-    data_input[[ls_index[1]]] <-
-      substr(data_input[[ls_index[1]]], start = 1, stop = 2) # using the first two characters to match
-
-    data_output[[ls_index[1]]] <-
-      substr(data_output[[ls_index[1]]], start = 1, stop = 2) # using the first two characters to match
+    data_input[[ls_index[1]]] <- substr(data_input[[ls_index[1]]], 1, 2)
+    data_output[[ls_index[1]]] <- substr(data_output[[ls_index[1]]], 1, 2)
   }
 
-  data_output <- left_join(data_input, data_output) |>
-    # using left_join to keep the order of the input data
-    pull(!!year_to)
+  # Indexing to find the first match quickly and directly
+  index <- match(data_input[[ls_index[1]]], data_output[[ls_index[1]]])
+  data_output <- data_output[index, year_to, drop = TRUE]
 
   # Because '2pinyin' can not be used as a variable name
 
   if (to_pinyin) {
-    data_output <- case_when(
-      substr(data_output, start = 1, stop = 2) == "\u9655\u897f" ~ "shaan_xi",
-      substr(data_output, start = 1, stop = 2) == "\u5185\u8499" ~ "inner_mongolia",
-      substr(data_output, start = 1, stop = 2) == "\u897f\u85cf" ~ "tibet",
-      substr(data_output, start = 1, stop = 2) == "\u6fb3\u95e8" ~ "macao",
-      substr(data_output, start = 1, stop = 2) == "\u9999\u6e2f" ~ "hong_kong",
-      TRUE ~ py(char = substr(data_output, start = 1, stop = 2), dic = pydic(method = "toneless", dic = "pinyin2"))
+    # Predefined mapping for special cases with Chinese characters
+    special_cases <- c(
+      "\u9655\u897f" = "shaan_xi",
+      "\u5185\u8499" = "inner_mongolia",
+      "\u897f\u85cf" = "tibet",
+      "\u6fb3\u95e8" = "macao",
+      "\u9999\u6e2f" = "hong_kong"
     )
+
+    # Extract the first two characters of each entry in data_output
+    first_two_chars <- substr(data_output, 1, 2)
+
+    # Apply special cases mapping
+    special_pinyin <- special_cases[first_two_chars]
+
+    # Use py function where no special case is matched
+    data_output <- ifelse(is.na(special_pinyin),
+                          py(
+                            char = first_two_chars,
+                            dic = pydic(method = "toneless", dic = "pinyin2")
+                          ),
+                          special_pinyin)
   }
 
-  return(data_output)  }
+  return(data_output)
+  }
+
+# Function to validate input
+
+validate_input <- function(data_input,
+                           year_from,
+                           province,
+                           to_dialect,
+                           convert_to,
+                           zhixiashi,
+                           to_pinyin) {
+  # Simplified data type checks
+  if (!(is.character(data_input[1]) || is.numeric(data_input[1]))) {
+    stop("Invalid input: only region names or division codes are valid.")
+  }
+
+  # Simplify type and value checks
+  if (!is.numeric(year_from) ||
+      !all(c(province, zhixiashi, to_pinyin) %in% c(TRUE, FALSE))) {
+    stop("Invalid input: Parameters must be of the correct data type.")
+  }
+
+  # Consolidated conversion checks
+  valid_conversions <- if (province && to_dialect == "none") {
+    c(
+      "name",
+      "code",
+      "area",
+      "rank",
+      "nameToabbre",
+      "codeToabbre",
+      "abbreToname",
+      "abbreTocode",
+      "abbreToarea"
+    )
+  } else {
+    c("name", "code", "area", "rank")
+  }
+
+  if (!(convert_to %in% valid_conversions)) {
+    stop("Invalid input: please choose a valid converting method.")
+  }
+
+  # Specific scenario checks
+  if (to_pinyin && convert_to == "code" && to_dialect == "none") {
+    stop("Invalid input: cannot translate administrative codes to pinyin.")
+  }
+}
+
 
