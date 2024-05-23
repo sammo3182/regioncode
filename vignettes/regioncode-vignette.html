@@ -12,7 +12,7 @@
 
 <meta name="author" content="HU Yue, YE Xinyi" />
 
-<meta name="date" content="2024-03-08" />
+<meta name="date" content="2024-05-23" />
 
 <title>regioncode: One-Step Solution for Chinese Region Conversions</title>
 
@@ -364,7 +364,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">regioncode: One-Step Solution for Chinese
 Region Conversions</h1>
 <h4 class="author">HU Yue, YE Xinyi</h4>
-<h4 class="date">2024-03-08</h4>
+<h4 class="date">2024-05-23</h4>
 
 
 
@@ -383,9 +383,10 @@ name/code conversions within China for the period 1986–2019.</p>
 <h1>Why <code>regioncode</code>?</h1>
 <p>The Chinese government assigns unique geocodes to each county, city
 (prefecture), and provincial-level administrative unit. These
-“administrative division codes” are consistently <a href="https://www.mca.gov.cn/article/sj/xzqh/1980/">adjusted and
-updated</a> to align with national and regional development plans <span class="citation">(民政部 2022)</span>. However, these adjustments may
-pose challenges for researchers conducting longitudinal studies or
+“administrative division codes” are consistently <a href="https://www.mca.gov.cn/mzsj/xzqh/2022/202202xzqh.html">adjusted
+and updated</a> to align with national and regional development plans
+<span class="citation">(民政部 2022)</span>. However, these adjustments
+may pose challenges for researchers conducting longitudinal studies or
 merging geo-based data from different years. For instance,
 inconsistencies between map data and statistical data can result in
 erroneous outputs when rendering statistical data on a Chinese map.</p>
@@ -549,8 +550,8 @@ problems:</p>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">2</span>)</span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>fake_incomplete</span></code></pre></div>
-<pre><code>##  [1] &quot;济南&quot;   &quot;泰州&quot;   &quot;松江区&quot; &quot;宜昌&quot;   &quot;来宾&quot;   &quot;怀化市&quot; &quot;莆田&quot;   &quot;宜宾&quot;  
-##  [9] &quot;定安&quot;   &quot;襄阳市&quot;</code></pre>
+<pre><code>##  [1] &quot;济南&quot;   &quot;泰州市&quot; &quot;松江&quot;   &quot;宜昌市&quot; &quot;来宾&quot;   &quot;怀化&quot;   &quot;莆田&quot;   &quot;宜宾市&quot;
+##  [9] &quot;定安&quot;   &quot;襄阳&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Conversion to full names in 2008</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> fake_incomplete, </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
@@ -758,9 +759,9 @@ this function operates on various demands:</p>
 <span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>           <span class="at">province =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
 <span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>           )</span></code></pre></div>
-<pre><code>##             山西                                                    
+<pre><code>##             &lt;NA&gt;             陕西             内蒙             香港 
 ##        &quot;shan_xi&quot;       &quot;shaan_xi&quot; &quot;inner_mongolia&quot;      &quot;hong_kong&quot; 
-##                  
+##             澳门 
 ##          &quot;macao&quot;</code></pre>
 </div>
 <div id="provinces" class="section level2">
@@ -798,7 +799,7 @@ province geocodes to their official names and abbreviations:</p>
 ##  5   450000 广西壮族自治区 桂        
 ##  6   430000 湖南省         湘        
 ##  7   350000 福建省         闽        
-##  8   510000 四川省         蜀        
+##  8   510000 四川省         川        
 ##  9   460000 海南省         琼        
 ## 10   420000 湖北省         鄂</code></pre>
 </div>

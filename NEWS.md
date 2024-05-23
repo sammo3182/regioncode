@@ -1,3 +1,7 @@
+# 0.2.2
+
+- Vectorize the merging functions
+
 # 0.2.1
 
 - Corrected the region codes of Xinjiang
