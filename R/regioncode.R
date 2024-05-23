@@ -29,7 +29,6 @@
 #' @returns The function returns a character or numeric vector depending on what method is specified.
 #'
 #' @import pinyin
-#' @import dplyr
 #'
 #' @examples
 #'

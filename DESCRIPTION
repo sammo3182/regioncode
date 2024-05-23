@@ -20,8 +20,9 @@ Depends:
 Imports:
   pinyin
 Suggests:
-    rmarkdown,
-    knitr
+    dplyr,
+    knitr,
+    rmarkdown
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
