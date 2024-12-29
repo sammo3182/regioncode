@@ -18,7 +18,16 @@ to_pinyin = FALSE
 province = FALSE
 
 data_input <- c("东城区", "梅州市")
-data_input <- c("北京市", "天津市")
-data_input <- c("河北省", "河南省")
+regioncode(data_input, convert_to = "code", year_from = 2019, year_to = 2020)
 
-regioncode(data_input, zhixiashi = TRUE)
+data_input <- c("河北省", "河南省")
+regioncode(data_input, convert_to = "code", year_from = 2019, year_to = 2020, province = TRUE)
+
+data_input <- c("北京", "天津")
+regioncode(data_input, convert_to = "code", year_from = 2019, year_to = 2020, province = TRUE, incomplete_name = TRUE)
+regioncode(data_input, convert_to = "name", year_from = 2019, year_to = 2020, province = TRUE, incomplete_name = TRUE)
+
+
+data_input <- c("东城", "梅州")
+regioncode(data_input, convert_to = "name", year_from = 2019, year_to = 2020, incomplete_name = TRUE)
+

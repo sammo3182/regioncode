@@ -200,31 +200,21 @@ regioncode <- function(data_input,
   data_output <- unique(region_data[ls_index])
   data_output_match <- data_output
 
+  # Get matching index based on full or shortened names
   if (incomplete_name) {
-    # For matching purposes, create a copy of data_output with shortened names
     data_output_match[[ls_index[1]]] <- substr(data_output[[ls_index[1]]], 1, 2)
     data_input[[ls_index[1]]] <- substr(data_input[[ls_index[1]]], 1, 2)
-    
-    # Get the matching index
     index <- match(data_input[[ls_index[1]]], data_output_match[[ls_index[1]]])
-    
-    # Handle different output types
-    if (convert_to == "name") {
-      if (incomplete_name %in% c("to", "both")) {
-        # Return shortened names if specifically requested
-        data_output <- substr(data_output[index, year_to], 1, 2)
-      } else {
-        # Return full names
-        data_output <- data_output[index, year_to, drop = TRUE]
-      }
-    } else {
-      # For codes and other types, return the full value
-      data_output <- data_output[index, year_to, drop = TRUE]
-    }
   } else {
-    # Regular matching without incomplete names
     index <- match(data_input[[ls_index[1]]], data_output[[ls_index[1]]])
-    data_output <- data_output[index, year_to, drop = TRUE]
+  }
+
+  # Get output data
+  data_output <- data_output[index, year_to, drop = TRUE]
+  
+  # Shorten output names if needed
+  if (incomplete_name && convert_to == "name" && incomplete_name %in% c("to", "both")) {
+    data_output <- substr(data_output, 1, 2)
   }
 
   # Because '2pinyin' can not be used as a variable name
