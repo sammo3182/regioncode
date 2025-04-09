@@ -19,6 +19,12 @@ province = FALSE
 
 data_input <- c("东城区", "梅州市")
 regioncode(data_input, convert_to = "code", year_from = 2019, year_to = 2020)
+regioncode(data_input, convert_to = "name", year_from = 2019, year_to = 2020, to_pinyin = TRUE)
+
+
+data_input <- c("北京市", "天津市")
+regioncode(data_input, convert_to = "name", year_from = 2019, year_to = 2020, to_dialect = TRUE, zhixiashi = TRUE)
+
 
 data_input <- c("河北省", "河南省")
 regioncode(data_input, convert_to = "code", year_from = 2019, year_to = 2020, province = TRUE)

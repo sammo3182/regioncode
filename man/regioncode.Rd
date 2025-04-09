@@ -2,7 +2,7 @@
 % Please edit documentation in R/regioncode.R
 \name{regioncode}
 \alias{regioncode}
-\title{regioncode}
+\title{\code{regioncode} is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.}
 \usage{
 regioncode(
   data_input,
@@ -56,16 +56,16 @@ The argument makes a difference only when \code{code} or \code{name} are chose i
 Users can use this argument together with \code{name} to convert between names and incomplete names.
 }
 \examples{
-
 \dontrun{
 # The example can be run well but CRAN does not like Chinese characters, so here just "dontrun" it.
 
 library(regioncode)
 
-regioncode(data_input = corruption$prefecture_id,
-           year_from = 2016,
-           year_to = 2017)
+regioncode(
+  data_input = corruption$prefecture_id,
+  year_from = 2016,
+  year_to = 2017
+)
 }
-
 
 }
