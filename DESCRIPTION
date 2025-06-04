@@ -4,10 +4,12 @@ Version: 0.1.99999
 Authors@R: 
     c(person(given = "Yue",family = "Hu",role = c("aut","cre"), email = "yuehu@tsinghua.edu.cn"),
     person(given = "Xinyi",family = "Ye",role = c("aut"), email = "yexy23@mails.tsinghua.edu.cn"),
+    person(given = "Qian",family = "Qiu",role = c("aut"), email = "qianlaile96@gmail.com"),
     person(given = "Yufei",family = "Sun",role = c("aut"), email = "sunyf20@mails.tsinghua.edu.cn"),
     person(given = "Wenquan",family = "Wu",role = c("aut"), email = "gohuntsuan@gmail.com"))
 Author: Yue Hu [aut, cre],
   Xinyi Ye [aut],
+  Qian Qiu [aut],
   Yufei Sun [aut],
   Wenquan Wu [aut]
 Maintainer: Yue Hu <yuehu@tsinghua.edu.cn>
