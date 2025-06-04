@@ -12,7 +12,7 @@
 
 <meta name="author" content="HU Yue, YE Xinyi" />
 
-<meta name="date" content="2024-05-23" />
+<meta name="date" content="2025-04-09" />
 
 <title>regioncode: One-Step Solution for Chinese Region Conversions</title>
 
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -364,7 +364,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">regioncode: One-Step Solution for Chinese
 Region Conversions</h1>
 <h4 class="author">HU Yue, YE Xinyi</h4>
-<h4 class="date">2024-05-23</h4>
+<h4 class="date">2025-04-09</h4>
 
 
 
@@ -434,7 +434,7 @@ year’s projection and the format type.</p>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>, <span class="co"># default setting</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
-<pre><code>##  [1] 370100 329001 310227 420500 452200 433000 350300 512500 460025 420600</code></pre>
+<pre><code>##  [1] 370100 329001 310227 420500 452200 433000 350300 512500     NA 420600</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Comparison</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">code2019 =</span> corruption<span class="sc">$</span>prefecture_id,</span>
@@ -462,7 +462,7 @@ year’s projection and the format type.</p>
 ##  6   431200   433000 怀化市   怀化地区
 ##  7   350300   350300 莆田市   莆田市  
 ##  8   511500   512500 宜宾市   宜宾地区
-##  9   469021   460025 定安县   定安县  
+##  9   469021       NA &lt;NA&gt;     &lt;NA&gt;    
 ## 10   420600   420600 襄阳市   襄樊市</code></pre>
 <p>Note that if a region was initially geocoded in, for example, 1989
 and later included in a new region in 2019, the new region geocode will
@@ -496,21 +496,21 @@ types of input to alternative formats of outputs:</p>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;济南市&quot;   &quot;泰州市&quot;   &quot;松江县&quot;   &quot;宜昌市&quot;   &quot;柳州地区&quot; &quot;怀化地区&quot;
-##  [7] &quot;莆田市&quot;   &quot;宜宾地区&quot; &quot;定安县&quot;   &quot;襄樊市&quot;</code></pre>
+<pre><code>##  [1] &quot;济南市&quot;   &quot;泰州市&quot;   &quot;松江县&quot;   &quot;宜昌市&quot;   &quot;柳州地区&quot; &quot;怀化地区&quot; &quot;莆田市&quot;  
+##  [8] &quot;宜宾地区&quot; NA         &quot;襄樊市&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Name to codes of the same year</span></span>
 <span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
 <span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2019</span>)</span></code></pre></div>
-<pre><code>##  [1] 370100 321200 310117 420500 451300 431200 350300 511500 469021 420600</code></pre>
+<pre><code>##  [1] 370100 321200 310117 420500 451300 431200 350300 511500     NA 420600</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Name to name of a different year</span></span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;济南市&quot;   &quot;泰州市&quot;   &quot;松江县&quot;   &quot;宜昌市&quot;   &quot;柳州地区&quot; &quot;怀化地区&quot;
-##  [7] &quot;莆田市&quot;   &quot;宜宾地区&quot; &quot;定安县&quot;   &quot;襄樊市&quot;</code></pre>
+<pre><code>##  [1] &quot;济南市&quot;   &quot;泰州市&quot;   &quot;松江县&quot;   &quot;宜昌市&quot;   &quot;柳州地区&quot; &quot;怀化地区&quot; &quot;莆田市&quot;  
+##  [8] &quot;宜宾地区&quot; NA         &quot;襄樊市&quot;</code></pre>
 </div>
 <div id="advanced-applications" class="section level1">
 <h1>Advanced Applications</h1>
@@ -540,8 +540,8 @@ names and show how <code>regioncode</code> can deal with such
 problems:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Original full names</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>corruption<span class="sc">$</span>prefecture</span></code></pre></div>
-<pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot;
-##  [9] &quot;定安县&quot; &quot;襄阳市&quot;</code></pre>
+<pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot; &quot;定安县&quot;
+## [10] &quot;襄阳市&quot;</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>fake_incomplete <span class="ot">&lt;-</span> corruption<span class="sc">$</span>prefecture</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>index_incomplete <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">length</span>(corruption<span class="sc">$</span>prefecture)), <span class="dv">7</span>)</span>
@@ -550,16 +550,16 @@ problems:</p>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">2</span>)</span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>fake_incomplete</span></code></pre></div>
-<pre><code>##  [1] &quot;济南&quot;   &quot;泰州市&quot; &quot;松江&quot;   &quot;宜昌市&quot; &quot;来宾&quot;   &quot;怀化&quot;   &quot;莆田&quot;   &quot;宜宾市&quot;
-##  [9] &quot;定安&quot;   &quot;襄阳&quot;</code></pre>
+<pre><code>##  [1] &quot;济南&quot;   &quot;泰州&quot;   &quot;松江区&quot; &quot;宜昌&quot;   &quot;来宾&quot;   &quot;怀化&quot;   &quot;莆田市&quot; &quot;宜宾&quot;   &quot;定安&quot;  
+## [10] &quot;襄阳市&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Conversion to full names in 2008</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> fake_incomplete, </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2008</span>,</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot;
-##  [9] &quot;定安县&quot; &quot;襄樊市&quot;</code></pre>
+<pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot; NA      
+## [10] &quot;襄樊市&quot;</code></pre>
 </div>
 <div id="municipalities" class="section level2">
 <h2>Municipalities</h2>
@@ -748,7 +748,7 @@ this function operates on various demands:</p>
 ##  6 怀化市 huai_hua   hua_zhong
 ##  7 莆田市 pu_tian    hua_dong 
 ##  8 宜宾市 yi_bin     xi_nan   
-##  9 定安县 ding_an    hua_nan  
+##  9 定安县 NA         NA       
 ## 10 襄阳市 xiang_fan  hua_zhong</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># Regions with special spelling</span></span>
 <span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> <span class="fu">c</span>(<span class="st">&quot;山西&quot;</span>, <span class="st">&quot;陕西&quot;</span>, <span class="st">&quot;内蒙古&quot;</span>, <span class="st">&quot;香港&quot;</span>, <span class="st">&quot;澳门&quot;</span>), </span>
@@ -759,10 +759,8 @@ this function operates on various demands:</p>
 <span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>           <span class="at">province =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
 <span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>           )</span></code></pre></div>
-<pre><code>##             &lt;NA&gt;             陕西             内蒙             香港 
-##        &quot;shan_xi&quot;       &quot;shaan_xi&quot; &quot;inner_mongolia&quot;      &quot;hong_kong&quot; 
-##             澳门 
-##          &quot;macao&quot;</code></pre>
+<pre><code>##             &lt;NA&gt;             陕西             内蒙             香港             澳门 
+##        &quot;shan_xi&quot;       &quot;shaan_xi&quot; &quot;inner_mongolia&quot;      &quot;hong_kong&quot;          &quot;macao&quot;</code></pre>
 </div>
 <div id="provinces" class="section level2">
 <h2>Provinces</h2>
@@ -862,7 +860,7 @@ provinces) into areas by setting the output format as “area”:</p>
 <span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
 <span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
 <span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>)</span></code></pre></div>
-<pre><code>##  [1] &quot;华东&quot; &quot;华东&quot; &quot;华东&quot; &quot;华中&quot; &quot;华南&quot; &quot;华中&quot; &quot;华东&quot; &quot;西南&quot; &quot;华南&quot; &quot;华中&quot;</code></pre>
+<pre><code>##  [1] &quot;华东&quot; &quot;华东&quot; &quot;华东&quot; &quot;华中&quot; &quot;华南&quot; &quot;华中&quot; &quot;华东&quot; &quot;西南&quot; NA     &quot;华中&quot;</code></pre>
 </div>
 <div id="linguistic-zone" class="section level3">
 <h3>Linguistic Zone</h3>
@@ -901,7 +899,7 @@ sub-groups:</p>
 ##  6 怀化市 湘语         岑江片-2,吉溆片-3,娄邵片-1,黔北片-3,长益片-3
 ##  7 莆田市 莆仙区       莆仙区-4                                    
 ##  8 宜宾市 西南官话     灌赤片-10                                   
-##  9 定安县 琼文区       府城片-1                                    
+##  9 定安县 &lt;NA&gt;         &lt;NA&gt;                                        
 ## 10 襄阳市 西南官话     鄂北片-10</code></pre>
 <p>Note that the linguistic distribution in China is too complex for
 precise gauging at the prefectural level, and it continually changes
