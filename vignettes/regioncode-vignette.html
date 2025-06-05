@@ -12,7 +12,7 @@
 
 <meta name="author" content="HU Yue, YE Xinyi" />
 
-<meta name="date" content="2025-04-09" />
+<meta name="date" content="2025-06-05" />
 
 <title>regioncode: One-Step Solution for Chinese Region Conversions</title>
 
@@ -50,8 +50,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,7 +63,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -364,7 +365,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">regioncode: One-Step Solution for Chinese
 Region Conversions</h1>
 <h4 class="author">HU Yue, YE Xinyi</h4>
-<h4 class="date">2025-04-09</h4>
+<h4 class="date">2025-06-05</h4>
 
 
 
@@ -550,8 +551,8 @@ problems:</p>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">2</span>)</span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>fake_incomplete</span></code></pre></div>
-<pre><code>##  [1] &quot;济南&quot;   &quot;泰州&quot;   &quot;松江区&quot; &quot;宜昌&quot;   &quot;来宾&quot;   &quot;怀化&quot;   &quot;莆田市&quot; &quot;宜宾&quot;   &quot;定安&quot;  
-## [10] &quot;襄阳市&quot;</code></pre>
+<pre><code>##  [1] &quot;济南&quot;   &quot;泰州&quot;   &quot;松江&quot;   &quot;宜昌&quot;   &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田&quot;   &quot;宜宾&quot;   &quot;定安县&quot;
+## [10] &quot;襄阳&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Conversion to full names in 2008</span></span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> fake_incomplete, </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>

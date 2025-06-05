@@ -3,13 +3,7 @@
 docs
 .DS_Store
 .Rbuildignore
-regioncode.Rproj
-.Rproj.user
-.Rhistory
-.Rhistory
 .Rproj.user/shared/notebooks/paths
-.Rproj.user/shared/notebooks/paths
-.Rhistory
 /doc/
 /Meta/
 jss
