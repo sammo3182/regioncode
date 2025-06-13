@@ -1,3 +1,8 @@
+# 0.2.3
+
+- Add extdata like yunnan and guizhou
+- fix the nas in vignette
+
 # 0.2.2
 
 - Vectorize the merging functions
