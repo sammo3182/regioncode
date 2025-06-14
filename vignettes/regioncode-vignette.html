@@ -12,7 +12,7 @@
 
 <meta name="author" content="HU Yue, YE Xinyi" />
 
-<meta name="date" content="2025-06-05" />
+<meta name="date" content="2025-06-14" />
 
 <title>regioncode: One-Step Solution for Chinese Region Conversions</title>
 
@@ -365,7 +365,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">regioncode: One-Step Solution for Chinese
 Region Conversions</h1>
 <h4 class="author">HU Yue, YE Xinyi</h4>
-<h4 class="date">2025-06-05</h4>
+<h4 class="date">2025-06-14</h4>
 
 
 
@@ -431,27 +431,35 @@ year’s projection and the format type.</p>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;corruption&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># Conversion to the 1989 version</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>, <span class="co"># default setting</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>, <span class="co"># default setting</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">1989</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1] 370100 329001 310227 420500 452200 433000 350300 512500     NA 420600</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Comparison</span></span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">code2019 =</span> corruption<span class="sc">$</span>prefecture_id,</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">code1989 =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>, <span class="co"># default setting</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="at">name2019 =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>, <span class="co"># default setting</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2019</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  <span class="at">name1989 =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>, <span class="co"># default setting</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">code1989 =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>, <span class="co"># default setting</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  ),</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="at">name2019 =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>, <span class="co"># default setting</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">2019</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>  ),</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>  <span class="at">name1989 =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>, <span class="co"># default setting</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>  )</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 4
 ##    code2019 code1989 name2019 name1989
 ##       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
@@ -493,23 +501,28 @@ types of input to alternative formats of outputs:</p>
 ##  9 469021 定安县
 ## 10 420600 襄阳市</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Codes to name</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id, </span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture_id,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">1989</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1] &quot;济南市&quot;   &quot;泰州市&quot;   &quot;松江县&quot;   &quot;宜昌市&quot;   &quot;柳州地区&quot; &quot;怀化地区&quot; &quot;莆田市&quot;  
 ##  [8] &quot;宜宾地区&quot; NA         &quot;襄樊市&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Name to codes of the same year</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2019</span>)</span></code></pre></div>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">2019</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1] 370100 321200 310117 420500 451300 431200 350300 511500     NA 420600</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Name to name of a different year</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">1989</span>)</span></code></pre></div>
 <pre><code>##  [1] &quot;济南市&quot;   &quot;泰州市&quot;   &quot;松江县&quot;   &quot;宜昌市&quot;   &quot;柳州地区&quot; &quot;怀化地区&quot; &quot;莆田市&quot;  
 ##  [8] &quot;宜宾地区&quot; NA         &quot;襄樊市&quot;</code></pre>
 </div>
@@ -547,18 +560,20 @@ problems:</p>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>index_incomplete <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq</span>(<span class="fu">length</span>(corruption<span class="sc">$</span>prefecture)), <span class="dv">7</span>)</span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>fake_incomplete[index_incomplete] <span class="ot">&lt;-</span> fake_incomplete[index_incomplete] <span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>fake_incomplete[index_incomplete] <span class="ot">&lt;-</span> fake_incomplete[index_incomplete] <span class="sc">|&gt;</span></span>
 <span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">2</span>)</span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>fake_incomplete</span></code></pre></div>
-<pre><code>##  [1] &quot;济南&quot;   &quot;泰州&quot;   &quot;松江&quot;   &quot;宜昌&quot;   &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田&quot;   &quot;宜宾&quot;   &quot;定安县&quot;
-## [10] &quot;襄阳&quot;</code></pre>
+<pre><code>##  [1] &quot;济南市&quot; &quot;泰州&quot;   &quot;松江&quot;   &quot;宜昌&quot;   &quot;来宾&quot;   &quot;怀化&quot;   &quot;莆田&quot;   &quot;宜宾&quot;   &quot;定安县&quot;
+## [10] &quot;襄阳市&quot;</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Conversion to full names in 2008</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> fake_incomplete, </span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2008</span>,</span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="at">data_input =</span> fake_incomplete,</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">2008</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>  <span class="at">incomplete_name =</span> <span class="cn">TRUE</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1] &quot;济南市&quot; &quot;泰州市&quot; &quot;松江区&quot; &quot;宜昌市&quot; &quot;来宾市&quot; &quot;怀化市&quot; &quot;莆田市&quot; &quot;宜宾市&quot; NA      
 ## [10] &quot;襄樊市&quot;</code></pre>
 </div>
@@ -576,25 +591,31 @@ as geocodes.</p>
 <p>The following example illustrates the municipalities identifier with
 a mixed string of names of municipalities, their districts, and a
 prefecture:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>names_municipality <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;北京市&quot;</span>, <span class="co"># Beijing, a municipality</span></span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>                        <span class="st">&quot;海淀区&quot;</span>, <span class="co"># A district of Beijing</span></span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>                        <span class="st">&quot;上海市&quot;</span>, <span class="co"># Shanghai, a municipality</span></span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>                        <span class="st">&quot;静安区&quot;</span>, <span class="co"># A district of Shanghai</span></span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>                        <span class="st">&quot;济南市&quot;</span>) <span class="co"># A prefecture of Shandong</span></span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co"># When `zhixiashi` is FALSE, only the districts are recognized</span></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> names_municipality, </span>
-<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2019</span>, </span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>           <span class="at">zhixiashi =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>names_municipality <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="st">&quot;北京市&quot;</span>, <span class="co"># Beijing, a municipality</span></span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="st">&quot;海淀区&quot;</span>, <span class="co"># A district of Beijing</span></span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="st">&quot;上海市&quot;</span>, <span class="co"># Shanghai, a municipality</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="st">&quot;静安区&quot;</span>, <span class="co"># A district of Shanghai</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>  <span class="st">&quot;济南市&quot;</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>) <span class="co"># A prefecture of Shandong</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co"># When `zhixiashi` is FALSE, only the districts are recognized</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>  <span class="at">data_input =</span> names_municipality,</span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">2019</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>  <span class="at">zhixiashi =</span> <span class="cn">FALSE</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1]     NA 110108     NA 310106 370100</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># When `zhixiashi` is TRUE, municipalities are recognized</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> names_municipality,</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2019</span>,</span>
-<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
-<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>           <span class="at">zhixiashi =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="at">data_input =</span> names_municipality,</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">2019</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;code&quot;</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  <span class="at">zhixiashi =</span> <span class="cn">TRUE</span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] 110000 110108 310000 310106 370100</code></pre>
 </div>
 <div id="city-ranking" class="section level2">
@@ -687,15 +708,18 @@ cities, we cannot find their populations from the official sources. The
 different years:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>  <span class="at">city =</span> corruption<span class="sc">$</span>prefecture,</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="at">rank1989 =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>           <span class="at">convert_to=</span><span class="st">&quot;rank&quot;</span>),</span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>  <span class="at">rank2014 =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2014</span>, </span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;rank&quot;</span>)</span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="at">rank1989 =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;rank&quot;</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  ),</span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>  <span class="at">rank2014 =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">2014</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;rank&quot;</span></span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>  ))</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##    city   rank1989 rank2014  
 ##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;     
@@ -725,19 +749,21 @@ and administrative area outputs. The following example demonstrates how
 this function operates on various demands:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="at">city =</span> corruption<span class="sc">$</span>prefecture,</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="at">cityPY =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>           ),</span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  <span class="at">areaPY =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>,</span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>           )</span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>  <span class="at">cityPY =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>    <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>  ),</span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>  <span class="at">areaPY =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>    <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>  )</span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##    city   cityPY     areaPY   
 ##    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;    
@@ -752,14 +778,15 @@ this function operates on various demands:</p>
 ##  9 定安县 NA         NA       
 ## 10 襄阳市 xiang_fan  hua_zhong</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># Regions with special spelling</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> <span class="fu">c</span>(<span class="st">&quot;山西&quot;</span>, <span class="st">&quot;陕西&quot;</span>, <span class="st">&quot;内蒙古&quot;</span>, <span class="st">&quot;香港&quot;</span>, <span class="st">&quot;澳门&quot;</span>), </span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">2008</span>, </span>
-<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>           <span class="at">incomplete_name =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>           <span class="at">province =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>           <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
-<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>           )</span></code></pre></div>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>  <span class="at">data_input =</span> <span class="fu">c</span>(<span class="st">&quot;山西&quot;</span>, <span class="st">&quot;陕西&quot;</span>, <span class="st">&quot;内蒙古&quot;</span>, <span class="st">&quot;香港&quot;</span>, <span class="st">&quot;澳门&quot;</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">2008</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>  <span class="at">incomplete_name =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>  <span class="at">province =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>  <span class="at">to_pinyin =</span> <span class="cn">TRUE</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##             &lt;NA&gt;             陕西             内蒙             香港             澳门 
 ##        &quot;shan_xi&quot;       &quot;shaan_xi&quot; &quot;inner_mongolia&quot;      &quot;hong_kong&quot;          &quot;macao&quot;</code></pre>
 </div>
@@ -777,17 +804,21 @@ abbreviation outputs, simply set <code>convert_to = &quot;abbre&quot;</code>.</p
 province geocodes to their official names and abbreviations:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="at">province =</span> corruption<span class="sc">$</span>province_id,</span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="at">prov_name =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>province_id, </span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
-<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>           <span class="at">province =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>  <span class="at">prov_abbre =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>province_id, </span>
-<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;codeToabbre&quot;</span>,</span>
-<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
-<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>           <span class="at">province =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="at">prov_name =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>province_id,</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;name&quot;</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>    <span class="at">province =</span> <span class="cn">TRUE</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>  ),</span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>  <span class="at">prov_abbre =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>province_id,</span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>    <span class="at">convert_to =</span> <span class="st">&quot;codeToabbre&quot;</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a>    <span class="at">province =</span> <span class="cn">TRUE</span></span>
+<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a>  )</span>
+<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##    province prov_name      prov_abbre
 ##       &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;     
@@ -857,10 +888,11 @@ and martial reasons <span class="citation">(孙平 2020)</span>:</p>
 prefecture or province belongs. <code>regioncode</code> offers a
 function to convert codes and names of the region (both prefectures and
 provinces) into areas by setting the output format as “area”:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>, </span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>           <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">regioncode</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>  <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  <span class="at">convert_to =</span> <span class="st">&quot;area&quot;</span>)</span></code></pre></div>
 <pre><code>##  [1] &quot;华东&quot; &quot;华东&quot; &quot;华东&quot; &quot;华中&quot; &quot;华南&quot; &quot;华中&quot; &quot;华东&quot; &quot;西南&quot; NA     &quot;华中&quot;</code></pre>
 </div>
 <div id="linguistic-zone" class="section level3">
@@ -880,15 +912,19 @@ conversion can only be to the dialect group level.)</p>
 sub-groups:</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="at">city =</span> corruption<span class="sc">$</span>prefecture,</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>  <span class="at">dialectGroup =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>           <span class="at">to_dialect =</span> <span class="st">&quot;dia_group&quot;</span>),</span>
-<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a>  <span class="at">dialectSubGroup =</span> <span class="fu">regioncode</span>(<span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture, </span>
-<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>           <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
-<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>           <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
-<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>           <span class="at">to_dialect =</span> <span class="st">&quot;dia_sub_group&quot;</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>  <span class="at">dialectGroup =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a>    <span class="at">to_dialect =</span> <span class="st">&quot;dia_group&quot;</span></span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>  ),</span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>  <span class="at">dialectSubGroup =</span> <span class="fu">regioncode</span>(</span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>    <span class="at">data_input =</span> corruption<span class="sc">$</span>prefecture,</span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a>    <span class="at">year_from =</span> <span class="dv">2019</span>,</span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a>    <span class="at">year_to =</span> <span class="dv">1989</span>,</span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a>    <span class="at">to_dialect =</span> <span class="st">&quot;dia_sub_group&quot;</span></span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a>  )</span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##    city   dialectGroup dialectSubGroup                             
 ##    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;                                       

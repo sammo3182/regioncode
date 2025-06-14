@@ -18,7 +18,10 @@ editor_options:
     wrap: sentence
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
+
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
 if(!require(regioncode)) install.packages("regioncode")
@@ -65,32 +68,42 @@ The following example illustrates the conversion of 2019 geocodes in the sample 
 It is essential for users to correctly set the `year_from` argument to reference the appropriate year.
 Subsequently, the `year_to` and `convert_to` arguments can be used to determine the desired year's projection and the format type.
 
-```{r code2code}
+```{r}
+#| label: code2code
+
 library(regioncode)
 
 data("corruption")
 
 # Conversion to the 1989 version
-regioncode(data_input = corruption$prefecture_id, 
-           convert_to = "code", # default setting
-           year_from = 2019,
-           year_to = 1989)
+regioncode(
+  data_input = corruption$prefecture_id,
+  convert_to = "code", # default setting
+  year_from = 2019,
+  year_to = 1989
+)
 
 # Comparison
 tibble(
   code2019 = corruption$prefecture_id,
-  code1989 = regioncode(data_input = corruption$prefecture_id,
-           convert_to = "code", # default setting
-           year_from = 2019,
-           year_to = 1989),
-  name2019 = regioncode(data_input = corruption$prefecture_id,
-           convert_to = "name", # default setting
-           year_from = 2019,
-           year_to = 2019),
-  name1989 = regioncode(data_input = corruption$prefecture_id,
-           convert_to = "name", # default setting
-           year_from = 2019,
-           year_to = 1989)
+  code1989 = regioncode(
+    data_input = corruption$prefecture_id,
+    convert_to = "code", # default setting
+    year_from = 2019,
+    year_to = 1989
+  ),
+  name2019 = regioncode(
+    data_input = corruption$prefecture_id,
+    convert_to = "name", # default setting
+    year_from = 2019,
+    year_to = 2019
+  ),
+  name1989 = regioncode(
+    data_input = corruption$prefecture_id,
+    convert_to = "name", # default setting
+    year_from = 2019,
+    year_to = 1989
+  )
 )
 ```
 
@@ -100,7 +113,9 @@ If a large area was divided into several regions, the later-year codes will alig
 In the current version, `regioncode` automatically identifies the input format: numerics for geocodes and characters for names.
 The following example demonstrates the conversions from various types of input to alternative formats of outputs:
 
-```{r code2name}
+```{r}
+#| label: code2name
+
 # Original name
 tibble(
   id = corruption$prefecture_id,
@@ -108,22 +123,27 @@ tibble(
 )
 
 # Codes to name
-regioncode(data_input = corruption$prefecture_id, 
-           convert_to = "name",
-           year_from = 2019,
-           year_to = 1989)
+regioncode(
+  data_input = corruption$prefecture_id,
+  convert_to = "name",
+  year_from = 2019,
+  year_to = 1989
+)
 
 # Name to codes of the same year
-regioncode(data_input = corruption$prefecture, 
-           convert_to = "code",
-           year_from = 2019,
-           year_to = 2019)
+regioncode(
+  data_input = corruption$prefecture,
+  convert_to = "code",
+  year_from = 2019,
+  year_to = 2019
+)
 
 # Name to name of a different year
-regioncode(data_input = corruption$prefecture, 
-           convert_to = "name",
-           year_from = 2019,
-           year_to = 1989)
+regioncode(
+  data_input = corruption$prefecture,
+  convert_to = "name",
+  year_from = 2019,
+  year_to = 1989)
 ```
 
 # Advanced Applications
@@ -145,7 +165,9 @@ To execute conversions for such data, one can specify the `incomplete_name` argu
 As long as there are two characters that can help to identify the city or province, `regioncode` can conduct the conversion.
 In the following example, we randomly removed 70% of the input city names to incomplete names and show how `regioncode` can deal with such problems:
 
-```{r incomplete_name}
+```{r}
+#| label: incomplete_name
+
 # Original full names
 corruption$prefecture
 
@@ -153,17 +175,19 @@ fake_incomplete <- corruption$prefecture
 
 index_incomplete <- sample(seq(length(corruption$prefecture)), 7)
 
-fake_incomplete[index_incomplete] <- fake_incomplete[index_incomplete] |> 
+fake_incomplete[index_incomplete] <- fake_incomplete[index_incomplete] |>
   substr(start = 1, stop = 2)
 
 fake_incomplete
 
 # Conversion to full names in 2008
-regioncode(data_input = fake_incomplete, 
-           convert_to = "name",
-           year_from = 2019,
-           year_to = 2008,
-           incomplete_name = TRUE)
+regioncode(
+  data_input = fake_incomplete,
+  convert_to = "name",
+  year_from = 2019,
+  year_to = 2008,
+  incomplete_name = TRUE
+)
 
 ```
 
@@ -179,26 +203,34 @@ When set to "TRUE," municipalities are considered as prefectures, and their prov
 
 The following example illustrates the municipalities identifier with a mixed string of names of municipalities, their districts, and a prefecture:
 
-```{r municipality}
-names_municipality <- c("北京市", # Beijing, a municipality
-                        "海淀区", # A district of Beijing
-                        "上海市", # Shanghai, a municipality
-                        "静安区", # A district of Shanghai
-                        "济南市") # A prefecture of Shandong
+```{r}
+#| label: municipality
+
+names_municipality <- c(
+  "北京市", # Beijing, a municipality
+  "海淀区", # A district of Beijing
+  "上海市", # Shanghai, a municipality
+  "静安区", # A district of Shanghai
+  "济南市"
+) # A prefecture of Shandong
 
 # When `zhixiashi` is FALSE, only the districts are recognized
-regioncode(data_input = names_municipality, 
-           year_from = 2019,
-           year_to = 2019, 
-           convert_to = "code",
-           zhixiashi = FALSE)
+regioncode(
+  data_input = names_municipality,
+  year_from = 2019,
+  year_to = 2019,
+  convert_to = "code",
+  zhixiashi = FALSE
+)
 
 # When `zhixiashi` is TRUE, municipalities are recognized
-regioncode(data_input = names_municipality,
-           year_from = 2019,
-           year_to = 2019,
-           convert_to = "code",
-           zhixiashi = TRUE)
+regioncode(
+  data_input = names_municipality,
+  year_from = 2019,
+  year_to = 2019,
+  convert_to = "code",
+  zhixiashi = TRUE
+)
 ```
 
 ## City Ranking
@@ -231,18 +263,23 @@ The `rank` of them will be `NA`.
 
 The following example compares the ranks from the same input in different years:
 
-```{r rank}
+```{r}
+#| label: rank
+
 tibble(
   city = corruption$prefecture,
-  rank1989 = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989, 
-           convert_to="rank"),
-  rank2014 = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 2014, 
-           convert_to = "rank")
-)
+  rank1989 = regioncode(
+    data_input = corruption$prefecture,
+    year_from = 2019,
+    year_to = 1989,
+    convert_to = "rank"
+  ),
+  rank2014 = regioncode(
+    data_input = corruption$prefecture,
+    year_from = 2019,
+    year_to = 2014,
+    convert_to = "rank"
+  ))
 ```
 
 ## Pinyin
@@ -255,32 +292,37 @@ This function also corrects the romanization output for areas with special spell
 It works for official names, incomplete names, and administrative area outputs.
 The following example demonstrates how this function operates on various demands:
 
-```{r pinyin}
+```{r}
+#| label: pinyin
+
 tibble(
   city = corruption$prefecture,
-  cityPY = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989, 
-           convert_to = "name",
-           to_pinyin = TRUE
-           ),
-  areaPY = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989, 
-           convert_to = "area",
-           to_pinyin = TRUE
-           )
+  cityPY = regioncode(
+    data_input = corruption$prefecture,
+    year_from = 2019,
+    year_to = 1989,
+    convert_to = "name",
+    to_pinyin = TRUE
+  ),
+  areaPY = regioncode(
+    data_input = corruption$prefecture,
+    year_from = 2019,
+    year_to = 1989,
+    convert_to = "area",
+    to_pinyin = TRUE
+  )
 )
 
 # Regions with special spelling
-regioncode(data_input = c("山西", "陕西", "内蒙古", "香港", "澳门"), 
-           year_from = 2019,
-           year_to = 2008, 
-           convert_to = "name",
-           incomplete_name = TRUE,
-           province = TRUE,
-           to_pinyin = TRUE
-           )
+regioncode(
+  data_input = c("山西", "陕西", "内蒙古", "香港", "澳门"),
+  year_from = 2019,
+  year_to = 2008,
+  convert_to = "name",
+  incomplete_name = TRUE,
+  province = TRUE,
+  to_pinyin = TRUE
+)
 ```
 
 ## Provinces
@@ -292,19 +334,25 @@ To receive abbreviation outputs, simply set `convert_to = "abbre"`.
 
 The following example demonstrates the conversion of a vector of province geocodes to their official names and abbreviations:
 
-```{r provinces}
+```{r}
+#| label: provinces
+
 tibble(
   province = corruption$province_id,
-  prov_name = regioncode(data_input = corruption$province_id, 
-           convert_to = "name",
-           year_from = 2019,
-           year_to = 1989,
-           province = TRUE),
-  prov_abbre = regioncode(data_input = corruption$province_id, 
-           convert_to = "codeToabbre",
-           year_from = 2019,
-           year_to = 1989,
-           province = TRUE)
+  prov_name = regioncode(
+    data_input = corruption$province_id,
+    convert_to = "name",
+    year_from = 2019,
+    year_to = 1989,
+    province = TRUE
+  ),
+  prov_abbre = regioncode(
+    data_input = corruption$province_id,
+    convert_to = "codeToabbre",
+    year_from = 2019,
+    year_to = 1989,
+    province = TRUE
+  )
 )
 ```
 
@@ -329,11 +377,14 @@ Chinese regions are divided into seven areas for social, political, and martial 
 In certain cases, users may wish to identify the area to which a prefecture or province belongs.
 `regioncode` offers a function to convert codes and names of the region (both prefectures and provinces) into areas by setting the output format as "area":
 
-```{r 2area}
-regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989, 
-           convert_to = "area")
+```{r}
+#| label: 2area
+
+regioncode(
+  data_input = corruption$prefecture,
+  year_from = 2019,
+  year_to = 1989,
+  convert_to = "area")
 ```
 
 ### Linguistic Zone
@@ -346,17 +397,23 @@ In the current version, `regioncode` offers two levels of linguistic zone identi
 
 The following example converts the toy data to dialect groups and sub-groups:
 
-```{r language_zone}
+```{r}
+#| label: language_zone
+
 tibble(
   city = corruption$prefecture,
-  dialectGroup = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989,
-           to_dialect = "dia_group"),
-  dialectSubGroup = regioncode(data_input = corruption$prefecture, 
-           year_from = 2019,
-           year_to = 1989,
-           to_dialect = "dia_sub_group")
+  dialectGroup = regioncode(
+    data_input = corruption$prefecture,
+    year_from = 2019,
+    year_to = 1989,
+    to_dialect = "dia_group"
+  ),
+  dialectSubGroup = regioncode(
+    data_input = corruption$prefecture,
+    year_from = 2019,
+    year_to = 1989,
+    to_dialect = "dia_sub_group"
+  )
 )
 ```
 
