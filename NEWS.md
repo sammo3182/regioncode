@@ -1,3 +1,5 @@
+# 0.2.4
+- Update the code to assign province‘s name to a city based on the year
 # 0.2.3
 
 - Add extdata like yunnan and guizhou
