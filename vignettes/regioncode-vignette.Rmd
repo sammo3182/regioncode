@@ -108,7 +108,12 @@ tibble(
 ```
 
 Note that if a region was initially geocoded in, for example, 1989 and later included in a new region in 2019, the new region geocode will be subsequently used.
-If a large area was divided into several regions, the later-year codes will align with the first region according to the ascending order of the regions' numeric geocodes.
+If a large area was divided into several regions, the later-year codes will align with the first region according to the ascending order of the regions' numeric geocodes.^[
+Some users may notice from the examples in this vignette that `regioncode` can output some provincially-administered counties ("直辖县"). 
+We include them to avoid too much missingness, but administratively they are still county-level units.
+Currently, we don't have the resource to cover all such counties and leave an issue for future [todo](https://github.com/sammo3182/regioncode/issues/54). 
+If any users who would like promote fixing the issue, welcome to conduct a pull request or contact us.
+]
 
 In the current version, `regioncode` automatically identifies the input format: numerics for geocodes and characters for names.
 The following example demonstrates the conversions from various types of input to alternative formats of outputs:
