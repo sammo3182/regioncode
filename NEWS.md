@@ -1,11 +1,13 @@
 # 0.2.3
 
-- Add extdata like yunnan and guizhou
-- fix the nas in vignette
+- Updated the code to assign province‘s name to a city based on the year
+- Added more data like Yunnan and Guizhou
+- Extended the year range to 2022
+- Fixed some data errors
 
 # 0.2.2
 
-- Vectorize the merging functions
+- Vectorized the merging functions
 
 # 0.2.1
 

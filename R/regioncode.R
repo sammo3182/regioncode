@@ -1,58 +1,12 @@
-#' `regioncode` is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.
-#'
-#' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
-#' @param year_from A integer to define the year of the input. The default value is 1999.
-#' @param year_to A integer to define the year to convert. The default value is 2015.
-#' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to city ranks, from codes to region names, from region names to city ranks, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or city ranks (`rank`). The default option is `code`.
-#'  When `province` is TRUE, one can also choose `abbre`, `abbreTocode`, `abbreToname`, and `abbreToarea` to convert between names/codes and abbreviations of provinces.
-#' @param incomplete_name A logic strong to indicate if the input has incomplete names (not nickname). See more in "Details".
-#' @param zhixiashi A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.
-#' @param to_pinyin A logic string to indicate whether the output is in pinyin spelling instead of Chinese characters. The default is FALSE.
-#' @param to_dialect A character indicating the language transformation. At the prefectural level, valid transformation include `dia_group`,`dia_sub_group`. At the province level, valid transformation is `dia_super`. The default value is "none".
-#'  When `province` is TRUE, one can also choose `dia_super` to get the language zone of provinces.
-#' @param province A logic string to indicate the level of converting. The default is FALSE.
-#'
-#'
-#' @details In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. `regioncode` accounts this issue by offering the argument `incomplete_name`.
-#' \itemize{
-#'   \item "none": no short name will be used for either input or output;
-#'   \item "from": input data is short names instead of the full, official ones;
-#'   \item "to": output results will be short names;
-#'   \item "both": both input and output are using short names.
-#' }
-#'
-#' The argument makes a difference only when `code` or `name` are chose in `convert_to`.
-#' Users can use this argument together with `name` to convert between names and incomplete names.
-#'
-#' @returns The function returns a character or numeric vector depending on what method is specified.
-#'
-#' @import pinyin
-#'
-#' @examples
-#' \dontrun{
-#' # The example can be run well but CRAN does not like Chinese characters, so here just "dontrun" it.
-#'
-#' library(regioncode)
-#'
-#' regioncode(
-#'   data_input = corruption$prefecture_id,
-#'   year_from = 2016,
-#'   year_to = 2017
-#' )
-#' }
-#'
-#' @export
-#'
-#' 
 regioncode <- function(data_input,
-                      year_from = 1999,
-                      year_to = 2015,
-                      convert_to = "code",
-                      incomplete_name = FALSE,
-                      zhixiashi = FALSE,
-                      to_dialect = "none",
-                      to_pinyin = FALSE,
-                      province = FALSE) {
+                       year_from = 1999,
+                       year_to = 2015,
+                       convert_to = "code",
+                       incomplete_name = FALSE,
+                       zhixiashi = FALSE,
+                       to_dialect = "none",
+                       to_pinyin = FALSE,
+                       province = FALSE) {
   validate_input(
     data_input,
     year_from,
@@ -91,30 +45,40 @@ regioncode <- function(data_input,
       } else {
         "prov_name"
       }
+
+      if (!is.na(year_to) && year_to < 1988) {
+        data_input <- gsub("海南省", "广东省", data_input)
+      }
+
+      # 重庆市在1997年前属四川
+      if (!is.na(year_to) && year_to < 1997) {
+        data_input <- gsub("重庆市", "四川省", data_input)
+      }
+
       year_to <- switch(convert_to,
-        "name" = "prov_name",
-        "code" = "prov_code",
-        "area" = "area",
-        "nameToabbre" = {
-          year_from <- "prov_name"
-          paste0(year_num, "_nickname")
-        },
-        "codeToabbre" = {
-          year_from <- "prov_code"
-          paste0(year_num, "_nickname")
-        },
-        "abbreToname" = {
-          year_from <- paste0(year_num, "_nickname")
-          "prov_name"
-        },
-        "abbreTocode" = {
-          year_from <- paste0(year_num, "_nickname")
-          "prov_code"
-        },
-        "abbreToarea" = {
-          year_from <- paste0(year_num, "_nickname")
-          "area"
-        }
+                        "name" = "prov_name",
+                        "code" = "prov_code",
+                        "area" = "area",
+                        "nameToabbre" = {
+                          year_from <- "prov_name"
+                          paste0(year_num, "_nickname")
+                        },
+                        "codeToabbre" = {
+                          year_from <- "prov_code"
+                          paste0(year_num, "_nickname")
+                        },
+                        "abbreToname" = {
+                          year_from <- paste0(year_num, "_nickname")
+                          "prov_name"
+                        },
+                        "abbreTocode" = {
+                          year_from <- paste0(year_num, "_nickname")
+                          "prov_code"
+                        },
+                        "abbreToarea" = {
+                          year_from <- paste0(year_num, "_nickname")
+                          "area"
+                        }
       )
       ls_index <- c(year_from, year_to)
     }
@@ -145,10 +109,10 @@ regioncode <- function(data_input,
       region_data <- region_data[!duplicated(region_data$`2019_code`), ]
 
       year_to <- switch(convert_to,
-        "code" = paste0(year_to, "_code"),
-        "area" = "area",
-        "name" = paste0(year_to, "_name"),
-        "rank" = paste0(year_to, "_rank")
+                        "code" = paste0(year_to, "_code"),
+                        "area" = "area",
+                        "name" = paste0(year_to, "_name"),
+                        "rank" = paste0(year_to, "_rank")
       )
       ls_index <- c(year_from, year_to)
 
@@ -243,11 +207,11 @@ regioncode <- function(data_input,
 
     # Use py function where no special case is matched
     data_output <- ifelse(is.na(special_pinyin),
-      py(
-        char = first_two_chars,
-        dic = pydic(method = "toneless", dic = "pinyin2")
-      ),
-      special_pinyin
+                          py(
+                            char = first_two_chars,
+                            dic = pydic(method = "toneless", dic = "pinyin2")
+                          ),
+                          special_pinyin
     )
   }
 
@@ -307,4 +271,3 @@ validate_input <- function(
     stop("Invalid input: cannot translate administrative codes to pinyin.")
   }
 }
-
