@@ -94,13 +94,12 @@ regioncode <- function(data_input,
       }
 
       if (!is.na(year_to) && year_to < 1988) {
-        data_input <- gsub("海南省", "广东省", data_input)
+        data_input <- gsub("\u6d77\u5357\u7701", "\u5e7f\u4e1c\u7701", data_input)
+      }
+      if (!is.na(year_to) && year_to < 1997) {
+        data_input <- gsub("\u91cd\u5e86\u5e02", "\u56db\u5ddd\u7701", data_input)
       }
 
-      # 重庆市在1997年前属四川
-      if (!is.na(year_to) && year_to < 1997) {
-        data_input <- gsub("重庆市", "四川省", data_input)
-      }
 
       year_to <- switch(convert_to,
                         "name" = "prov_name",
