@@ -1,6 +1,6 @@
 Package: regioncode
 Title: Convert Region Names and Division Codes of China Over Years
-Version: 0.1.99999
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Yue",family = "Hu",role = c("aut","cre"), email = "yuehu@tsinghua.edu.cn"),
     person(given = "Xinyi",family = "Ye",role = c("aut"), email = "yexy23@mails.tsinghua.edu.cn"),

@@ -11,6 +11,6 @@
 #'   \item{prefecture_id}{6-digit province number}
 #'   \item{county_id}{6-digit province number}
 #' }
-#' @source \url{https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD}
+#' @source \doi{10.7910/DVN/9QZRAD}
 #'
 "corruption"

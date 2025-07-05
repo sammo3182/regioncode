@@ -16,7 +16,7 @@ A data frame with 6 variables:
 }
 }
 \source{
-\url{https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/9QZRAD}
+\doi{10.7910/DVN/9QZRAD}
 }
 \usage{
 corruption

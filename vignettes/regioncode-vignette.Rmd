@@ -111,7 +111,7 @@ tibble(
 Note that if a region geocoded in 1989 was later absorbed into a new region by 2019, the package uses the new region's geocode. 
 If a single large area was later divided into several smaller regions, the package aligns the new codes with the first new region based on the ascending numerical order of their geocodes.^[Users may notice that `regioncode` sometimes outputs provincially-administered counties ("直辖县"). 
 We include some of these units to minimize missing data, although they remain county-level administrative units. 
-Current resources do not permit coverage of all such counties, an issue we plan to address in the future (see [todo](https://github.com/sammo3182/regioncode/issues/54)). 
+Current resources do not permit coverage of all such counties, an issue we plan to address in the future (github issues \#54). 
 We welcome users to contribute a pull request or contact us to help resolve this issue.]
 `regioncode` automatically identifies the input format, treating numeric vectors as geocodes and character vectors as names. 
 The following example demonstrates converting various input types into different output formats:
@@ -419,7 +419,7 @@ tibble(
 
 `regioncode` provides a convenient tool for converting Chinese administrative division codes and official names and for performing other specialized conversions. 
 We are actively developing the package and plan to add more administrative levels and richer data in future versions. 
-We welcome collaboration, and users can direct any questions, comments, or bug reports to our [Github Issues](https://github.com/sammo3182/regioncode/issues) page.
+We welcome collaboration, and users can direct any questions, comments, or bug reports to our Github Issues page.
 
 We extend our appreciation to LI Ruizhe, ZHU Meng, SHI Yuyang, XU Yujia, PAN Yuxin, TIAN Haiting, SHAO Weihang, CHEN Yuanqian, and LIU Xueyan for their contributions to data collection and code development for this package.
 
