@@ -28,7 +28,7 @@ if(!require(regioncode)) install.packages("regioncode")
 library(regioncode)
 library(dplyr)
 
-load(here::here("R", "sysdata.rda"))
+load("../R/sysdata.rda")
 vec_yearRange <- names(region_data) |>
   grep("^\\d{4}_code$", x = _, value = TRUE) |>
   substr(start = 1, stop = 4) |> 
