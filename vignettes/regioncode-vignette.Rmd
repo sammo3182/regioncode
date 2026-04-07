@@ -284,7 +284,7 @@ tibble(
 
 Pinyin provides a phonetic romanization of Chinese characters, and some datasets store region names in pinyin. 
 While `regioncode` defaults to outputting names in Chinese characters, users can obtain pinyin output by setting the `to_pinyin` argument to `TRUE`. 
-This functionality is integrated from the `pinyin` package developed by Peng Zhao and Qu Cheng. 
+This functionality uses an internal lookup table covering all Chinese provinces, prefecture-level cities, and administrative area names, providing accurate and consistent romanization including conventional English names for regions such as Inner Mongolia, Tibet, Hong Kong, and Macao.
 The function also produces the correct romanization for regions with unique spellings, such as Shanxi versus Shaanxi, Inner Mongolia, and the special administrative regions. 
 This pinyin conversion works for official names, incomplete names, and administrative area outputs. 
 The following example shows how the function works for different requests:

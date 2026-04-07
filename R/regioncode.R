@@ -26,7 +26,6 @@
 #'
 #' @returns The function returns a character or numeric vector depending on what method is specified.
 #'
-#' @import pinyin
 #'
 #' @examples
 #' \dontrun{
@@ -236,29 +235,17 @@ regioncode <- function(data_input,
   # Because '2pinyin' can not be used as a variable name
 
   if (to_pinyin) {
-    # Predefined mapping for special cases with Chinese characters
-    special_cases <- c(
-      "\u9655\u897f" = "shaan_xi",
-      "\u5185\u8499" = "inner_mongolia",
-      "\u897f\u85cf" = "tibet",
-      "\u6fb3\u95e8" = "macao",
-      "\u9999\u6e2f" = "hong_kong"
-    )
-
-    # Extract the first two characters of each entry in data_output
     first_two_chars <- substr(data_output, 1, 2)
-
-    # Apply special cases mapping
-    special_pinyin <- special_cases[first_two_chars]
-
-    # Use py function where no special case is matched
-    data_output <- ifelse(is.na(special_pinyin),
-                          py(
-                            char = first_two_chars,
-                            dic = pydic(method = "toneless", dic = "pinyin2")
-                          ),
-                          special_pinyin
-    )
+    result <- pinyin_lookup[first_two_chars]
+    unknown_mask <- is.na(result) & !is.na(first_two_chars)
+    if (any(unknown_mask)) {
+      warning(
+        "to_pinyin: no pinyin found for: ",
+        paste(unique(first_two_chars[unknown_mask]), collapse = ", "),
+        ". Returning NA for those entries."
+      )
+    }
+    data_output <- unname(result)
   }
 
   return(data_output)
