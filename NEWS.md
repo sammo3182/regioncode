@@ -1,3 +1,8 @@
+# 0.2.1
+
+- Fixed the `to_pinyin` function
+- Fixed the `incomplete_name` function
+
 # 0.2.0
 
 - Updated the code to assign province‘s name to a city based on the year
