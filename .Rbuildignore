@@ -4,6 +4,7 @@
 ^cran-comments.md$
 
 ^dev$
+^data-raw$
 ^CONDUCT\.md$
 ^CRAN-RELEASE$
 ^doc$

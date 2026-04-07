@@ -164,9 +164,14 @@ The `regioncode` package also provides specialized functions for more complex da
 ## Incomplete Naming of Prefectures
 
 Datasets often record geographic information using incomplete names that omit the administrative level, such as "北京" for "北京市" or "内蒙" for "内蒙古自治区." 
-To handle this type of data, a user can set the `incomplete_name` argument to `TRUE`. 
-`regioncode` can perform the conversion as long as at least two characters are available to identify the city or province. 
-In the following example, we shorten 70% of the city names in the input vector to demonstrate how `regioncode` resolves this issue:
+To handle this type of data, `regioncode` provides the `incomplete_name` argument with four options:
+
+- `"none"` (default): full official names are used for both input and output;
+- `"from"`: the input data contains short names instead of full official names;
+- `"to"`: the output will be short names rather than full official names;
+- `"both"`: both input and output use short names.
+
+In the following example, we shorten 70% of the city names in the input vector to demonstrate how `regioncode` resolves this issue using `incomplete_name = "from"`:
 
 
 ```{r}
@@ -190,7 +195,7 @@ regioncode(
   convert_to = "name",
   year_from = 2019,
   year_to = 2008,
-  incomplete_name = TRUE
+  incomplete_name = "from"
 )
 
 ```
@@ -316,7 +321,7 @@ regioncode(
   year_from = 2019,
   year_to = 2008,
   convert_to = "name",
-  incomplete_name = TRUE,
+  incomplete_name = "from",
   province = TRUE,
   to_pinyin = TRUE
 )

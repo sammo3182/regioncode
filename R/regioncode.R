@@ -5,7 +5,8 @@
 #' @param year_to A integer to define the year to convert. The default value is 2015.
 #' @param convert_to A character indicating the converting methods. At the prefectural level, valid methods include converting between codes in different years, from codes to city ranks, from codes to region names, from region names to city ranks, from region names to division codes, from region names or division codes to sociopolitical area names, and between names in different years. The current version automatically detect the type of the input. Users only need to choose the output to be codes (`code`), names (`name`) , area (`area`) or city ranks (`rank`). The default option is `code`.
 #'  When `province` is TRUE, one can also choose `abbre`, `abbreTocode`, `abbreToname`, and `abbreToarea` to convert between names/codes and abbreviations of provinces.
-#' @param incomplete_name A logic strong to indicate if the input has incomplete names (not nickname). See more in "Details".
+#' @param incomplete_name A character string indicating how incomplete (short) names are handled.
+#'   One of \code{"none"} (default), \code{"from"}, \code{"to"}, or \code{"both"}. See "Details".
 #' @param zhixiashi A logic string to indicate whether treating division codes and names of municipality directly under the central government (Only makes a difference for prefectural-level conversion). The default value is FALSE.
 #' @param to_pinyin A logic string to indicate whether the output is in pinyin spelling instead of Chinese characters. The default is FALSE.
 #' @param to_dialect A character indicating the language transformation. At the prefectural level, valid transformation include `dia_group`,`dia_sub_group`. At the province level, valid transformation is `dia_super`. The default value is "none".
@@ -45,14 +46,14 @@
 #'
 
 regioncode <- function(data_input,
-                       year_from = 1999,
-                       year_to = 2015,
-                       convert_to = "code",
-                       incomplete_name = FALSE,
-                       zhixiashi = FALSE,
-                       to_dialect = "none",
-                       to_pinyin = FALSE,
-                       province = FALSE) {
+                      year_from = 1999,
+                      year_to = 2015,
+                      convert_to = "code",
+                      incomplete_name = "none",
+                      zhixiashi = FALSE,
+                      to_dialect = "none",
+                      to_pinyin = FALSE,
+                      province = FALSE) {
   validate_input(
     data_input,
     year_from,
@@ -60,7 +61,8 @@ regioncode <- function(data_input,
     to_dialect,
     convert_to,
     zhixiashi,
-    to_pinyin
+    to_pinyin,
+    incomplete_name
   )
 
 
@@ -212,24 +214,30 @@ regioncode <- function(data_input,
   data_input <- as.data.frame(data_input)
   names(data_input) <- ls_index[1]
 
-  data_output <- unique(region_data[ls_index])
-  data_output_match <- data_output
+  # Determine sname column for output if needed
+  out_sname_col <- if (incomplete_name %in% c("to", "both") && grepl("_name$", year_to)) {
+    sub("_name$", "_sname", year_to)
+  } else {
+    NULL
+  }
+
+  # Fetch output table (include sname col if needed for output)
+  cols_needed <- if (!is.null(out_sname_col)) c(ls_index, out_sname_col) else ls_index
+  data_output <- unique(region_data[cols_needed])
 
   # Get matching index based on full or shortened names
-  if (incomplete_name) {
-    data_output_match[[ls_index[1]]] <- substr(data_output[[ls_index[1]]], 1, 2)
-    data_input[[ls_index[1]]] <- substr(data_input[[ls_index[1]]], 1, 2)
-    index <- match(data_input[[ls_index[1]]], data_output_match[[ls_index[1]]])
+  if (incomplete_name %in% c("from", "both") && grepl("_name$", ls_index[1])) {
+    sname_in_col <- sub("_name$", "_sname", ls_index[1])
+    index <- match(data_input[[ls_index[1]]], data_output[[sname_in_col]])
   } else {
     index <- match(data_input[[ls_index[1]]], data_output[[ls_index[1]]])
   }
 
-  # Get output data
-  data_output <- data_output[index, year_to, drop = TRUE]
-
-  # Shorten output names if needed
-  if (incomplete_name && convert_to == "name" && incomplete_name %in% c("to", "both")) {
-    data_output <- substr(data_output, 1, 2)
+  # Get output data (use sname column when "to" or "both")
+  if (!is.null(out_sname_col)) {
+    data_output <- data_output[index, out_sname_col, drop = TRUE]
+  } else {
+    data_output <- data_output[index, year_to, drop = TRUE]
   }
 
   # Because '2pinyin' can not be used as a variable name
@@ -259,7 +267,8 @@ validate_input <- function(
     to_dialect,
     convert_to,
     zhixiashi,
-    to_pinyin) {
+    to_pinyin,
+    incomplete_name) {
   # Fast type check for data_input using first element only
   input_type <- typeof(data_input[1])
 
@@ -302,5 +311,9 @@ validate_input <- function(
   # Direct condition check for pinyin conversion
   if (to_pinyin && convert_to == "code" && to_dialect == "none") {
     stop("Invalid input: cannot translate administrative codes to pinyin.")
+  }
+
+  if (!incomplete_name %in% c("none", "from", "to", "both")) {
+    stop('Invalid input: incomplete_name must be one of "none", "from", "to", or "both".')
   }
 }
