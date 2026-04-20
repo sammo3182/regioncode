@@ -1,3 +1,8 @@
+# 0.2.2
+
+- Corrected the region code of Danzhou (儋州市) from `469003` to `460400` for the years 2015–2022, reflecting its 2015 upgrade from a provincially-administered county-level city to a prefecture-level city (#55).
+- Renamed the city-rank columns for 2020–2022 from `2020_cityranking` / `2021_cityrankin` / `2022_cityranking` to `2020_rank` / `2021_rank` / `2022_rank`, fixing a typo in the 2021 column name and aligning the naming convention with earlier years so that `convert_to = "rank"` works for 2020–2022 (#51).
+
 # 0.2.1
 
 - Fixed the `to_pinyin` function
