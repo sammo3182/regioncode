@@ -1,4 +1,4 @@
-#' `regioncode` is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.
+#' `regioncode` is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, `regioncode` enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2022.
 #'
 #' @param data_input A character vector for names or a six-digit integer vector for division codes to convert.
 #' @param year_from A integer to define the year of the input. The default value is 1999.
@@ -65,35 +65,24 @@ regioncode <- function(data_input,
     incomplete_name
   )
 
+  # `region_data` and `pinyin_lookup` are internal lookup tables (see data-raw/).
+  is_code <- is.numeric(data_input)
 
   if (province) {
+    # 1 Province-level conversion (municipalities never apply here)
     zhixiashi <- FALSE
 
-    # 1 Section of province-level converting
     if (to_dialect != "none") {
-      # 1-1 If convert language zone
-      year_from <- if (is.numeric(data_input[1])) {
-        "prov_code"
-      } else {
-        "prov_name"
-      }
-
-      ls_index <- if (to_dialect == "dia_super") {
-        year_to <- "prov_language"
-        c(year_from, year_to)
-      }
+      # 1-1 Language zone (only `dia_super` is valid at this level)
+      from_col <- if (is_code) "prov_code" else "prov_name"
+      to_col <- "prov_language"
     } else {
-      # 1-2 If not convert language zone
-      prov_data <- unique(region_data[, c("prov_code", paste0("199", 8:9, "_nickname"), "area")])
+      # 1-2 Names, codes, areas, and abbreviations
+      # Province nicknames changed in 1999, so pick the matching column.
+      year_num <- if (as.numeric(year_from) < 1999) 1998 else 1999
+      nickname_col <- paste0(year_num, "_nickname")
 
-      # Because province nicknames changed in 1999
-      year_num <- ifelse(as.numeric(year_from) < 1999, 1998, 1999)
-      year_from <- if (is.numeric(data_input[1])) {
-        "prov_code"
-      } else {
-        "prov_name"
-      }
-
+      # Regions that did not yet exist as provinces in the target year
       if (!is.na(year_to) && year_to < 1988) {
         data_input <- gsub("\u6d77\u5357\u7701", "\u5e7f\u4e1c\u7701", data_input)
       }
@@ -101,146 +90,54 @@ regioncode <- function(data_input,
         data_input <- gsub("\u91cd\u5e86\u5e02", "\u56db\u5ddd\u7701", data_input)
       }
 
-
-      year_to <- switch(convert_to,
-                        "name" = "prov_name",
-                        "code" = "prov_code",
-                        "area" = "area",
-                        "nameToabbre" = {
-                          year_from <- "prov_name"
-                          paste0(year_num, "_nickname")
-                        },
-                        "codeToabbre" = {
-                          year_from <- "prov_code"
-                          paste0(year_num, "_nickname")
-                        },
-                        "abbreToname" = {
-                          year_from <- paste0(year_num, "_nickname")
-                          "prov_name"
-                        },
-                        "abbreTocode" = {
-                          year_from <- paste0(year_num, "_nickname")
-                          "prov_code"
-                        },
-                        "abbreToarea" = {
-                          year_from <- paste0(year_num, "_nickname")
-                          "area"
-                        }
+      from_col <- if (is_code) "prov_code" else "prov_name"
+      to_col <- switch(convert_to,
+        "name" = "prov_name",
+        "code" = "prov_code",
+        "area" = "area",
+        "nameToabbre" = { from_col <- "prov_name"; nickname_col },
+        "codeToabbre" = { from_col <- "prov_code"; nickname_col },
+        "abbreToname" = { from_col <- nickname_col; "prov_name" },
+        "abbreTocode" = { from_col <- nickname_col; "prov_code" },
+        "abbreToarea" = { from_col <- nickname_col; "area" }
       )
-      ls_index <- c(year_from, year_to)
     }
   } else {
-    # 2 Section of prefectural-level converting
+    # 2 Prefecture-level conversion
+    from_col <- if (is_code) paste0(year_from, "_code") else paste0(year_from, "_name")
+
     if (to_dialect != "none") {
-      # 2-1 If convert language zone
-      year_from <- if (is.numeric(data_input[1])) {
-        paste0(year_from, "_code")
-      } else {
-        paste0(year_from, "_name")
-      }
-
-      year_to <- if (to_dialect == "dia_group") {
-        "pref_language_all"
-      } else if (to_dialect == "dia_sub_group") {
-        "dia_sub_language_all"
-      }
-      ls_index <- c(year_from, year_to)
+      # 2-1 Language zone
+      to_col <- if (to_dialect == "dia_group") "pref_language_all" else "dia_sub_language_all"
     } else {
-      # 2-2 If not convert language zone
-      year_from <- if (is.numeric(data_input[1])) {
-        paste0(year_from, "_code")
-      } else {
-        paste0(year_from, "_name")
-      }
-
+      # 2-2 Names, codes, areas, and ranks
       region_data <- region_data[!duplicated(region_data$`2019_code`), ]
 
-      year_to <- switch(convert_to,
-                        "code" = paste0(year_to, "_code"),
-                        "area" = "area",
-                        "name" = paste0(year_to, "_name"),
-                        "rank" = paste0(year_to, "_rank")
+      to_col <- switch(convert_to,
+        "code" = paste0(year_to, "_code"),
+        "area" = "area",
+        "name" = paste0(year_to, "_name"),
+        "rank" = paste0(year_to, "_rank")
       )
-      ls_index <- c(year_from, year_to)
 
-      # Using the Municipal codes for within region codes
+      # Treat municipalities as prefectures by giving them provincial codes/names
       if (zhixiashi) {
-        region_zhixiashi <- subset(region_data, zhixiashi)
-
-        # Gathering all the needed fields
-        region_sname <- region_zhixiashi[grep("_sname$", names(region_zhixiashi))]
-        region_name <- region_zhixiashi[grep("_name$", names(region_zhixiashi))]
-        region_code <- region_zhixiashi[grep("_code$", names(region_zhixiashi))]
-        region_remain <- region_zhixiashi[!grepl(
-          "(_code$|_sname$|_name$|language$|_all$|_nickname$|dia_sub_group$|freq$)", names(region_zhixiashi)
-        )]
-
-        # Replacing prefectural names and codes with provincial ones
-        region_name2 <- as.data.frame(matrix(
-          rep(region_zhixiashi$prov_name, ncol(region_name)),
-          ncol = ncol(region_name)
-        ))
-        names(region_name2) <- names(region_name)
-
-        region_sname2 <- as.data.frame(matrix(
-          rep(region_zhixiashi$prov_sname, ncol(region_sname)),
-          ncol = ncol(region_sname)
-        ))
-        names(region_sname2) <- names(region_sname)
-
-        region_code2 <- as.data.frame(matrix(
-          rep(region_zhixiashi$prov_code, ncol(region_code)),
-          ncol = ncol(region_code)
-        ))
-        names(region_code2) <- names(region_code)
-
-        region_zhixiashi <- cbind(
-          region_name2,
-          region_code2,
-          region_sname2,
-          region_remain
-        )
-        region_zhixiashi <- unique(region_zhixiashi[, order(names(region_zhixiashi))])
-
-        region_province <- unique(region_data[!grepl("language$|_all$|_nickname$|dia_sub_group$|freq$", names(region_data))])
-        region_province <- region_province[, order(names(region_province))]
-
-        region_data <- rbind(region_zhixiashi, region_province)
+        region_data <- expand_zhixiashi(region_data)
       }
     }
   }
 
-  # Convert the input to a data.frame for later merging
-  data_input <- as.data.frame(data_input)
-  names(data_input) <- ls_index[1]
-
-  # Determine sname column for output if needed
-  out_sname_col <- if (incomplete_name %in% c("to", "both") && grepl("_name$", year_to)) {
-    sub("_name$", "_sname", year_to)
-  } else {
-    NULL
+  # Resolve which columns to match on / read from. With `incomplete_name`,
+  # swap a name column for its short-name (`_sname`) counterpart.
+  if (incomplete_name %in% c("from", "both") && grepl("_name$", from_col)) {
+    from_col <- sub("_name$", "_sname", from_col)
+  }
+  if (incomplete_name %in% c("to", "both") && grepl("_name$", to_col)) {
+    to_col <- sub("_name$", "_sname", to_col)
   }
 
-  # Fetch output table (include sname col if needed for output)
-  cols_needed <- if (!is.null(out_sname_col)) c(ls_index, out_sname_col) else ls_index
-  data_output <- unique(region_data[cols_needed])
-
-  # Get matching index based on full or shortened names
-  if (incomplete_name %in% c("from", "both") && grepl("_name$", ls_index[1])) {
-    sname_in_col <- sub("_name$", "_sname", ls_index[1])
-    index <- match(data_input[[ls_index[1]]], data_output[[sname_in_col]])
-  } else {
-    index <- match(data_input[[ls_index[1]]], data_output[[ls_index[1]]])
-  }
-
-  # Get output data (use sname column when "to" or "both")
-  if (!is.null(out_sname_col)) {
-    data_output <- data_output[index, out_sname_col, drop = TRUE]
-  } else {
-    data_output <- data_output[index, year_to, drop = TRUE]
-  }
-
-  # Because '2pinyin' can not be used as a variable name
+  # The first matching row wins, mirroring a left join on `from_col`.
+  data_output <- region_data[[to_col]][match(data_input, region_data[[from_col]])]
 
   if (to_pinyin) {
     first_two_chars <- substr(data_output, 1, 2)
@@ -256,7 +153,34 @@ regioncode <- function(data_input,
     data_output <- unname(result)
   }
 
-  return(data_output)
+  data_output
+}
+
+# Rebuild the lookup table so that municipalities ("\u76f4\u8f96\u5e02") carry
+# their provincial names and codes across every year, then stack them back with
+# the rest of the regions. Used when `zhixiashi = TRUE`.
+expand_zhixiashi <- function(region_data) {
+  drop_pattern <- "language$|_all$|_nickname$|dia_sub_group$|freq$"
+  region_zhixiashi <- region_data[region_data$zhixiashi %in% TRUE, ]
+
+  # Columns to overwrite with the provincial value, and the value to use
+  replace_map <- list(
+    "_name$" = region_zhixiashi$prov_name,
+    "_sname$" = region_zhixiashi$prov_sname,
+    "_code$" = region_zhixiashi$prov_code
+  )
+  for (pattern in names(replace_map)) {
+    cols <- grep(pattern, names(region_zhixiashi), value = TRUE)
+    region_zhixiashi[cols] <- replace_map[[pattern]]
+  }
+
+  region_zhixiashi <- region_zhixiashi[!grepl(drop_pattern, names(region_zhixiashi))]
+  region_zhixiashi <- unique(region_zhixiashi[order(names(region_zhixiashi))])
+
+  region_province <- unique(region_data[!grepl(drop_pattern, names(region_data))])
+  region_province <- region_province[order(names(region_province))]
+
+  rbind(region_zhixiashi, region_province)
 }
 # Function to validate input
 

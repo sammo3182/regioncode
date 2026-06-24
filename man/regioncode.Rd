@@ -2,7 +2,7 @@
 % Please edit documentation in R/regioncode.R
 \name{regioncode}
 \alias{regioncode}
-\title{\code{regioncode} is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.}
+\title{\code{regioncode} is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2022.}
 \usage{
 regioncode(
   data_input,
@@ -42,7 +42,7 @@ When \code{province} is TRUE, one can also choose \code{dia_super} to get the la
 The function returns a character or numeric vector depending on what method is specified.
 }
 \description{
-\code{regioncode} is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2019.
+\code{regioncode} is developed to conquer the difficulties to convert various region names and administration division codes of Chinese regions. In the current version, \code{regioncode} enables seamlessly converting Chinese regions' formal names, common-used names, and geocodes between each other at the prefectural level from 1986 to 2022.
 }
 \details{
 In many national and regional data in China studies, the source applies incomplete names instead of the official, full name of a given region. A typical case is that "Xinjiang" is used much more often than "Xinjiang Weiwuer Zizhiqu" (the Xinjiang Uygur Autonomous Region) for the name of the province. In other cases the "Shi" (City) is often omitted to refer to a prefectural city. \code{regioncode} accounts this issue by offering the argument \code{incomplete_name}.

@@ -1,3 +1,14 @@
+# 0.3.0
+
+- Fixed `incomplete_name = "from"` and `"both"`: short-name inputs are now
+  matched correctly instead of always returning `NA` (this also restores
+  `to_pinyin` output for province conversions from incomplete names).
+- Simplified and sped up the core `regioncode()` conversion by matching on the
+  lookup vectors directly and removing redundant data-frame copies and dead code.
+- Cleaned trailing whitespace from the internal region data.
+- Vignette no longer depends on a fragile relative path to the package's
+  internal data and renders reproducibly.
+
 # 0.2.1
 
 - Fixed the `to_pinyin` function

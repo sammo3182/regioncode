@@ -24,14 +24,14 @@ editor_options:
 
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
-if(!require(regioncode)) install.packages("regioncode")
 library(regioncode)
 library(dplyr)
 
-load("../R/sysdata.rda")
-vec_yearRange <- names(region_data) |>
+# Derive the covered year range from the package's internal lookup table.
+vec_yearRange <- utils::getFromNamespace("region_data", "regioncode") |>
+  names() |>
   grep("^\\d{4}_code$", x = _, value = TRUE) |>
-  substr(start = 1, stop = 4) |> 
+  substr(start = 1, stop = 4) |>
   as.numeric()
 ```
 
@@ -179,6 +179,8 @@ In the following example, we shorten 70% of the city names in the input vector t
 
 # Original full names
 corruption$prefecture
+
+set.seed(2024)
 
 fake_incomplete <- corruption$prefecture
 
